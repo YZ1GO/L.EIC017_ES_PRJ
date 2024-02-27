@@ -11,7 +11,7 @@ rectangle "APP" {
         (Adicionar medicamento) .> (Indicar frequência para tomar o medicamento) : <<include>>
         (Indicar frequência para tomar o medicamento) .> (Indicar a que horas e minutos) : <<extends>>
         (Indicar frequência para tomar o medicamento) .> (Indicar a quantidade para tomar) : <<extends>>
-        (Indicar frequência para tomar o medicamento) <. (Indicar quando acaba o tratamento)
+        (Indicar frequência para tomar o medicamento) .> (Indicar quando acaba o tratamento) : <<include>>
         (Adicionar medicamento) .> (Indicar data de início) : <<include>>
         User -- (Indicar data de expiração do medicamento)
         User -- (Indicar quantidade do medicamento)
