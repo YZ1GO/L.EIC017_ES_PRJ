@@ -10,3 +10,6 @@ Let's embrace a healthy lifestyle with "app-name"!
 
 ## User Stories
 As a "user-role" I "want/need/can" ..., so that ...
+
+## Project Requirement
+3-5 different screens
