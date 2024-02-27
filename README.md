@@ -1,4 +1,5 @@
 # 2LEIC03T2
+![](logo-app.png)
 "app-name"
 
 ## Description
