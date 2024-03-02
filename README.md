@@ -1,27 +1,28 @@
 # 2LEIC03T2
 ![](logo-app.png)
-"app-name"
+"PenguPills"
 
 ## Description
-Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – "app-name" has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
+Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – "PenguPills" has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
 
-Let's embrace a healthy lifestyle with "app-name"!
+Let's embrace a healthy lifestyle with "PenguPills"!
 
 ## Use Case Diagram
+![](usecase.png)
 
 ## User Stories
-1. Adicionar um medicamento numa categoria definida pelo utilizador ou predefinida na app.
-2. Registar a data de expiração do medicamento.
-3. Registar o periodo de tempo para tomar a medicação incluindo o tempo da 1ª vez que o utilizador tomou.
-4. A app avisar na hora para tomar a medicação.
-5. Opção de remind me later (por ex. 5min depois) ou check.
-6. Check -> mostra a quantidade de medicação restante após tomar, por ex. 18/20 de antibiotico.
-7. X dias antes de expirar avisar o utilizador que daqui a X dias passa de prazo.
-8. Quando o medicamento estiver prestes a acabar, avisar para reabastecer o stock.
-9. Após acabar o stock ou passar de prazo, o medicamento é "deitado fora na app" (por ex. fica um tom mais acizentado e vai para o histórico).
-10. Opção de cancelar a toma de medicação.
-11. Ver estatísticas sobre as tomas.
-12. Possuir "dark-mode"
+1. As a user, I want to be able to add a medication to a user-defined or pre-defined category in the app.
+2. As a user, I want to be able to record the expiration date of the medication.
+3. As a user, I want to log the time period for taking the medication, including the initial time I took it.
+4. As a user, I want the app to notify me at the scheduled time to take the medication.
+5. As a user, I want the option to be reminded later (e.g., 5 minutes later) to take the medication or mark as taken.
+6. As a user, after marking the medication as taken, I want to see the remaining quantity (e.g., 18/20 antibiotics, the app should decrease automatically)
+7. As a user, I want to receive a notification a specified number of days before the medication expires.
+8. As a user, I want the app to visually indicate when a medication has expired or run out, moving it to a historical section.
+9. As a user, I want to be reminded when the medication is running low to replenish the stock
+10. As a user, I want the option to cancel a scheduled medication intake or to cancel a missclick as medication taken.
+11. As a user, I want to view statistics regarding my medication intake.
+12. As a user, I want the app to have a dark mode for a more comfortable viewing experience (depends from person to person).
 
 ## Project Requirement
 3-5 different screens
