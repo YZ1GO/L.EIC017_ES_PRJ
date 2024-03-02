@@ -1,0 +1,39 @@
+@startuml
+
+left to right direction
+
+actor User
+actor System
+rectangle "APP" {
+    rectangle "Registo do medicamento" {
+        User -- (Adicionar medicamento)
+        (Adicionar medicamento) .> (Indicar nome do medicamento) : <<include>>
+        (Adicionar medicamento) .> (Indicar frequência para tomar o medicamento) : <<include>>
+        (Indicar frequência para tomar o medicamento) ..> (Indicar a que horas e minutos) : <<extends>>
+        (Indicar frequência para tomar o medicamento) ..> (Indicar a quantidade para tomar) : <<extends>>
+        (Indicar frequência para tomar o medicamento) ..> (Indicar quando acaba o tratamento) : <<include>>
+        (Adicionar medicamento) .> (Indicar data de início) : <<include>>
+        User -- (Indicar data de expiração do medicamento)
+        User -- (Indicar quantidade do medicamento)
+        note right of (Indicar quantidade do medicamento): Stock/Quantidade restante na caixa
+    }
+
+    rectangle "Avisos da APP" {
+        (Avisar para tomar medicação) -- System
+        User -- (Escolher para avisar 5 min mais tarde)
+        (Avisar para tomar medicação) .> (Escolher para avisar 5 min mais tarde) : <<include>>
+        User -- (Check de ter tomado a medicação)
+        (Avisar para tomar medicação) .> (Check de ter tomado a medicação) : <<extends>>
+        User -- (Cancelar toma de medicação)
+        (Avisar medicamento prestes a passar de validade) -- System
+        (Avisar medicamento prestes a acabar) -- System
+        note left of (Avisar medicamento prestes a acabar) : Resta apenas 1 dose
+    }
+    
+    ("Eliminar medicamento" após expirar/acabar) -- System
+
+    User -- (Ver estatísticas sobre a toma de medicação)
+    User -- (Ativar dark-mode da app)
+}
+
+@enduml
