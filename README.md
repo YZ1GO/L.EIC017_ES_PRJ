@@ -1,13 +1,14 @@
-# 2LEIC03T2
-![](logo-app.png)
-"app-name"
+# PINGUPILLS
+### 2LEIC03T2
+![](LOGO-PINGUPILLS.png)
 
 ## Description
-Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – "app-name" has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
+Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
 
-Let's embrace a healthy lifestyle with "app-name"!
+Let's embrace a healthy lifestyle with __PINGUPILLS__ !
 
 ## Use Case Diagram
+--
 
 ## User Stories
 1. Adicionar um medicamento numa categoria definida pelo utilizador ou predefinida na app.
