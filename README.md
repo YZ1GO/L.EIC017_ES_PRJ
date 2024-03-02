@@ -19,7 +19,7 @@ Let's embrace a healthy lifestyle with "app-name"!
 7. X dias antes de expirar avisar o utilizador que daqui a X dias passa de prazo.
 8. Quando o medicamento estiver prestes a acabar, avisar para reabastecer o stock.
 9. Após acabar o stock ou passar de prazo, o medicamento é "deitado fora na app" (por ex. fica um tom mais acizentado e vai para o histórico).
-10. Apção de cancelar a toma de medicação.
+10. Opção de cancelar a toma de medicação.
 11. Ver estatísticas sobre as tomas.
 12. Possuir "dark-mode"
 
