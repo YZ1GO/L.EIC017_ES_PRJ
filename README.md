@@ -1,6 +1,6 @@
 # PINGUPILLS
 ### 2LEIC03T2
-<p align="center"><img src="LOGO-PINGUPILLS.png"></p>
+<p align="center"><img src="LOGO-PINGUPILLS.png" width=70%></p>
 
 ## Overview
 Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
@@ -8,7 +8,8 @@ Struggling to remember your medication schedule? Unsure about your pill count at
 Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Use Case Diagram
-![](usecase.png)
+<p align="center"><img src="usecase.png" width=70%></p>
+<p align="center" justify="center">Use Case Diagram</p><br>
 
 ## User Stories
 1. As a user, I want to add medications to the app's stock and specify the remaining quantity and expiration date.
