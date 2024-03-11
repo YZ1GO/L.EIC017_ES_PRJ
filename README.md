@@ -1,6 +1,6 @@
 # PINGUPILLS
 ### 2LEIC03T2
-<p align="center"><img src="LOGO-PINGUPILLS.png" width=70%></p>
+<p align="center"><img src="assets/logo/LOGO-PINGUPILLS.png" width=70%></p>
 
 ## Overview
 Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
@@ -8,7 +8,7 @@ Struggling to remember your medication schedule? Unsure about your pill count at
 Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Use Case Diagram
-<p align="center"><img src="usecase.png" width=70%></p>
+<p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
 <p align="center" justify="center">Use Case Diagram</p><br>
 
 ## User Stories
@@ -32,7 +32,7 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Mockups
 
-| ![Mockup - main screen](mockup-main.jpg) | ![Mockup - stock screen](mockup-stock.jpg) |
+| ![](assets/mockups/mockup-main.jpg) | ![](assets/mockups/mockup-stock.jpg) |
 |:----------------------------------------:|:------------------------------------------:|
 |          Mockup - main screen            |           Mockup - stock screen           |
 
