@@ -2,7 +2,7 @@
 ### 2LEIC03T2
 ![](LOGO-PINGUPILLS.png)
 
-## Description
+## Overview
 Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
 
 Let's embrace a healthy lifestyle with __PINGUPILLS__!
