@@ -33,9 +33,8 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ## Mockups
 
 | ![](assets/mockups/mockup-main.jpg) | ![](assets/mockups/mockup-stock.jpg) |
-|:----------------------------------------:|:------------------------------------------:|
-|          Mockup - main screen            |           Mockup - stock screen           |
-
+|:-----------------------------------:|:-----------------------------------:|
+|       Mockup - main screen         |        Mockup - stock screen       |
 
 
 
