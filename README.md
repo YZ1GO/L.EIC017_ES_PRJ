@@ -26,3 +26,10 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__ !
 
 ## Project Requirement
 3-5 different screens
+
+## Mockups
+<p align="center"><img src="mockup-main.jpg"></p>
+<p align="center">Mockup - main screen</p><br>
+
+<p align="center"><img src="mockup-stock.jpg"></p>
+<p align="center">Mockup - stock screen</p><br>
