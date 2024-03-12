@@ -17,6 +17,8 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Domain Model
 
+To be done
+
 ### Use Case Diagram
 <p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
 <p align="center" justify="center">Use Case Diagram</p><br>
@@ -25,14 +27,13 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Logical
 
+To be done
+
 ### Physical
 
+To be done
 
 # Everything Below Move Later To Another Place
-### Mockups
-| ![](assets/mockups/mockup-main.jpg) | ![](assets/mockups/mockup-stock.jpg) |
-|:-----------------------------------:|:-----------------------------------:|
-|       Mockup - main screen         |        Mockup - stock screen       |
 
 ## User Stories
 2. As a user, I expect the app to suggest medications when I'm adding them to the stock (like an autofill feature).
