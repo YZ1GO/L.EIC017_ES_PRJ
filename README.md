@@ -13,6 +13,14 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 - Eriton Naife - 202008859
 - Ricardo Yang - 202208465
 
+### Features
+- Keep track of medications that you have at home
+- Reminder for you to take your medications
+- One click to have the medication marked as taken 
+- Quick visualization of the remaining medication stock and expiration day
+- Reminder for close to expiration day and stock replenishment
+- A simple calendar to see medication intake in specific day
+
 ## Requirements
 
 ### Domain Model
