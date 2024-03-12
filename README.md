@@ -15,6 +15,8 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Requirements
 
+### Domain Model
+
 ### Use Case Diagram
 <p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
 <p align="center" justify="center">Use Case Diagram</p><br>
@@ -37,7 +39,7 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 2. As a user, I expect the app to suggest medications when I'm adding them to the stock (like an autofill feature).
 3. As a user, I want the app to automatically assign an image to the medication I add, but I also want the option to add my own image if necessary.
 4. As a user, I want to log the time period for taking the medication, including the initial time I took it.
-5. As a user, I want to have a calendar within the app where I can visualize all my medication schedules.
+5. Moved
 6. As a user, I want the app to notify me at the scheduled time to take the medication.
 7. As a user, I want the option to be reminded later (e.g., 5 minutes later) to take the medication or mark as taken.
 8. As a user, after marking the medication as taken, I want to see the remaining quantity (e.g., 18/20 antibiotics, the app should decrease automatically).
