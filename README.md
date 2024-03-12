@@ -7,6 +7,11 @@ Struggling to remember your medication schedule? Unsure about your pill count at
 
 Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
+## Mockups
+| ![](assets/mockups/mockup-main.jpg) | ![](assets/mockups/mockup-stock.jpg) |
+|:-----------------------------------:|:-----------------------------------:|
+|       Mockup - main screen         |        Mockup - stock screen       |
+
 ## Use Case Diagram
 <p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
 <p align="center" justify="center">Use Case Diagram</p><br>
@@ -31,11 +36,6 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ## Project Requirement
 3-5 different screens
 
-## Mockups
-
-| ![](assets/mockups/mockup-main.jpg) | ![](assets/mockups/mockup-stock.jpg) |
-|:-----------------------------------:|:-----------------------------------:|
-|       Mockup - main screen         |        Mockup - stock screen       |
 
 
 
