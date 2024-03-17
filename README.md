@@ -35,7 +35,8 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Logical
 
-To be done
+![logical_diagram](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T2/assets/115298702/8e925e76-3d2f-4de4-9fa1-40e394387859)
+
 
 ### Physical
 
