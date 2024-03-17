@@ -25,11 +25,11 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Domain Model
 
-To be done
+<p align="center"><img src="assets/domain_model/domain_model.png"></p>
+
 
 ### Use Case Diagram
 <p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
-<p align="center" justify="center">Use Case Diagram</p><br>
 
 ## Architecture and design
 
