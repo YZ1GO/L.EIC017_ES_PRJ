@@ -1,0 +1,64 @@
+@startuml PINGUPILLS
+
+class Medication {
+    - name: String
+    - defaultImage: Image
+    - customImage: Image
+    - quantity: Integer
+    - remainingQuantity: Integer
+    - expirationDate: Date
+    - lowStockThreshold: Integer
+}
+
+class Prescription {
+    - dosageFrequency: String
+    - dosageQuantity: Integer
+    - startDate: Date
+    - endDate: Date
+    - cancelIntake: Boolean
+}
+
+note left of Prescription
+    endDate needs to be higher than startDate
+end note
+
+class Reminder {
+    - reminderTime: Time
+    - reminderType: Enum
+    - remindLater: Boolean
+}
+
+class Preferences {
+    - theme: Enum
+}
+
+class User {
+    - name: String
+}
+
+class MedicationIntakeHistory {
+    - intakeDate: Date
+    - intakeTime: Time
+    - quantityTaken: Integer
+}
+
+class MedicationExpirationNotification {
+    - notificationDaysBeforeExpiry: Integer
+    - expirationStatus: Boolean
+}
+
+class MedicationLowStockNotification {
+    - notificationThreshold: Integer
+    - lowStockStatus: Boolean
+    - outOfStockStatus: Boolean
+}
+
+Medication "1" *-- "1..*" Prescription
+Medication "1" *-- "0..*" Reminder
+Medication "1" *-- "0..*" MedicationIntakeHistory
+Medication "1" o-- "1" MedicationExpirationNotification
+Medication "1" o-- "1" MedicationLowStockNotification
+User "1" o-- "1" Preferences
+User "1" *-- "0..*" Medication
+
+@enduml

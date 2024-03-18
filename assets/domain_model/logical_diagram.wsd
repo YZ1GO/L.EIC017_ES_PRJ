@@ -1,0 +1,37 @@
+@startuml
+
+package "Users"{
+    [User]
+}
+
+
+package "Pingupills"{
+
+    package "User Interface"{
+        
+        [API]
+
+        [Interface]
+
+    }
+
+    package "Database"{
+        [Data base]
+    }
+
+    package "Services"{
+        [Notifications]
+        [Reminder Management]
+        [Quantity Tracking Service]
+
+    }
+
+}
+
+[User] --> [Interface]
+[Interface] --> [API]
+[API] --> [Notifications]
+[API] --> [Data base]
+[API] --> [Reminder Management]
+[API] --> [Quantity Tracking Service]
+@enduml
