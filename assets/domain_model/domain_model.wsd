@@ -18,6 +18,10 @@ class Prescription {
     - cancelIntake: Boolean
 }
 
+note left of Prescription
+    endDate needs to be higher than startDate
+end note
+
 class Reminder {
     - reminderTime: Time
     - reminderType: Enum
