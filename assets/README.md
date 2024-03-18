@@ -1,15 +1,13 @@
 ## MOCKUPS
 Mockups created in Figma
-|                                    |                                     |
-|:----------------------------------:|:-----------------------------------:|
-| ![](mockups/mockup-main.jpg)       | ![](mockups/mockup-controller.jpg)  |
-|       Mockup - main screen         |      Mockup - control center        |
-| ![](mockups/mockup-addreminder.jpg	)       | ![](mockups/mockup-managereminders.jpg)  |
-|       Mockup - add reminder         |      Mockup - manage reminders       |
-| ![](mockups/mockup-stock.jpg)       | ![](mockups/mockup-addmedication1.jpg)  |
-|       Mockup - stock screen        |      Mockup - add medication 01        |
-| ![](mockups/mockup-addmedication2.jpg)       | ![](mockups/mockup-addmedication3.jpg)  |
-|       Mockup - add medication 02        |      Mockup - add medication 03        |
 
-
-
+|                                      |                                        |
+|:------------------------------------:|:--------------------------------------:|
+| <img src="mockups/mockup-main.jpg" width="250"> | <img src="mockups/mockup-controller.jpg" width="250"> |
+|            Mockup - main screen            |           Mockup - control center           |
+| <img src="mockups/mockup-addreminder.jpg" width="250"> | <img src="mockups/mockup-managereminders.jpg" width="250"> |
+|            Mockup - add reminder           |        Mockup - manage reminders         |
+| <img src="mockups/mockup-stock.jpg" width="250"> | <img src="mockups/mockup-addmedication1.jpg" width="250"> |
+|            Mockup - stock screen           |       Mockup - add medication 01        |
+| <img src="mockups/mockup-addmedication2.jpg" width="250"> | <img src="mockups/mockup-addmedication3.jpg" width="250"> |
+|       Mockup - add medication 02          |       Mockup - add medication 03       |
