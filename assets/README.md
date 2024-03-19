@@ -9,6 +9,6 @@ Mockups created in [Figma](https://www.figma.com/file/qMeErr0JtWtYGfH0MOQVOe/Pin
 |            Mockup - stock screen           |       Mockup - add medication 01        |       Mockup - add medication 02          |       Mockup - add medication 03       |
 |<img src="mockups/mockup-addmedication4.jpg" width="250">|<img src="mockups/mockup-medicationexpired.jpg" width="250">|<img src="mockups/mockup-medicationtaken1.jpg" width="250">|<img src="mockups/mockup-medicationtaken2.jpg" width="250">|
 |Mockup - add medication 04|Mockup - medication expired|Mockup - medication taken 1|Mockup - medication taken 2|
-|<img src="mockups/mockup-calendarhistory.jpg" width="250">|<img src="mockups/mockup-darkmode.jpg" width="250">|||
-|Mockup - calendar history|Mockup - dark mode|||
+|<img src="mockups/mockup-calendarhistory.jpg" width="250">|<img src="mockups/mockup-darkmode.jpg" width="250">|<img src="mockups/color-palette.png" width="250">||
+|Mockup - calendar history|Mockup - dark mode|Color Palette||
 
