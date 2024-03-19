@@ -46,10 +46,6 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## User Stories
 
-3. As a user, I want the app to automatically assign an image to the medication I add, but I also want the option to add my own image if necessary.
-6. As a user, I want the app to notify me at the scheduled time to take the medication.
-7. As a user, I want the option to be reminded later (e.g., 5 minutes later) to take the medication or mark as taken.
-8. As a user, after marking the medication as taken, I want to see the remaining quantity (e.g., 18/20 antibiotics, the app should decrease automatically).
 9. As a user, I want to receive a notification about a specified number of days before a medication expires, moving the medication to a historical section after expiration.
 10. As a user, I want to be reminded when the medication is running low to replenish the stock.
 11. As a user, I want the option to cancel a scheduled medication intake or to cancel a missclick as medication taken.
