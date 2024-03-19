@@ -35,11 +35,12 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ## Architecture and design
 
 ### Logical
-<p align="center"><img src="assets/diagrams/logical/logical_model.png" width=80%></p>
+<p align="center"><img src="assets/diagrams/logical/logical_architecture.png" width=80%></p>
 
 
 ### Physical
-<p align="center"><img src="assets/diagrams/physical/physical_domain.png" width=80%></p>
+<p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
+
 
 # Everything Below Move Later To Another Place
 
