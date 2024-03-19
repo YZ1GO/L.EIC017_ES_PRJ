@@ -36,12 +36,6 @@ class User {
     - name: String
 }
 
-class MedicationIntakeHistory {
-    - intakeDate: Date
-    - intakeTime: Time
-    - quantityTaken: Integer
-}
-
 class MedicationExpirationNotification {
     - notificationDaysBeforeExpiry: Integer
     - expirationStatus: Boolean
@@ -54,10 +48,9 @@ class MedicationLowStockNotification {
 }
 
 Medication "1" *-- "1..*" Prescription
-Medication "1" *-- "0..*" Reminder
-Medication "1" *-- "0..*" MedicationIntakeHistory
 Medication "1" o-- "1" MedicationExpirationNotification
 Medication "1" o-- "1" MedicationLowStockNotification
+Prescription "1" *-- "0..*" Reminder
 User "1" o-- "1" Preferences
 User "1" *-- "0..*" Medication
 
