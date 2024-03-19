@@ -27,22 +27,21 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Domain Model
 
-<p align="center"><img src="assets/domain_model/domain_model.png"></p>
+<p align="center"><img src="assets/diagrams/domain_model/domain_model.png"></p>
 
 
 ### Use Case Diagram
-<p align="center"><img src="assets/usecase/usecase.png" width=70%></p>
+<p align="center"><img src="assets/diagrams/usecase/usecase.png" width=70%></p>
 
 ## Architecture and design
 
 ### Logical
 
-![logical_diagram](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T2/assets/115298702/8e925e76-3d2f-4de4-9fa1-40e394387859)
+<p align="center"><img src="assets/diagrams/logical/logical_model.png" width=80%></p>
 
 
 ### Physical
-
-To be done
+<p align="center"><img src="assets/diagrams/physical/physical_domain.png" width=80%></p>
 
 # Everything Below Move Later To Another Place
 
