@@ -1,6 +1,8 @@
 ## MOCKUPS
 Mockups created in [Figma](https://www.figma.com/file/qMeErr0JtWtYGfH0MOQVOe/PinguPills?type=design&node-id=0%3A1&mode=design&t=NM5ZBWsMYzxWpchM-1)
 
+> To obtain shape specifications, open the project in figma
+
 |||||
 |:------------------------------------:|:--------------------------------------:|:------------------------------------:|:--------------------------------------:|
 | <img src="mockups/mockup-main.jpg" width="250"> | <img src="mockups/mockup-controller.jpg" width="250"> | <img src="mockups/mockup-addreminder.jpg" width="250"> | <img src="mockups/mockup-managereminders.jpg" width="250"> |
