@@ -41,23 +41,14 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ### Physical
 <p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
 
+### Vertical Prototype
+Implement screens with diverse techs to use in our project.
+Just for demo.
 
-# Everything Below Move Later To Another Place
-
-## User Stories
-
-9. As a user, I want to receive a notification about a specified number of days before a medication expires, moving the medication to a historical section after expiration.
-10. As a user, I want to be reminded when the medication is running low to replenish the stock.
-11. As a user, I want the option to cancel a scheduled medication intake or to cancel a missclick as medication taken.
-12. As a user, I want to view statistics or history regarding my medication intake.
-13. As a user, I want the app to support dark mode and other theme options for customization.
-
-## Project Requirement
-3-5 different screens
-
-
-
-
-
-
-
+List of technologies to use:
+- Buttons
+- Search box (w/ suggestions)
+- Sort buttons
+- Local preferences
+- Calendar Scroll
+- Notification
