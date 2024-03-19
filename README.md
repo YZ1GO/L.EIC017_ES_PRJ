@@ -41,6 +41,17 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ### Physical
 <p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
 
+### Vertical Prototype
+Implement screens with diverse techs to use in our project.
+Just for demo.
+
+List of technologies to use:
+- Buttons
+- Search box (w/ suggestions)
+- Sort buttons
+- Local preferences
+- Calendar Scroll
+- Notification
 
 # Everything Below Move Later To Another Place
 
@@ -54,6 +65,7 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Project Requirement
 3-5 different screens
+
 
 
 
