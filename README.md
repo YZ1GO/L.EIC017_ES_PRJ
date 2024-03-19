@@ -42,7 +42,8 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ### Physical
 
-To be done
+![Physical_model](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T2/blob/main/assets/physical_model/physical_domain.png?raw=true)
+
 
 # Everything Below Move Later To Another Place
 
