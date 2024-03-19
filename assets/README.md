@@ -7,3 +7,5 @@ Mockups created in [Figma](https://www.figma.com/file/qMeErr0JtWtYGfH0MOQVOe/Pin
 |            Mockup - main screen            |           Mockup - control center           |             Mockup - add reminder           |        Mockup - manage reminders         |
 | <img src="mockups/mockup-stock.jpg" width="250"> | <img src="mockups/mockup-addmedication1.jpg" width="250"> |  <img src="mockups/mockup-addmedication2.jpg" width="250"> | <img src="mockups/mockup-addmedication3.jpg" width="250"> |
 |            Mockup - stock screen           |       Mockup - add medication 01        |       Mockup - add medication 02          |       Mockup - add medication 03       |
+|<img src="mockups/mockup-medicationexpired.jpg" width="250">||||
+|Mockup - medication expired||||
