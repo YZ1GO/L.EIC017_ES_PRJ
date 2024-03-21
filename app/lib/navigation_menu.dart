@@ -23,6 +23,26 @@ class NavigationMenuState extends State<NavigationMenu> {
     });
   }
 
+  void _showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Popup"),
+          content: Text("This is a popup."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +65,13 @@ class NavigationMenuState extends State<NavigationMenu> {
         ],
         currentIndex: selectedIndex,
         onTap: onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showPopup(context);
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }
