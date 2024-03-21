@@ -46,31 +46,44 @@ class NavigationMenuState extends State<NavigationMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // Extend body behind app bar
       appBar: AppBar(
         title: const Text('Vertical Prototype'),
+        elevation: 0,
+        backgroundColor: Colors.transparent, // Set app bar background color as transparent
       ),
-      body: Center(
-        child: screens.elementAt(selectedIndex),
-      ),
-      bottomNavigationBar:
-        Material (
-          child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-          currentIndex: selectedIndex,
-          onTap: onItemTapped,
-          selectedIconTheme: const IconThemeData(
-            color: Colors.deepOrange, // Set the color of the icon
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: selectedIndex,
+            children: screens,
           ),
-        ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Material(
+              color: Colors.transparent, // Set background color of bottom navigation bar as transparent
+              child: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Settings',
+                  ),
+                ],
+                currentIndex: selectedIndex,
+                onTap: onItemTapped,
+                selectedItemColor: Colors.deepOrange, // Set selected item color
+                unselectedItemColor: Colors.grey, // Set unselected item color
+                backgroundColor: Colors.transparent, // Set bottom navigation bar background color as transparent
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
