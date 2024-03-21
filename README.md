@@ -6,7 +6,7 @@ Struggling to remember your medication schedule? Unsure about your pill count at
 
 Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
-[⚠️ Report Template ⚠️](https://github.com/FEUP-LEIC-ES-2023-24/templates/blob/main/README.md)
+⚠️ [Report Template](https://github.com/FEUP-LEIC-ES-2023-24/templates) ⚠️
 
 ### 2LEIC03T2
 
