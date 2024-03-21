@@ -23,19 +23,19 @@ class NavigationMenuState extends State<NavigationMenu> {
     });
   }
 
-  void _showPopup(BuildContext context) {
+  void showPopup(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Popup"),
-          content: Text("This is a popup."),
+          title: const Text("Popup"),
+          content: const Text("This is a popup."),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Close"),
+              child: const Text("Close"),
             ),
           ],
         );
@@ -52,26 +52,32 @@ class NavigationMenuState extends State<NavigationMenu> {
       body: Center(
         child: screens.elementAt(selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar:
+        Material (
+          child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+          selectedIconTheme: const IconThemeData(
+            color: Colors.deepOrange, // Set the color of the icon
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showPopup(context);
+          showPopup(context);
         },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.deepOrange,
+        child: const Icon(Icons.add),
       ),
     );
   }
