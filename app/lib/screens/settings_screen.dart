@@ -6,7 +6,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 244, 236, 1), // Background color
+      backgroundColor: Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
         children: [
           Center(
