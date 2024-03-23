@@ -110,7 +110,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
-                        'assets/pills_icon.png',
+                        'assets/icons/pills_icon.png',
                         width: 32,
                         height: 32,
                       ),
@@ -127,7 +127,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
-                        'assets/box_icon.png',
+                        'assets/icons/box_icon.png',
                         width: 32,
                         height: 32,
                       ),
