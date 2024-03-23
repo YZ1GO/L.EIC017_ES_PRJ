@@ -57,10 +57,10 @@ class NavigationMenuState extends State<NavigationMenu> {
         index: selectedIndex,
         children: screens,
       ),
-      floatingActionButton: Stack( // Wrap the Positioned widget with a Stack
+      floatingActionButton: Stack(
         children: [
           Positioned(
-            bottom: kBottomNavigationBarHeight + 10,
+            bottom: kBottomNavigationBarHeight + 12,
             left: (MediaQuery.of(context).size.width - 125) / 2,
             child: RawMaterialButton(
               onPressed: () {
@@ -68,41 +68,60 @@ class NavigationMenuState extends State<NavigationMenu> {
               },
               elevation: 0,
               fillColor: Colors.transparent,
-              child: Image.asset(
-                'assets/pingu_transparent.png',
-                width: 125, // Adjust width as needed
-                height: 125, // Adjust height as needed
-              ),
+              child:
+                Image.asset(
+                  'assets/pingu-transparent-shadow.png',
+                  width: 120,
+                  height: 120,
+                ),
             ),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.blue, // Set the background color
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), // Adjust the radius as needed
-            topRight: Radius.circular(20), // Adjust the radius as needed
-          ),
-        ),
-        child: BottomAppBar(
-          elevation: 0,
-          color: Colors.transparent,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () => onItemTapped(0),
-                color: selectedIndex == 0 ? Colors.deepOrange : Colors.grey,
-              ),
-              IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () => onItemTapped(1),
-                color: selectedIndex == 1 ? Colors.deepOrange : Colors.grey,
-              ),
+      bottomNavigationBar: SizedBox(
+        height: 83,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.1),
+                blurRadius: 14,
+                offset: Offset(0, -1),
+              )
             ],
+          ),
+          child: BottomAppBar(
+            elevation: 0,
+            color: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () => onItemTapped(0),
+                    color: selectedIndex == 0 ? Colors.deepOrange : Colors.grey,
+                    iconSize: 32,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () => onItemTapped(1),
+                    color: selectedIndex == 1 ? Colors.deepOrange : Colors.grey,
+                    iconSize: 32,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

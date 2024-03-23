@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.blueGrey, // Background color of the shape
+              color: Color.fromRGBO(255, 244, 236, 1), // Background color of the shape
               borderRadius: BorderRadius.circular(0), // Border radius of the shape
             ),
           ),
