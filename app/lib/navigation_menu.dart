@@ -49,7 +49,6 @@ class NavigationMenuState extends State<NavigationMenu> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
-        title: const Text('Vertical Prototype'),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),

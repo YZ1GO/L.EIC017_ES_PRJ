@@ -6,23 +6,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color.fromRGBO(255, 244, 236, 1), // Background color
       body: Stack(
         children: [
-          // Background shape
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(255, 244, 236, 1), // Background color of the shape
-              borderRadius: BorderRadius.circular(0), // Border radius of the shape
-            ),
+          Center(
+            child: Text('Home Screen'),
           ),
-          // Content
-          const Center(
-            child: Text(
-              'Home Screen',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+          Positioned(
+            left: -206,
+            top: -268,
+            child: ClipOval(
+              child: Container(
+                width: 801,
+                height: 553,
+                color: Color.fromRGBO(225, 95, 0, 1),
+              ),
             ),
           ),
         ],
