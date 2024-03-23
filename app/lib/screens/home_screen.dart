@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
             child: Text('Home Screen'),
           ),
           Positioned(
-            left: -206,
+            left: (MediaQuery.of(context).size.width - 801) / 2, // Adjust position to center horizontally
             top: -268,
             child: ClipOval(
               child: Container(

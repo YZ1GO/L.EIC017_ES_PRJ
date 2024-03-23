@@ -68,11 +68,11 @@ class NavigationMenuState extends State<NavigationMenu> {
               elevation: 0,
               fillColor: Colors.transparent,
               child:
-                Image.asset(
-                  'assets/pingu-transparent-shadow.png',
-                  width: 120,
-                  height: 120,
-                ),
+              Image.asset(
+                'assets/pingu-transparent-shadow.png',
+                width: 120,
+                height: 120,
+              ),
             ),
           ),
         ],
@@ -104,19 +104,35 @@ class NavigationMenuState extends State<NavigationMenu> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: IconButton(
-                    icon: Icon(Icons.home),
+                    icon: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        selectedIndex == 0 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
+                        BlendMode.srcIn,
+                      ),
+                      child: Image.asset(
+                        'assets/pills_icon.png',
+                        width: 32,
+                        height: 32,
+                      ),
+                    ),
                     onPressed: () => onItemTapped(0),
-                    color: selectedIndex == 0 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
-                    iconSize: 32,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        selectedIndex == 1 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
+                        BlendMode.srcIn,
+                      ),
+                      child: Image.asset(
+                        'assets/box_icon.png',
+                        width: 32,
+                        height: 32,
+                      ),
+                    ),
                     onPressed: () => onItemTapped(1),
-                    color: selectedIndex == 1 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
-                    iconSize: 32,
                   ),
                 ),
               ],
