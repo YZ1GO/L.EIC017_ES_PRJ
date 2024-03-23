@@ -42,13 +42,16 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 <p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
 
 ### Vertical Prototype
-Implement screens with diverse techs to use in our project.
-Just for demo.
+Develop screens showcasing various features for demonstration purposes.
+
+> Delivery Date: March 27th
+
+> ✅ Done
 
 List of technologies to use:
-- Buttons
-- Search box (w/ suggestions)
-- Sort buttons
-- Local preferences
-- Calendar Scroll
-- Notification
+- __✅ UI and buttons:__ Colors and Icons combinations.
+- __System Notification Button:__ Create a button that, when clicked, triggers a system notification to test the notification feature.
+- __Search Box with Suggestions:__ Implement a search box with suggestions. Create list/array with words to provide suggestions as the user types.
+- __Local Preferences:__ Allow users to input a value, which is stored locally. After app restarts, the value should remains saved.
+- __Calendar Scroll:__ Develop a scrollable list of numbers resembling a calendar. Users can scroll horizontally to navigate through dates.
+- __Firebase__ (setup)
