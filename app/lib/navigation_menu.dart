@@ -107,7 +107,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                   child: IconButton(
                     icon: Icon(Icons.home),
                     onPressed: () => onItemTapped(0),
-                    color: selectedIndex == 0 ? Colors.deepOrange : Colors.grey,
+                    color: selectedIndex == 0 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
                     iconSize: 32,
                   ),
                 ),
@@ -116,7 +116,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                   child: IconButton(
                     icon: Icon(Icons.settings),
                     onPressed: () => onItemTapped(1),
-                    color: selectedIndex == 1 ? Colors.deepOrange : Colors.grey,
+                    color: selectedIndex == 1 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
                     iconSize: 32,
                   ),
                 ),
