@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/screens/search_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,7 +11,15 @@ class SettingsScreen extends StatelessWidget {
       body: Stack(
         children: [
           Center(
-            child: Text('Settings Screen'),
+            child: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()),
+                );
+              },
+            )
           ),
           Positioned(
             left: -206,
