@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
-class CalendarWidget extends StatelessWidget {
+class CalendarWidget extends StatefulWidget {
   const CalendarWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Calculate the initial page index based on today's date
-    final initialPage = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
+  CalendarWidgetState createState() => CalendarWidgetState();
+}
 
+class CalendarWidgetState extends State<CalendarWidget> {
+  // Calculate the initial page index based on today's date
+  late int initialPage;
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    initialPage = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
+    pageController = PageController(initialPage: initialPage, viewportFraction: 0.14);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         // Box in the center of calendar

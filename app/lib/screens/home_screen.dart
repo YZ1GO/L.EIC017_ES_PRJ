@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import '../widgets/calendar_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

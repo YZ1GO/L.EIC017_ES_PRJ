@@ -34,7 +34,7 @@ class SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Medications'),
+        title: const Text('Search Medications'),
       ),
       body: Column(
         children: [
@@ -44,7 +44,7 @@ class SearchScreenState extends State<SearchScreen> {
               onChanged: (searchMedication) {
                 onTextChanged(searchMedication);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Search',
                 hintText: 'Type medication name',
                 prefixIcon: Icon(Icons.search),
