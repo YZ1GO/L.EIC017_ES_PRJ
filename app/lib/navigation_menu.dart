@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
+import 'controlCenter.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -23,62 +24,6 @@ class NavigationMenuState extends State<NavigationMenu> {
     });
   }
 
-
-  void showPopup(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          width: MediaQuery.of(context).size.width,
-          height: 239,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(height: 65),
-                Container(
-                  width: 350, // Set the width of the buttons container
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color.fromRGBO(225, 95, 0, 1),
-                    ),
-                    child: const Text("Button 1"),
-                  ),
-                ),
-                SizedBox(height: 8), // Add some space between the buttons
-                Container(
-                  width: 350, // Set the width of the buttons container
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Color.fromRGBO(199, 84, 0, 1),
-                      backgroundColor: Color.fromRGBO(255, 198, 157, 1),
-                    ),
-                    child: const Text("Button 2"),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +44,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
               onPressed: () {
-                showPopup(context);
+                showControlCenter(context);
               },
               elevation: 0,
               highlightElevation: 0,
