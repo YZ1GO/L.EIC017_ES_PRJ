@@ -23,25 +23,61 @@ class NavigationMenuState extends State<NavigationMenu> {
     });
   }
 
+
   void showPopup(BuildContext context) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Popup"),
-          content: const Text("This is a popup."),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Close"),
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 239,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
-          ],
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(height: 65),
+                Container(
+                  width: 350, // Set the width of the buttons container
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(225, 95, 0, 1),
+                    ),
+                    child: const Text("Button 1"),
+                  ),
+                ),
+                SizedBox(height: 8), // Add some space between the buttons
+                Container(
+                  width: 350, // Set the width of the buttons container
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Color.fromRGBO(199, 84, 0, 1),
+                      backgroundColor: Color.fromRGBO(255, 198, 157, 1),
+                    ),
+                    child: const Text("Button 2"),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
