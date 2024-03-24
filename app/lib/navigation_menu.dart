@@ -110,9 +110,9 @@ class NavigationMenuState extends State<NavigationMenu> {
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
-                        'assets/icons/pills_icon.png',
-                        width: 32,
-                        height: 32,
+                        'assets/icons/pills_icon_2.png',
+                        width: 31,
+                        height: 31,
                       ),
                     ),
                     onPressed: () => onItemTapped(0),
