@@ -59,16 +59,18 @@ class NavigationMenuState extends State<NavigationMenu> {
       floatingActionButton: Stack(
         children: [
           Positioned(
-            bottom: kBottomNavigationBarHeight + 12,
-            left: (MediaQuery.of(context).size.width - 125) / 2,
-            child: RawMaterialButton(
+            bottom: kBottomNavigationBarHeight + 10,
+            left: (MediaQuery.of(context).size.width - 150) / 2,
+            child: MaterialButton(
               onPressed: () {
                 showPopup(context);
               },
               elevation: 0,
-              fillColor: Colors.transparent,
-              child:
-              Image.asset(
+              highlightElevation: 0,
+              color: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: Image.asset(
                 'assets/pingu-transparent-shadow.png',
                 width: 120,
                 height: 120,
@@ -116,6 +118,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                       ),
                     ),
                     onPressed: () => onItemTapped(0),
+                    highlightColor: Colors.transparent,
                   ),
                 ),
                 Padding(
@@ -133,6 +136,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                       ),
                     ),
                     onPressed: () => onItemTapped(1),
+                    highlightColor: Colors.transparent,
                   ),
                 ),
               ],
