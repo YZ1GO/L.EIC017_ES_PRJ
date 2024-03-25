@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
-import 'screens/settings_screen.dart';
+import 'screens/stock_screen.dart';
 import 'controlCenter.dart';
 
 class NavigationMenu extends StatefulWidget {
@@ -15,7 +15,7 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   static final List<Widget> screens = <Widget>[
     const HomeScreen(),
-    const SettingsScreen(),
+    const StockScreen(),
   ];
 
   void onItemTapped(int index) {

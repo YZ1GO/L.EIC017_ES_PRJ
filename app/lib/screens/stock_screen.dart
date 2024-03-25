@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/search_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class StockScreen extends StatelessWidget {
+  const StockScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
