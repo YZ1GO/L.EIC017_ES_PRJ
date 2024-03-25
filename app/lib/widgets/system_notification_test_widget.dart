@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class SystemNotificationWidget extends StatelessWidget {
-  const SystemNotificationWidget({super.key});
+  const SystemNotificationWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 300,
-      child: ElevatedButton(
-        onPressed: () {
-          showNotification();
-        },
-        child: const Text('Test Notification'),
+    return Center(
+      child: Positioned(
+        top: 300,
+        child: ElevatedButton(
+          onPressed: () {
+            showNotification();
+          },
+          child: const Text('Test Notification'),
+          style: ElevatedButton.styleFrom(
+            elevation: 4,
+            shadowColor: Colors.black.withOpacity(0.5),
+            backgroundColor: Color.fromRGBO(255, 131, 41, 1),
+            foregroundColor: Colors.white,
+          ),
+        ),
       ),
     );
   }
