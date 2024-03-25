@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/calendar_widget.dart';
+import '../widgets/system_notification_test_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,6 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const CalendarWidget(),
+          const SystemNotificationWidget(),
         ],
       ),
     );
