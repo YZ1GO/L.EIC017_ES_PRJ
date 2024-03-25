@@ -13,5 +13,5 @@ Mockups created in [Figma](https://www.figma.com/file/qMeErr0JtWtYGfH0MOQVOe/Pin
 |Mockup - add medication 04|Mockup - medication expired|Mockup - medication taken 1|Mockup - medication taken 2|
 |<img src="mockups/mockup-medicationoutofstock.png" width="250">|<img src="mockups/mockup-calendarhistory.jpg" width="250">|<img src="mockups/mockup-darkmode.jpg" width="250">|<img src="mockups/color-palette.png" width="250">|
 |Mockup - medication out of stock|Mockup - calendar history|Mockup - dark mode|Color Palette|
-|<img src="mockups/mockup-notificationexpired.png" width="250">|<img src="mockups/mockup-notificationscheduled.png" width="250">|<img src="mockups/mockup-notificationstocklow.png" width="250">|<img src="mockups/logininterface.png" width="250">|
+|<img src="mockups/mockup-notificationexpired.png" width="250">|<img src="mockups/mockup-notificationscheduled.png" width="250">|<img src="mockups/mockup-notificationstocklow.png" width="250">|<img src="mockups/mockup-logininterface.png" width="250">|
 |Mockup - medication expired notification|Mockup - scheduled medication notification|Mockup - low stock notification|Firebase login interface|
