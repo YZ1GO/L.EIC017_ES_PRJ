@@ -7,20 +7,19 @@ class SystemNotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Positioned(
-        top: 300,
-        child: ElevatedButton(
-          onPressed: () async {
-            await requestNotificationPermission(context);
-          },
-          child: const Text('Test Notification'),
-          style: ElevatedButton.styleFrom(
-            elevation: 4,
-            shadowColor: Colors.black.withOpacity(0.5),
-            backgroundColor: Color.fromRGBO(255, 131, 41, 1),
-            foregroundColor: Colors.white,
-          ),
+    return Positioned(
+      top: 400,
+      left: (MediaQuery.of(context).size.width - 150) / 2,
+      child: ElevatedButton(
+        onPressed: () async {
+          await requestNotificationPermission(context);
+        },
+        child: const Text('Test Notification'),
+        style: ElevatedButton.styleFrom(
+          elevation: 4,
+          shadowColor: Colors.black.withOpacity(0.5),
+          backgroundColor: Color.fromRGBO(255, 131, 41, 1),
+          foregroundColor: Colors.white,
         ),
       ),
     );
@@ -75,9 +74,7 @@ class SystemNotificationWidget extends StatelessWidget {
       icon: '@mipmap/ic_launcher', // flutter default icon
     );
     const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(
-        android: androidPlatformChannelSpecifics
-    );
+    NotificationDetails(android: androidPlatformChannelSpecifics);
     await FlutterLocalNotificationsPlugin().show(
       0,
       'Test Notification',
