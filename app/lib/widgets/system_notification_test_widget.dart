@@ -6,12 +6,13 @@ class SystemNotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Positioned(
+      top: 300,
       child: ElevatedButton(
         onPressed: () {
           showNotification();
         },
-        child: const Text('Send Notification'),
+        child: const Text('Test Notification'),
       ),
     );
   }
