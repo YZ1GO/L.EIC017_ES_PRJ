@@ -55,4 +55,4 @@ List of technologies to use:
 - __✅ Animations:__ Implement an animated pop-up that slides in from the bottom when opened, adding a visually appealing transition effect.
 - __Local Preferences:__ Allow users to input a value, which is stored locally. After app restarts, the value should remains saved.
 - __✅ Calendar Scroll:__ Develop a scrollable list of numbers resembling a calendar. Users can scroll horizontally to navigate through dates.
-- __✅ Firebase__ (setup)
+- __✅ Firebase:__ Access the Real-Time Database provided by Firebase to fetch and display data in the app.
