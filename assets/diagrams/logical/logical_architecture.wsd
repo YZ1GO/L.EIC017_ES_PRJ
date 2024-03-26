@@ -26,12 +26,29 @@ package "Pingupills"{
 
     }
 
+    package "Security"{
+        [Authentication]
+        [Authorization]
+        [Data Validation]
+        [Encryption]
+        [Error Handling]
+        [Logging]
+    }
+
+
+
+    [User] --> [Interface]
+    [Interface] --> [API] : Request
+    [API] --> [Notifications] : Notify
+    [API] --> [Data base] : Access data
+    [API] --> [Reminder Management] : Manage reminders
+    [API] --> [Quantity Tracking Service] : Track quantities
+    [Security] <-- [API] : Authenticate & Authorize
+    [Security] --> [Data Validation] : Validate input
+    [Security] --> [Encryption] : Secure data
+    [Security] --> [Error Handling] : Handle errors
+    [Security] --> [Logging] : Log events
+
 }
 
-[User] --> [Interface]
-[Interface] --> [API]
-[API] --> [Notifications]
-[API] --> [Data base]
-[API] --> [Reminder Management]
-[API] --> [Quantity Tracking Service]
 @enduml
