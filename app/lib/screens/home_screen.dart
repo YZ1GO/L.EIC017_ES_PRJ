@@ -47,11 +47,11 @@ class HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Database()),
+                        MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
                       );
                     },
                     icon: Icon(Icons.cloud),
-                    label: Text('Search on Database'),
+                    label: Text('Firebase Database'),
                     style: ElevatedButton.styleFrom(
                       elevation: 4,
                       shadowColor: Colors.black.withOpacity(0.5),
