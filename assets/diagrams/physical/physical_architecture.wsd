@@ -1,0 +1,31 @@
+@startuml
+
+!define PINGUPILLS [PinguPills]
+!define PHONE [Phone]
+!define FIREBASE [Firebase]
+
+
+node "User" as USER
+
+node "Mobile Device" as user_device {
+    node "Interface" as mobile
+    node "Internal Database" as internal_db
+}
+
+node "PINGUPILLS Server" as server {
+    node "Application Server" as app_server
+}
+
+node "External Services" as external {
+    node "Firebase Database" as firebase_db
+    node "Calendar Service" as calendar_service
+}
+
+USER --> mobile: Uses
+mobile --> internal_db: Stores User Data
+user_device --> app_server: HTTP Request
+app_server --> firebase_db: Database Query
+app_server --> external: API Request
+app_server --> user_device: HTTP Response
+
+@enduml
