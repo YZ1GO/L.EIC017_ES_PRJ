@@ -62,9 +62,10 @@ class CalendarWidgetState extends State<CalendarWidget> {
                         Text(
                           getDayOfWeek(date.weekday),
                           style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(255, 244, 236, 1)
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(255, 244, 236, 1),
+                            fontFamily: 'Open_Sans',
                           ),
                         ),
                         // Day of the month inside a circle
@@ -81,8 +82,8 @@ class CalendarWidgetState extends State<CalendarWidget> {
                               '${date.day}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: date.isAfter(DateTime.now()) ?
-                                Colors.black.withOpacity(0.5) : Colors.black,
+                                color: date.isAfter(DateTime.now()) ? Colors.black.withOpacity(0.5) : Colors.black,
+                                fontFamily: 'Open_Sans',
                               ),
                             ),
                           ),
