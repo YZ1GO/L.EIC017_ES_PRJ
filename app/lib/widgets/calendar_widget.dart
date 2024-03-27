@@ -73,7 +73,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
                         ),
                         // Day of the month inside a circle
                         Container(
-                          width: 40,
+                          width: MediaQuery.of(context).size.width / 7,
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
