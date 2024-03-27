@@ -35,11 +35,11 @@ Let's embrace a healthy lifestyle with __PINGUPILLS__!
 ## Architecture and design
 
 ### Logical
-<p align="center"><img src="assets/diagrams/logical/logical_architecture.png" width=80%></p>
+<p align="center"><img src="assets/diagrams/logical/logical_architecture.png"></p>
 
 
 ### Physical
-<p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
+<p align="center"><img src="assets/diagrams/physical/physical_architecture.png"></p>
 
 ### Vertical Prototype
 Develop screens showcasing various features for demonstration purposes.

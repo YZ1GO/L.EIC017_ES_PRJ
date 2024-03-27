@@ -1,5 +1,9 @@
 @startuml
 
+package "Users"{
+    [User]
+}
+
 package "PinguPills App" {
     [User Interface] as UI
     [Reminder] as Reminder
@@ -14,7 +18,7 @@ package "Firebase" {
     } 
 }
 
-
+User --> UI
 UI --> Reminder : Manage Reminders
 UI --> Stock : Manage Stock
 Reminder --> LocalDB : Read/Write Reminders
