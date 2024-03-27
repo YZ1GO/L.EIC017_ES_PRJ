@@ -26,7 +26,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
         // Box in the center of calendar
         Positioned(
           left: (MediaQuery.of(context).size.width - 58) / 2,
-          top: MediaQuery.of(context).size.height / 5.5,
+          top: 140,
           child: Container(
             width: 60,
             height: 70,
@@ -43,7 +43,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
           top: 125,
           child: Center(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 7,
+              height: 100,
               child: PageView.builder(
                 itemCount: null, // Infinite scrolling
                 controller: PageController(

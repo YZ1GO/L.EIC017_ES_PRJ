@@ -53,6 +53,6 @@ List of technologies to use:
 - __✅ System Notification Button:__ Create a button that, when clicked, triggers a system notification to test the notification feature.
 - __✅ Search Box with Suggestions:__ Implement a search box with suggestions. Create list/array with words to provide suggestions as the user types.
 - __✅ Animations:__ Implement an animated pop-up that slides in from the bottom when opened, adding a visually appealing transition effect.
-- __Local Preferences:__ Allow users to input a value, which is stored locally. After app restarts, the value should remains saved.
+- __✅ Local Preferences:__ Allow users to input a value, which is stored locally. After app restarts, the value should remains saved.
 - __✅ Calendar Scroll:__ Develop a scrollable list of numbers resembling a calendar. Users can scroll horizontally to navigate through dates.
 - __✅ Firebase:__ Access the Real-Time Database provided by Firebase to fetch and display data in the app.
