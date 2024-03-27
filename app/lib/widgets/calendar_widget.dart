@@ -59,13 +59,16 @@ class CalendarWidgetState extends State<CalendarWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Day of the week
-                        Text(
-                          getDayOfWeek(date.weekday),
-                          style: const TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(255, 244, 236, 1),
-                            fontFamily: 'Open_Sans',
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            getDayOfWeek(date.weekday),
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * 0.03,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Open_Sans',
+                              color: const Color.fromRGBO(255, 244, 236, 1),
+                            ),
                           ),
                         ),
                         // Day of the month inside a circle
@@ -78,12 +81,17 @@ class CalendarWidgetState extends State<CalendarWidget> {
                             const Color.fromRGBO(253, 165, 108, 1) : const Color.fromRGBO(255, 244, 236, 1),
                           ),
                           child: Center(
-                            child: Text(
-                              '${date.day}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: date.isAfter(DateTime.now()) ? Colors.black.withOpacity(0.5) : Colors.black,
-                                fontFamily: 'Open_Sans',
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                '${date.day}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontFamily: 'Open_Sans',
+                                  color: date.isAfter(DateTime.now()) ?
+                                  Colors.black.withOpacity(0.5) : Colors.black,
+                                ),
                               ),
                             ),
                           ),
