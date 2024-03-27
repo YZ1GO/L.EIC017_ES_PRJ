@@ -56,3 +56,22 @@ List of technologies to use:
 - __✅ Local Preferences:__ Allow users to input a value, which is stored locally. After app restarts, the value should remains saved.
 - __✅ Calendar Scroll:__ Develop a scrollable list of numbers resembling a calendar. Users can scroll horizontally to navigate through dates.
 - __✅ Firebase:__ Access the Real-Time Database provided by Firebase to fetch and display data in the app.
+
+<br><br/>
+<p align="center"><img src="assets/gifs/scroll_calendar.gif" width=30%>
+<p align="center" justify="center">Gif 1 - Scrollable Calendar<br><br/>
+
+<p align="center"><img src="assets/gifs/notification.gif" width=30%>
+<p align="center" justify="center">Gif 2 - Trigger Notification<br><br/>
+
+<p align="center"><img src="assets/gifs/firebase.gif" width=30%>
+<p align="center" justify="center">Gif 3 - Firebase Realtime Database<br><br/>
+
+<p align="center"><img src="assets/gifs/control_center.gif" width=30%>
+<p align="center" justify="center">Gif 4 - Control Center<br><br/>
+
+<p align="center"><img src="assets/gifs/search_medications.gif" width=30%>
+<p align="center" justify="center">Gif 5 - Search for Medication<br><br/>
+
+<p align="center"><img src="assets/gifs/user_preferences.gif" width=30%>
+<p align="center" justify="center">Gif 6 - Store User Preferences<br><br/>
