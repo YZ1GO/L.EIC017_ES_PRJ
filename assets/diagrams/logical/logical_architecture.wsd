@@ -1,54 +1,23 @@
 @startuml
 
-package "Users"{
-    [User]
+package "PinguPills App" {
+    [User Interface] as UI
+    [Reminder] as Reminder
+    [Medication Stock] as Stock
+    
+    database "Local Database" as LocalDB {
+    }
+}
+package "Firebase" {
+    database "Realtime database" as FirebaseDB {
+
+    } 
 }
 
 
-package "Pingupills"{
-
-    package "User Interface"{
-        
-        [API]
-
-        [Interface]
-
-    }
-
-    package "Database"{
-        [Data base]
-    }
-
-    package "Services"{
-        [Notifications]
-        [Reminder Management]
-        [Quantity Tracking Service]
-
-    }
-
-    package "Security"{
-        [Authentication]
-        [Authorization]
-        [Data Validation]
-        [Encryption]
-        [Error Handling]
-        [Logging]
-    }
-
-
-
-    [User] --> [Interface]
-    [Interface] --> [API] : Request
-    [API] --> [Notifications] : Notify
-    [API] --> [Data base] : Access data
-    [API] --> [Reminder Management] : Manage reminders
-    [API] --> [Quantity Tracking Service] : Track quantities
-    [Security] <-- [API] : Authenticate & Authorize
-    [Security] --> [Data Validation] : Validate input
-    [Security] --> [Encryption] : Secure data
-    [Security] --> [Error Handling] : Handle errors
-    [Security] --> [Logging] : Log events
-
-}
-
+UI --> Reminder : Manage Reminders
+UI --> Stock : Manage Stock
+Reminder --> LocalDB : Read/Write Reminders
+Stock --> LocalDB : Read/Write Stock
+Stock --> FirebaseDB : Read Medication Information
 @enduml
