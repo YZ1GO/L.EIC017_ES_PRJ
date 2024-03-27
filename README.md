@@ -1,6 +1,6 @@
 # PINGUPILLS 🐧
 
-<p align="center"><img src="assets/logo/LOGO-PINGUPILLS.png" width=70%></p>
+<p align="center"><img src="assets/logo/LOGO-PINGUPILLS.png" width=80%></p>
 
 Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
 
@@ -55,7 +55,7 @@ The **mobile device** acts as **interaction platform** between the **user** and 
 - The **Firebase API** facilitates communication between the application and **Firebase services**.
 - The **Realtime Database** acts as a **centralized repository**, ensuring **real-time synchronization** across devices and enhancing functionality.
 
-<p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=80%></p>
+<p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=60%></p>
 
 ### Vertical Prototype
 Develop screens showcasing various features for demonstration purposes.
