@@ -52,7 +52,7 @@ class NavigationMenuState extends State<NavigationMenu> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Image.asset(
-                'assets/pingu-transparent-shadow.png',
+                'assets/icons/pingu-transparent-shadow.png',
                 width: 120,
                 height: 120,
               ),

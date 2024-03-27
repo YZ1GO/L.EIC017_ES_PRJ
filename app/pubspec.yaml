@@ -32,14 +32,12 @@ dependencies:
     sdk: flutter
   flutter_local_notifications: ^17.0.0
   permission_handler: ^11.3.0
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   firebase_core: ^2.27.2
   firebase_database: ^10.4.11
   cloud_firestore: ^4.15.10
   shared_preferences: ^2.2.2
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +65,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/images/
     - assets/alarm.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -94,3 +93,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo-app.png"
+  adaptive_icon_background: "assets/images/ic_launcher_background.png"
+  adaptive_icon_foreground: "assets/images/ic_launcher_foreground.png"
+  adaptive_icon_monochrome: "assets/images/ic_launcher_monochrome.png"
+  android_adaptive_icon_maskable: true
+  min_sdk_android: 21
