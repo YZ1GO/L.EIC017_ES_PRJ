@@ -26,7 +26,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
         // Box in the center of calendar
         Positioned(
           left: (MediaQuery.of(context).size.width - 58) / 2,
-          top: 140,
+          top: MediaQuery.of(context).size.height / 5.5,
           child: Container(
             width: 60,
             height: 70,
@@ -43,7 +43,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
           top: 125,
           child: Center(
             child: SizedBox(
-              height: 100,
+              height: MediaQuery.of(context).size.height / 7,
               child: PageView.builder(
                 itemCount: null, // Infinite scrolling
                 controller: PageController(
@@ -60,11 +60,11 @@ class CalendarWidgetState extends State<CalendarWidget> {
                       children: [
                         // Day of the week
                         FittedBox(
-                          fit: BoxFit.scaleDown,
+                          fit: BoxFit.none,
                           child: Text(
                             getDayOfWeek(date.weekday),
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.03,
+                              fontSize: MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Open_Sans',
                               color: const Color.fromRGBO(255, 244, 236, 1),
@@ -82,7 +82,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
                           ),
                           child: Center(
                             child: FittedBox(
-                              fit: BoxFit.scaleDown,
+                              fit: BoxFit.none,
                               child: Text(
                                 '${date.day}',
                                 style: TextStyle(
