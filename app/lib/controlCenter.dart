@@ -21,7 +21,7 @@ void showControlCenter(BuildContext context) {
             children: [
               SizedBox(height: 65),
               Container(
-                width: 350,
+                width: MediaQuery.of(context).size.width * 0.9,
                 height: 44,
                 child: ElevatedButton.icon(
                   onPressed: () {
@@ -42,7 +42,7 @@ void showControlCenter(BuildContext context) {
               ),
               SizedBox(height: 8),
               Container(
-                width: 350,
+                width: MediaQuery.of(context).size.width * 0.9,
                 height: 44,
                 child: ElevatedButton.icon(
                   onPressed: () {
