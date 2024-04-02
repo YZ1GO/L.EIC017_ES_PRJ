@@ -99,4 +99,30 @@ Develop screens showcasing various features for demonstration purposes.
   </tr>
 </table>
 
-
+### Backlog
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_0.png">
+      <p align="center">Beginning 0</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_1.png">
+      <p align="center">Beginning 1</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_2.png">
+      <p align="center">Beginning 2</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_sprint0_initial_0.png">
+      <p align="center">Sprint 0 - Initial 0</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_1.png">
+      <p align="center">Sprint 0 - Initial 1</p>
+    </td>
+  </tr>
+</table>
