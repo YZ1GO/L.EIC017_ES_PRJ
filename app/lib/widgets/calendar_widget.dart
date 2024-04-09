@@ -156,12 +156,13 @@ class CalendarWidgetState extends State<CalendarWidget> {
     );
   }
 
+  // Function to scroll calendar to tapped day
   void scrollToDate(DateTime date) {
     final pageIndex = date.difference(DateTime(date.year, 1, 1)).inDays;
     pageController.animateToPage(
       pageIndex,
-      duration: const Duration(milliseconds: 300), // Adjust the duration as needed
-      curve: Curves.easeInOut, // Use any curve you prefer
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
     );
   }
 
