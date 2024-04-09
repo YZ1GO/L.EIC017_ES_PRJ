@@ -98,48 +98,53 @@ class CalendarWidgetState extends State<CalendarWidget> {
                   return Container(
                     width: 100,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Day of the week
-                        FittedBox(
-                          fit: BoxFit.none,
-                          child: Text(
-                            getDayOfWeek(date.weekday),
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Open_Sans',
-                              color: const Color.fromRGBO(255, 244, 236, 1),
+                    child: GestureDetector(
+                      onTap: () {
+                        scrollToDate(date);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Day of the week
+                          FittedBox(
+                            fit: BoxFit.none,
+                            child: Text(
+                              getDayOfWeek(date.weekday),
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.025,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Open_Sans',
+                                color: const Color.fromRGBO(255, 244, 236, 1),
+                              ),
                             ),
                           ),
-                        ),
-                        // Day of the month inside a circle
-                        Container(
-                          width: MediaQuery.of(context).size.width / 7,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: date.isAfter(DateTime.now()) ?
-                            const Color.fromRGBO(253, 165, 108, 1) : const Color.fromRGBO(255, 244, 236, 1),
-                          ),
-                          child: Center(
-                            child: FittedBox(
-                              fit: BoxFit.none,
-                              child: Text(
-                                '${date.day}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  fontFamily: 'Open_Sans',
-                                  color: date.isAfter(DateTime.now()) ?
-                                  Colors.black.withOpacity(0.5) : Colors.black,
+                          // Day of the month inside a circle
+                          Container(
+                            width: MediaQuery.of(context).size.width / 7,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: date.isAfter(DateTime.now()) ?
+                              const Color.fromRGBO(253, 165, 108, 1) : const Color.fromRGBO(255, 244, 236, 1),
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                fit: BoxFit.none,
+                                child: Text(
+                                  '${date.day}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    fontFamily: 'Open_Sans',
+                                    color: date.isAfter(DateTime.now()) ?
+                                    Colors.black.withOpacity(0.5) : Colors.black,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -148,6 +153,15 @@ class CalendarWidgetState extends State<CalendarWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  void scrollToDate(DateTime date) {
+    final pageIndex = date.difference(DateTime(date.year, 1, 1)).inDays;
+    pageController.animateToPage(
+      pageIndex,
+      duration: const Duration(milliseconds: 300), // Adjust the duration as needed
+      curve: Curves.easeInOut, // Use any curve you prefer
     );
   }
 
