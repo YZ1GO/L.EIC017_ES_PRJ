@@ -18,8 +18,21 @@ class CalendarWidgetState extends State<CalendarWidget> {
     super.initState();
     selectedDate = DateTime.now();
 
-    initialPage = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
+    initialPage = selectedDate.difference(DateTime(DateTime.now().year, 1, 1)).inDays;
     pageController = PageController(initialPage: initialPage, viewportFraction: 0.14);
+
+    pageController.addListener(() {
+      // Calculate the new selectedDate based on the current page
+      final newPageIndex = pageController.page!.round();
+      final newSelectedDate = DateTime(DateTime.now().year, 1, 1).add(Duration(days: newPageIndex));
+
+      // Update selectedDate if it's changed
+      if (newSelectedDate != selectedDate) {
+        setState(() {
+          selectedDate = newSelectedDate;
+        });
+      }
+    });
   }
 
   @override
@@ -79,10 +92,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
               height: 100,
               child: PageView.builder(
                 itemCount: null, // Infinite scrolling
-                controller: PageController(
-                  initialPage: initialPage,
-                  viewportFraction: 0.14,
-                ),
+                controller: pageController,
                 itemBuilder: (context, index) {
                   final date = DateTime.now().subtract(Duration(days: initialPage - index));
                   return Container(
