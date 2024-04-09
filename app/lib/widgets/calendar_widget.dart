@@ -11,18 +11,64 @@ class CalendarWidgetState extends State<CalendarWidget> {
   // Calculate the initial page index based on today's date
   late int initialPage;
   late PageController pageController;
+  late DateTime selectedDate;
 
   @override
   void initState() {
     super.initState();
-    initialPage = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
+    selectedDate = DateTime.now();
+
+    initialPage = selectedDate.difference(DateTime(DateTime.now().year, 1, 1)).inDays;
     pageController = PageController(initialPage: initialPage, viewportFraction: 0.14);
+
+    pageController.addListener(() {
+      // Calculate the new selectedDate based on the current page
+      final newPageIndex = pageController.page!.round();
+      final newSelectedDate = DateTime(DateTime.now().year, 1, 1).add(Duration(days: newPageIndex));
+
+      // Update selectedDate if it's changed
+      if (newSelectedDate != selectedDate) {
+        setState(() {
+          selectedDate = newSelectedDate;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // Specifics of the selected day
+        Positioned(
+            top: 60,
+            left: 25,
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // Align month with day of week
+                  children: [
+                    Text(
+                      getDayOfWeekComplete(selectedDate.weekday),
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "${getMonth(selectedDate.month)} ${selectedDate.day}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 48, 0, 1),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+        ),
         // Box in the center of calendar
         Positioned(
           left: (MediaQuery.of(context).size.width - 58) / 2,
@@ -46,10 +92,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
               height: 100,
               child: PageView.builder(
                 itemCount: null, // Infinite scrolling
-                controller: PageController(
-                  initialPage: initialPage,
-                  viewportFraction: 0.14,
-                ),
+                controller: pageController,
                 itemBuilder: (context, index) {
                   final date = DateTime.now().subtract(Duration(days: initialPage - index));
                   return Container(
@@ -125,6 +168,28 @@ class CalendarWidgetState extends State<CalendarWidget> {
         return 'SAT';
       case 7:
         return 'SUN';
+      default:
+        return '';
+    }
+  }
+
+  // Function to get the day of the week
+  String getDayOfWeekComplete(int weekday) {
+    switch (weekday) {
+      case 1:
+        return 'Monday';
+      case 2:
+        return 'Tuesday';
+      case 3:
+        return 'Wednesday';
+      case 4:
+        return 'Thursday';
+      case 5:
+        return 'Friday';
+      case 6:
+        return 'Saturday';
+      case 7:
+        return 'Sunday';
       default:
         return '';
     }
