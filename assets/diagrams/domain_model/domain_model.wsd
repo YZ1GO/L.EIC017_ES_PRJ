@@ -1,6 +1,6 @@
-@startuml PINGUPILLS
+@startuml domain_model
 
-class Medication {
+class Medicament {
     - name: String
     - defaultImage: Image
     - customImage: Image
@@ -28,30 +28,38 @@ class Reminder {
     - remindLater: Boolean
 }
 
+note right of Reminder
+    reminderType can be expiration reminder, take medication reminder, low stock reminder
+end note
+
 class Preferences {
     - theme: Enum
 }
+
+note right of Preferences
+    theme can be dark mode or light mode
+end note
 
 class User {
     - name: String
 }
 
-class MedicationExpirationNotification {
+class MedicamentExpirationNotification {
     - notificationDaysBeforeExpiry: Integer
     - expirationStatus: Boolean
 }
 
-class MedicationLowStockNotification {
+class MedicamentLowStockNotification {
     - notificationThreshold: Integer
     - lowStockStatus: Boolean
     - outOfStockStatus: Boolean
 }
 
-Medication "1" *-- "1..*" Prescription
-Medication "1" o-- "1" MedicationExpirationNotification
-Medication "1" o-- "1" MedicationLowStockNotification
+Medicament "1" *-- "1..*" Prescription
+Medicament "1" o-- "1" MedicamentExpirationNotification
+Medicament "1" o-- "1" MedicamentLowStockNotification
 Prescription "1" *-- "0..*" Reminder
 User "1" o-- "1" Preferences
-User "1" *-- "0..*" Medication
+User "1" *-- "0..*" Medicament
 
 @enduml

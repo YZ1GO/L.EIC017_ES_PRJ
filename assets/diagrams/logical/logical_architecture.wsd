@@ -1,8 +1,4 @@
-@startuml
-
-package "Users"{
-    [User]
-}
+@startuml logical_architecture
 
 package "PinguPills App" {
     [User Interface] as UI
@@ -14,11 +10,9 @@ package "PinguPills App" {
 }
 package "Firebase" {
     database "Realtime database" as FirebaseDB {
-
     } 
 }
 
-User --> UI
 UI --> Reminder : Manage Reminders
 UI --> Stock : Manage Stock
 Reminder --> LocalDB : Read/Write Reminders

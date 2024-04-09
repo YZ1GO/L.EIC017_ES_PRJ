@@ -2,21 +2,20 @@
 !define PHONE [Phone]
 !define FIREBASE [Firebase]
 
-@startuml
-
-node "User" as USER
+@startuml physical_architecture
 
 node "Mobile Device" as device {
     frame "App (Dart)" as app
-    database "Local Database" as localDB
+    database "Local Database \n       (sqlite)" as localDB
 }
 
 node "Google Firebase" as firebase {
     frame "Firebase API" as api
-    database "Realtime Database" as firebaseDB
+    database "Realtime Database \n           (json)" as firebaseDB
 }
 
-USER --> device
+app .> localDB
+api .> firebaseDB
 device -- firebase: 1..*
 app ..> api
 
