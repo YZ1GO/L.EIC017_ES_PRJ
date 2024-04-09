@@ -29,7 +29,7 @@ class Reminder {
 }
 
 note right of Reminder
-    reminderType can be expiration reminder, take medication reminder, low stock reminder
+    reminderType can be 'expiration reminder', 'take medicament reminder', 'low stock reminder'
 end note
 
 class Preferences {
@@ -37,7 +37,7 @@ class Preferences {
 }
 
 note right of Preferences
-    theme can be dark mode or light mode
+    theme can be 'dark mode' or 'light mode'
 end note
 
 class User {
