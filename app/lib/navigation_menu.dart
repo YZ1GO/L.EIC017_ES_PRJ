@@ -1,3 +1,4 @@
+import 'package:app/widgets/calendar_widget.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/stock_screen.dart';
@@ -17,6 +18,9 @@ class NavigationMenuState extends State<NavigationMenu> {
     const HomeScreen(),
     const StockScreen(),
   ];
+
+  // GlobalKey for accessing CalendarWidgetState methods
+  final GlobalKey<CalendarWidgetState> calendarKey = GlobalKey();
 
   void onItemTapped(int index) {
     setState(() {
@@ -98,7 +102,14 @@ class NavigationMenuState extends State<NavigationMenu> {
                         height: 31,
                       ),
                     ),
-                    onPressed: () => onItemTapped(0),
+                    onPressed: () {
+                      onItemTapped(0);
+                      if (calendarKey.currentState != null) {
+                        calendarKey.currentState!.scrollToDate(DateTime.now());
+                      } else {
+                        print("Calendar key's current state is null.");
+                      }
+                    },
                     highlightColor: Colors.transparent,
                   ),
                 ),
