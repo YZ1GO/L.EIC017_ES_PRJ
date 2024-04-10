@@ -46,19 +46,43 @@ class StockScreen extends StatelessWidget {
                           width: 155,
                           height: 240,
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 220, 194, 1),
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
-                              );
-                            },
-                            icon: Icon(Icons.search),
-                            iconSize: 40,
-                            color: Colors.white,
+                          child: Center(
+                            child: Container(
+                              width: 77,
+                              height: 77,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: Color.fromRGBO(58, 44, 0, 1),
+                                  width: 1.5,
+                                )
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(255, 220, 194, 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.add),
+                                    iconSize: 25,
+                                    color: Color.fromRGBO(58, 44, 0, 1),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
