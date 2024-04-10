@@ -158,6 +158,56 @@ class StockScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 155,
+                          height: 240,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 220, 194, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              // Add your action here
+                            },
+                            icon: Icon(Icons.medical_services_outlined),
+                            iconSize: 40,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Container(
+                  height: kToolbarHeight,
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      '\"honk honk! It\'s the end!\"',
+                      style: TextStyle(
+                        color: Color.fromRGBO(199,54,00,1),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 150),
               ],
             ),
           ),
