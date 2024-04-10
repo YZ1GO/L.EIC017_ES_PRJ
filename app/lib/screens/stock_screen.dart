@@ -1,7 +1,8 @@
-import 'package:app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:app/screens/settings_screen.dart';
 import 'package:app/screens/search_screen.dart';
 import '../widgets/eclipse_background.dart';
+import 'database.dart';
 
 class StockScreen extends StatelessWidget {
   const StockScreen({Key? key});
@@ -24,7 +25,7 @@ class StockScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                      MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
                     );
                   },
                   icon: Icon(Icons.search),
@@ -59,6 +60,13 @@ class StockScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your action here
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Color.fromRGBO(255, 220, 194, 1),
       ),
     );
   }
