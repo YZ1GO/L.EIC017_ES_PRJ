@@ -89,7 +89,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                   child: IconButton(
                     icon: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        selectedIndex == 0 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
+                        selectedIndex == 0 ? const Color.fromRGBO(185, 137, 102, 1) : const Color.fromRGBO(230, 217, 206, 1),
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
@@ -107,7 +107,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                   child: IconButton(
                     icon: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        selectedIndex == 1 ? Color.fromRGBO(185, 137, 102, 1) : Color.fromRGBO(230, 217, 206, 1),
+                        selectedIndex == 1 ? const Color.fromRGBO(185, 137, 102, 1) : const Color.fromRGBO(230, 217, 206, 1),
                         BlendMode.srcIn,
                       ),
                       child: Image.asset(
