@@ -49,7 +49,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start, // Align month with day of week
                   children: [
                     Text(
-                      getDayOfWeekComplete(selectedDate.weekday),
+                      getSelectedDay(selectedDate),
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
                       ),
                     ),
                     Text(
-                      "${getMonth(selectedDate.month)} ${selectedDate.day}",
+                      getSelectedDayDescription(selectedDate),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -239,6 +239,29 @@ class CalendarWidgetState extends State<CalendarWidget> {
         return 'December';
       default:
         return '';
+    }
+  }
+
+  // Function to get the day of the week at top left corner
+  String getSelectedDay(DateTime d) {
+    DateTime today = DateTime.now();
+    if (d.year == today.year && d.month == today.month && d.day == today.day) {
+      return 'Today';
+    } else if (d.year == today.year && d.month == today.month && d.day == today.day + 1) {
+      return 'Tomorrow';
+    } else if (d.year == today.year && d.month == today.month && d.day == today.day - 1) {
+      return 'Yesterday';
+    } else {
+      return getDayOfWeekComplete(selectedDate.weekday);
+    }
+  }
+
+  // Function to get the month and day at top left corner
+  String getSelectedDayDescription(DateTime d) {
+    if (getSelectedDay(d) == 'Yesterday' || getSelectedDay(d) == 'Today' || getSelectedDay(d) == 'Tomorrow') {
+      return '${getDayOfWeekComplete(d.weekday)}, ${getMonth(d.month)} ${d.day}';
+    } else {
+      return '${getMonth(selectedDate.month)} ${selectedDate.day}';
     }
   }
 }
