@@ -8,8 +8,7 @@ class DatabaseContentScreen extends StatefulWidget {
 }
 
 class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
-  TextEditingController _searchController = TextEditingController();
-  List<Map<dynamic, dynamic>>? _brandList; // Initialize as null
+  List<Map<dynamic, dynamic>>? _brandList;
 
   @override
   Widget build(BuildContext context) {
@@ -28,35 +27,22 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
           ),
         ],
       ),
-      body: _buildBrandList(),
+      body: _buildBody(),
     );
   }
 
-  Widget _buildBrandList() {
+  Widget _buildBody() {
     if (_brandList == null) {
-      return Center(child: CircularProgressIndicator()); // Show a loading indicator while fetching data
-    } else if (_brandList!.isEmpty) {
-      return Center(child: Text('No data available')); // Show message if data is fetched but empty
+      return Center(child: CircularProgressIndicator());
     } else {
-      return ListView.builder(
-        itemCount: _brandList!.length,
-        itemBuilder: (BuildContext context, int index) {
-          var brand = _brandList![index];
-          return ListTile(
-            title: Text(brand['brand_name'] ?? ''),
-            subtitle: Text(
-              'Form: ${brand['form'] ?? ''}, Strength: ${brand['strength'] ?? ''}, Price: ${brand['price'] ?? ''}',
-            ),
-          );
-        },
-      );
+      return SizedBox.shrink();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _fetchData(); // Call function to fetch data when screen initializes
+    _fetchData();
   }
 
   void _fetchData() {
@@ -69,13 +55,12 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
         });
       } else {
         setState(() {
-          _brandList = []; // Set _brandList to empty list if no data is fetched
+          _brandList = [];
         });
       }
     });
   }
 }
-
 
 class BrandSearchDelegate extends SearchDelegate<String> {
   final List<Map<dynamic, dynamic>> brandList;
