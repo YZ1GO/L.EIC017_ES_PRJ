@@ -14,7 +14,7 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Database Content'),
+        title: Text('Search Medicament'),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
