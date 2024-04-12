@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AddMedicamentPage extends StatefulWidget {
+  final Map<dynamic, dynamic>? brand;
+  final String? customMedicamentName;
+
+  const AddMedicamentPage({Key? key, this.brand, this.customMedicamentName}) : super(key: key);
+
   @override
   _AddMedicamentPageState createState() => _AddMedicamentPageState();
 }
@@ -23,15 +28,6 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       });
   }
 
-  void _openMedicamentDetailsPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MedicamentDetailsPage(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +39,11 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            if (widget.brand != null)
+              Text('Medicament Name: ${widget.brand!['brand_name']}'),
+            if (widget.customMedicamentName != null)
+              Text('Custom Medicament Name: ${widget.customMedicamentName!}'),
+            SizedBox(height: 16.0),
             Text('Quantity'),
             SizedBox(height: 8.0),
             Row(
@@ -89,33 +90,15 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
               ),
             ),
             SizedBox(height: 16.0),
-            GestureDetector(
-              onTap: () => _openMedicamentDetailsPage(context),
-              child: IconButton(
-                onPressed: () {
-                  // Add your action here
-                },
-                icon: Icon(Icons.medical_services_outlined),
-                iconSize: 40,
-                color: Colors.white,
-              ),
+            ElevatedButton(
+              onPressed: () {
+                // Add logic to save medicament to database or perform any other action
+                // You can access medicament details from widget.brand
+              },
+              child: Text('Save'),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MedicamentDetailsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Medicament Details'),
-      ),
-      body: Center(
-        child: Text('This is the medicament details page.'),
       ),
     );
   }

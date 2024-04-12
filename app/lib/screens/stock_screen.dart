@@ -107,10 +107,7 @@ class StockScreen extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => AddMedicamentPage()),
-                              );
+
                             },
                             icon: Icon(Icons.medical_services_outlined),
                             iconSize: 40,
