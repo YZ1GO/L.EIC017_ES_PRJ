@@ -1,5 +1,5 @@
+import 'package:app/screens/add_medicicament_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/screens/settings_screen.dart';
 import '../widgets/eclipse_background.dart';
 import 'database.dart';
 
@@ -107,7 +107,10 @@ class StockScreen extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              // Add your action here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AddMedicamentPage()),
+                              );
                             },
                             icon: Icon(Icons.medical_services_outlined),
                             iconSize: 40,
@@ -170,7 +173,6 @@ class StockScreen extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              // Add your action here
                             },
                             icon: Icon(Icons.medical_services_outlined),
                             iconSize: 40,
