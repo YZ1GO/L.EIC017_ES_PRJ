@@ -25,6 +25,7 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: Icon(Icons.search),

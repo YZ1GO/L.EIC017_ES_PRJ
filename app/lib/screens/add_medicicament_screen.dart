@@ -35,7 +35,15 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Add Medicament'),
+        title: Text(
+          'ADD MEDICAMENT',
+          style: TextStyle(
+            color: Color.fromRGBO(158, 66, 0, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
