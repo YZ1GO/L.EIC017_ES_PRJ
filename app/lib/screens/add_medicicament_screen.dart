@@ -43,19 +43,26 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Medicament Name:'),
+              Text('Medicament:'),
               SizedBox(height: 8.0),
               if (widget.brand != null)
                 Container(
-                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 198, 157, 1),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.brand!['brand_name'],
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    children: [
+                      if (widget.brand!['brand_id'] != null) // Check if brand_id exists
+                        _loadMedicamentImage(int.parse(widget.brand!['brand_id'])), // Load medicament image
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          widget.brand!['brand_name'],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               if (widget.customMedicamentName != null)
@@ -178,6 +185,27 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _loadMedicamentImage(int brandId) {
+    String imagePath = 'assets/database/$brandId.jpg';
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
+      child: Image.asset(
+        imagePath,
+        width: 50,
+        height: 50,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            'assets/database/default.jpg',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          );
+        },
       ),
     );
   }
