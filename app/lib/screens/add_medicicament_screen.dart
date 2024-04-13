@@ -54,8 +54,8 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      if (widget.brand!['brand_id'] != null) // Check if brand_id exists
-                        _loadMedicamentImage(int.parse(widget.brand!['brand_id'])), // Load medicament image
+                      if (widget.brand!['brand_id'] != null)
+                        _loadMedicamentImage(int.parse(widget.brand!['brand_id'])),
                       SizedBox(width: 8.0),
                       Expanded(
                         child: Text(
@@ -67,15 +67,21 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                 ),
               if (widget.customMedicamentName != null)
                 Container(
-                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 198, 157, 1),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.customMedicamentName!,
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    children: [
+                      _loadMedicamentImage(null), // Use default image
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          widget.customMedicamentName!,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               SizedBox(height: 32.0),
@@ -189,10 +195,10 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
     );
   }
 
-  Widget _loadMedicamentImage(int brandId) {
-    String imagePath = 'assets/database/$brandId.jpg';
+  Widget _loadMedicamentImage(int? brandId) {
+    String imagePath = brandId != null ? 'assets/database/$brandId.jpg' : 'assets/database/default.jpg';
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
+      borderRadius: BorderRadius.circular(8.0),
       child: Image.asset(
         imagePath,
         width: 50,
