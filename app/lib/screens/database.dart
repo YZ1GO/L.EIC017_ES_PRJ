@@ -13,8 +13,18 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(255, 244, 236, 1),
       appBar: AppBar(
-        title: Text('Search Medicament'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'SEARCH MEDICAMENT',
+          style: TextStyle(
+            color: Color.fromRGBO(158, 66, 0, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
@@ -102,43 +112,73 @@ class BrandSearchDelegate extends SearchDelegate<String> {
   Widget _buildSearchResults(BuildContext context) {
     final List<Map<dynamic, dynamic>> filteredBrands = _filterBrands();
 
-    return Column(
-      children: [
-        if (query.isNotEmpty)
-          ListTile(
-            title: Text('Add Custom Medicament: $query'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddMedicamentPage(customMedicamentName: query),
-                ),
-              );
-            },
-          ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: filteredBrands.length,
-            itemBuilder: (BuildContext context, int index) {
-              var brand = filteredBrands[index];
-              return ListTile(
-                title: Text(brand['brand_name'] ?? ''),
-                subtitle: Text(
-                  'Form: ${brand['form'] ?? ''}, Strength: ${brand['strength'] ?? ''}, Price: ${brand['price'] ?? ''}',
+    return Container(
+      color: Color.fromRGBO(255, 244, 236, 1),
+      child: Column(
+        children: [
+          if (query.isNotEmpty)
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 222, 199, 1),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              margin: EdgeInsets.all(10.0),
+              child: ListTile(
+                title: Text(
+                    'Add Custom Medicament: $query',
+                    style: TextStyle(
+                      color: Color.fromRGBO(158, 66, 0, 1),
+                    ),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddMedicamentPage(brand: brand),
+                      builder: (context) => AddMedicamentPage(customMedicamentName: query),
                     ),
                   );
                 },
-              );
-            },
+              ),
+            ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredBrands.length,
+              itemBuilder: (BuildContext context, int index) {
+                var brand = filteredBrands[index];
+                var imageUrl = 'assets/database/${brand['brand_id']}.jpg';
+                return ListTile(
+                  title: Text(brand['brand_name'] ?? ''),
+                  subtitle: Text(
+                    'Form: ${brand['form'] ?? ''}, Strength: ${brand['strength'] ?? ''}',
+                  ),
+                  leading: Image.asset(
+                    imageUrl,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/database/default.jpg',
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddMedicamentPage(brand: brand),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
