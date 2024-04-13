@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:app/screens/add_medicicament_screen.dart';
@@ -26,19 +27,47 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: BrandSearchDelegate(brandList: _brandList ?? []),
-              );
-            },
-          ),
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 8.0),
+          customSearchBox(),
+          _buildBody(),
         ],
       ),
-      body: _buildBody(),
+    );
+  }
+
+  Widget customSearchBox() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      color: Colors.transparent, // Change color here
+      width: double.infinity, // Adjust width as needed
+      child: InkWell(
+        onTap: () {
+          showSearch(
+            context: context,
+            delegate: BrandSearchDelegate(brandList: _brandList ?? []),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Color.fromRGBO(255, 198, 157, 1),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          child: Row(
+            children: [
+              Icon(Icons.search, color: Color.fromRGBO(158, 66, 0, 1)),
+              SizedBox(width: 12.0),
+              Text(
+                'Enter medicament name',
+                style: TextStyle(color: Color.fromRGBO(158, 66, 0, 1)),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
