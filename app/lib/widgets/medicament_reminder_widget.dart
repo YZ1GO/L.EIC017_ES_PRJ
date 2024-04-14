@@ -50,31 +50,83 @@ class MedicationReminderCard extends StatelessWidget {
       child: FractionallySizedBox(
         widthFactor: 0.9,
         child: Card(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          margin: const EdgeInsets.symmetric(vertical: 7),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          color: const Color.fromRGBO(255, 218, 190, 1),
+          child: SizedBox(
+            height: 150,
+            child: Stack(
               children: [
-                Text(
-                  formatTimeToString(time),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 2),
+                            child: Icon(
+                              Icons.access_time,
+                              color: Color.fromRGBO(225, 95, 0, 1),
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            formatTimeToString(time),
+                            style: const TextStyle(
+                              fontFamily: 'Open_Sans',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Color.fromRGBO(225, 95, 0, 1),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                          medicamentName,
+                        style: const TextStyle(
+                          fontFamily: 'Open_Sans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Color.fromRGBO(225, 95, 0, 1),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                Text(medicamentName),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: onPressed,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
+                        backgroundColor: const Color.fromRGBO(225, 95, 0, 1),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text(
+                          'Take',
+                          style: TextStyle(
+                            fontFamily: 'Open_Sans',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                       ),
                     ),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text('TAKE'),
                   ),
                 ),
               ],
@@ -89,4 +141,7 @@ class MedicationReminderCard extends StatelessWidget {
     return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   }
 }
+
+
+
 
