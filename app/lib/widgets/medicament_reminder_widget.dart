@@ -71,6 +71,16 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                 // Specifics of medication
                 Stack(
                   children: [
+                    // Three dots icon
+                    Positioned(
+                      top: 20,
+                      right: 18,
+                      child: Icon(
+                        FontAwesomeIcons.ellipsisVertical,
+                        size: 15,
+                        color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
                       child: Column(
@@ -81,11 +91,12 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: Icon(
-                                  Icons.access_time,
+                                  FontAwesomeIcons.solidClock,
+                                  size: 15,
                                   color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
                                 ),
                               ),
-                              const SizedBox(width: 2),
+                              const SizedBox(width: 5),
                               Text(
                                 widget.time.format(context),
                                 style: TextStyle(
