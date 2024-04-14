@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MedicationReminderWidget extends StatelessWidget {
   final String medicamentName;
@@ -16,7 +17,7 @@ class MedicationReminderWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Column(
           children: frequencies.map((time) {
             return MedicationReminderCard(
@@ -67,23 +68,37 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
             height: 150,
             child: Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
+                // Specifics of medication
+                Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 60),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 2),
-                            child: Icon(
-                              Icons.access_time,
-                              color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
-                            ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 2),
+                                child: Icon(
+                                  Icons.access_time,
+                                  color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
+                                ),
+                              ),
+                              const SizedBox(width: 2),
+                              Text(
+                                widget.time.format(context),
+                                style: TextStyle(
+                                  fontFamily: 'Open_Sans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 2),
                           Text(
-                            widget.time.format(context),
+                            widget.medicamentName,
                             style: TextStyle(
                               fontFamily: 'Open_Sans',
                               fontWeight: FontWeight.bold,
@@ -91,32 +106,35 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                               color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
                             ),
                           ),
+                          if (isTaken) ...[
+                            const Text(
+                              'Taken',
+                              style: TextStyle(
+                                fontFamily: 'Open_Sans',
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
-                      Text(
-                        widget.medicamentName,
-                        style: TextStyle(
-                          fontFamily: 'Open_Sans',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
+                    ),
+                    // White tick after taken
+                    if (isTaken) ...[
+                      const Positioned(
+                        top: -5,
+                        right: -25,
+                        child: Icon(
+                          FontAwesomeIcons.check,
+                          size: 120,
+                          color: Colors.white,
                         ),
                       ),
-                      if (isTaken) ...[
-                        const Text(
-                          'Taken',
-                          style: TextStyle(
-                            fontFamily: 'Open_Sans',
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 10),
                     ],
-                  ),
+                  ],
                 ),
+                // Take button
                 Positioned(
                   bottom: 0,
                   left: 0,
