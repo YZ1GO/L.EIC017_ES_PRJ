@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/calendar_widget.dart';
+import '../widgets/medicament_reminder_widget.dart';
 import '../widgets/system_notification_test_widget.dart';
 import '../widgets/eclipse_background.dart';
 import 'database.dart';
@@ -20,7 +21,21 @@ class HomeScreenState extends State<HomeScreen> {
         children: [
           eclipse_background(),
           const CalendarWidget(),
-          Positioned(
+          Positioned( // Add MedicationReminderWidget here
+            left: 0,
+            right: 0,
+            top: 500, // Adjust the position as needed
+            child: MedicationReminderWidget(
+              medicamentName: 'Paracetamol', // Default medicament name
+              dayAdded: DateTime.now(), // Today's date
+              frequencies: [
+                TimeOfDay(hour: 12, minute: 0),
+                TimeOfDay(hour: 16, minute: 0),
+                TimeOfDay(hour: 20, minute: 0),
+              ], // Custom frequency
+            ),
+          ),
+          /*Positioned(
             left: 0,
             right: 0,
             top: 400,
@@ -61,7 +76,7 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          ),
+          ),*/
         ],
       ),
     );
