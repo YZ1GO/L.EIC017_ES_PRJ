@@ -33,7 +33,7 @@ class MedicationReminderWidget extends StatelessWidget {
   }
 }
 
-class MedicationReminderCard extends StatelessWidget {
+class MedicationReminderCard extends StatefulWidget {
   final String medicamentName;
   final TimeOfDay time;
   final VoidCallback onPressed;
@@ -45,6 +45,14 @@ class MedicationReminderCard extends StatelessWidget {
   });
 
   @override
+  MedicationReminderCardState createState() => MedicationReminderCardState();
+}
+
+class MedicationReminderCardState extends State<MedicationReminderCard> {
+  late TimeOfDay? pressedTime;
+  bool isTaken = false;
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: FractionallySizedBox(
@@ -54,7 +62,7 @@ class MedicationReminderCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          color: const Color.fromRGBO(255, 218, 190, 1),
+          color: isTaken ? const Color.fromRGBO(255, 122, 0, 1) : const Color.fromRGBO(255, 218, 190, 1),
           child: SizedBox(
             height: 150,
             child: Stack(
@@ -66,35 +74,45 @@ class MedicationReminderCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2),
                             child: Icon(
                               Icons.access_time,
-                              color: Color.fromRGBO(225, 95, 0, 1),
+                              color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
                             ),
                           ),
                           const SizedBox(width: 2),
                           Text(
-                            formatTimeToString(time),
-                            style: const TextStyle(
+                            widget.time.format(context),
+                            style: TextStyle(
                               fontFamily: 'Open_Sans',
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
-                              color: Color.fromRGBO(225, 95, 0, 1),
+                              color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       Text(
-                          medicamentName,
-                        style: const TextStyle(
+                        widget.medicamentName,
+                        style: TextStyle(
                           fontFamily: 'Open_Sans',
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          color: Color.fromRGBO(225, 95, 0, 1),
+                          color: isTaken ? Colors.white : const Color.fromRGBO(225, 95, 0, 1),
                         ),
                       ),
+                      if (isTaken) ...[
+                        const Text(
+                          'Taken',
+                          style: TextStyle(
+                            fontFamily: 'Open_Sans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -106,7 +124,18 @@ class MedicationReminderCard extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: onPressed,
+                      onPressed: () {
+                        setState(() {
+                          if (isTaken) {
+                            isTaken = false;
+                            pressedTime = null;
+                          } else {
+                            isTaken = true;
+                            pressedTime = TimeOfDay.now();
+                          }
+                        });
+                        widget.onPressed();
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
@@ -118,13 +147,15 @@ class MedicationReminderCard extends StatelessWidget {
                         backgroundColor: const Color.fromRGBO(225, 95, 0, 1),
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text(
-                          'Take',
-                          style: TextStyle(
-                            fontFamily: 'Open_Sans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        isTaken
+                            ? '${pressedTime!.hour.toString().padLeft(2, '0')}:${pressedTime!.minute.toString().padLeft(2, '0')}'
+                            : 'Take',
+                        style: const TextStyle(
+                          fontFamily: 'Open_Sans',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -136,12 +167,4 @@ class MedicationReminderCard extends StatelessWidget {
       ),
     );
   }
-
-  String formatTimeToString(TimeOfDay time) {
-    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
-  }
 }
-
-
-
-
