@@ -63,6 +63,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
+          elevation: 5,
           color: isTaken ? const Color.fromRGBO(255, 122, 0, 1) : const Color.fromRGBO(255, 218, 190, 1),
           child: SizedBox(
             height: 150,
