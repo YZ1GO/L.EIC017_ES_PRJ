@@ -21,10 +21,10 @@ class HomeScreenState extends State<HomeScreen> {
         children: [
           eclipse_background(),
           const CalendarWidget(),
-          Positioned( // Add MedicationReminderWidget here
+          Positioned(
             left: 0,
             right: 0,
-            top: 500, // Adjust the position as needed
+            top: 250,
             child: MedicationReminderWidget(
               medicamentName: 'Paracetamol', // Default medicament name
               dayAdded: DateTime.now(), // Today's date
