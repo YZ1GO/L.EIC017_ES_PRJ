@@ -16,20 +16,14 @@ class MedicationReminderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 10),
-        Column(
-          children: frequencies.map((time) {
-            return MedicationReminderCard(
-              medicamentName: medicamentName,
-              time: time,
-              onPressed: () {
-
-              },
-            );
-          }).toList(),
-        ),
-      ],
+      children: frequencies.map((time) {
+        return MedicationReminderCard(
+          medicamentName: medicamentName,
+          time: time,
+          onPressed: () {
+            },
+        );
+      }).toList(),
     );
   }
 }
