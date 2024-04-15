@@ -54,7 +54,10 @@ class _StockScreenState extends State<StockScreen> {
                         right: 20,
                         child: IconButton(
                           onPressed: () {
-                            _medicamentsFuture = getMedicaments();
+                            setState(() {
+                              _medicamentsFuture = getMedicaments();
+                            });
+                            print(Text('refresh button pressed'));
                           },
                           icon: Icon(Icons.refresh, color: Colors.white),
                         ),
