@@ -273,7 +273,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         quantity: _quantity,
         expiryDate: _expiryDate,
         notes: _notes,
-        brandId: widget.brand != null ? widget.brand!['brand_id'] : null,
+        brandId: widget.brand != null ? int.tryParse(widget.brand!['brand_id']) : null,
       );
 
       int result = await _medicamentStock.insertMedicament(newMedicament);
@@ -286,7 +286,6 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         print('Failed to add medicament');
       }
     } catch (e) {
-      // Handle any exceptions
       print('Error saving medicament: $e');
     }
   }
