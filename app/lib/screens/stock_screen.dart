@@ -12,12 +12,12 @@ class StockScreen extends StatefulWidget {
 }
 
 class _StockScreenState extends State<StockScreen> {
-  late Future<List<Medicament>> _medicamentsFuture; // Declare as a member variable
+  late Future<List<Medicament>> _medicamentsFuture;
 
   @override
   void initState() {
     super.initState();
-    _medicamentsFuture = getMedicaments(); // Initialize the future in initState
+    _medicamentsFuture = getMedicaments();
   }
 
   Widget build(BuildContext context) {
@@ -35,40 +35,71 @@ class _StockScreenState extends State<StockScreen> {
                 Container(
                   height: kToolbarHeight,
                   color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      'MEDICINE STOCK',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        backgroundColor: Colors.transparent,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Text(
+                          'MEDICINE STOCK',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            backgroundColor: Colors.transparent,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        top: 0,
+                        right: 20,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _medicamentsFuture = getMedicaments();
+                            });
+                          },
+                          icon: Icon(Icons.refresh, color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DatabaseContentScreen())
+                      context,
+                      MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
                     );
                   },
-                  child: Text('Add New Medicament'),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _medicamentsFuture = getMedicaments();
-                    });
-                  },
-                  child: Text('Refresh Stock'),
+                  child: Text(
+                    'Add New Medicament',
+                    style: TextStyle(
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromRGBO(255, 200, 150, 1),
+                    elevation: 4,
+                    shadowColor: Colors.black.withOpacity(0.5),
+                  ),
                 ),
                 SizedBox(height: 20),
                 medicamentList(),
                 SizedBox(height: 20),
+                Center(
+                  child: Text(
+                    '\"honk honk! It\'s the end!\"',
+                    style: TextStyle(
+                      color: Color.fromRGBO(199,54,00,1),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 160),
               ],
             ),
           ],
@@ -90,15 +121,12 @@ class _StockScreenState extends State<StockScreen> {
           print('Stock items ${medicaments?.length ?? 0}');
           if (medicaments != null && medicaments.isNotEmpty) {
             medicaments.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
-            // Create a list to hold rows of medicament cards
             List<Widget> rows = [];
-            // Iterate through the list of medicaments, two at a time
             for (int i = 0; i < medicaments.length; i += 2) {
-              // Create a row to hold two medicament cards
               Widget row = Container(
-                width: MediaQuery.of(context).size.width, // Full width of the screen
+                width: MediaQuery.of(context).size.width,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust as needed
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
                       child: Padding(
@@ -106,19 +134,18 @@ class _StockScreenState extends State<StockScreen> {
                         child: _buildMedicamentCard(medicaments[i]),
                       ),
                     ),
-                    if (i + 1 < medicaments.length) // Check if there's another medicament to display
+                    if (i + 1 < medicaments.length)
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: _buildMedicamentCard(medicaments[i + 1]),
                         ),
                       ),
                   ],
                 ),
               );
-              rows.add(row); // Add the row to the list
+              rows.add(row);
             }
-            // Return a column with rows of medicament cards
             return Column(
               children: rows,
             );
@@ -132,8 +159,9 @@ class _StockScreenState extends State<StockScreen> {
 
   Widget _buildMedicamentCard(Medicament medicament) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2 - 20, // Adjust the width as needed
+      width: MediaQuery.of(context).size.width / 2 - 20,
       child: Card(
+        color: Color.fromRGBO(255, 220, 194, 1),
         elevation: 3,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -147,27 +175,44 @@ class _StockScreenState extends State<StockScreen> {
                   child: _loadMedicamentImage(medicament.brandId),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 6),
+              Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+              SizedBox(height: 2),
               Center(
                 child: Text(
                   medicament.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(199, 84, 0, 1),
+                    fontSize: 16,
                   ),
                   textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 2),
+              Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+              SizedBox(height: 6),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Expiry',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    ' Expiry',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 12,
+                    ),
                   ),
                   SizedBox(width: 4),
                   Text(
                     DateFormat('dd/MM/yyyy').format(medicament.expiryDate),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
@@ -176,33 +221,53 @@ class _StockScreenState extends State<StockScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Quantity',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    ' Quantity',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 12,
+                    ),
                   ),
                   SizedBox(width: 4),
                   Text(
                     '${medicament.quantity} piece(s)',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 12,
+                    )
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
-                  // Handle edit action here
-                  // For example, navigate to an edit screen or show a modal bottom sheet for editing
+                  print(Text('TO BE DONE'));
                 },
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color.fromRGBO(225, 95, 0, 1),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  padding: EdgeInsets.all(8),
-                  child: Center(
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  padding: EdgeInsets.all(6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.edit,
+                        color: Color.fromRGBO(255, 220, 194, 1),
+                        size: 14,
+                      ),
+                      SizedBox(width: 9),
+                      Text(
+                        'Edit',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 220, 194, 1),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
