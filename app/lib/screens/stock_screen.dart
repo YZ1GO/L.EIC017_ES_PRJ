@@ -95,23 +95,26 @@ class _StockScreenState extends State<StockScreen> {
             // Iterate through the list of medicaments, two at a time
             for (int i = 0; i < medicaments.length; i += 2) {
               // Create a row to hold two medicament cards
-              Widget row = Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _buildMedicamentCard(medicaments[i]),
-                    ),
-                  ),
-                  if (i + 1 < medicaments.length) // Check if there's another medicament to display
+              Widget row = Container(
+                width: MediaQuery.of(context).size.width, // Full width of the screen
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust as needed
+                  children: [
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: _buildMedicamentCard(medicaments[i + 1]),
+                        child: _buildMedicamentCard(medicaments[i]),
                       ),
                     ),
-                ],
+                    if (i + 1 < medicaments.length) // Check if there's another medicament to display
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: _buildMedicamentCard(medicaments[i + 1]),
+                        ),
+                      ),
+                  ],
+                ),
               );
               rows.add(row); // Add the row to the list
             }
@@ -127,38 +130,85 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
-// Helper method to build a medicament card
   Widget _buildMedicamentCard(Medicament medicament) {
-    return Card(
-      elevation: 3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _loadMedicamentImage(medicament.brandId),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+    return Container(
+      width: MediaQuery.of(context).size.width / 2 - 20, // Adjust the width as needed
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10),
+              Container(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: _loadMedicamentImage(medicament.brandId),
+                ),
+              ),
+              SizedBox(height: 10),
+              Center(
+                child: Text(
                   medicament.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 4),
-                Text('Expiry Date: ${DateFormat('dd/MM/yyyy').format(medicament.expiryDate)}'),
-                SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Quantity: ${medicament.quantity}'),
-                  ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Expiry',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    DateFormat('dd/MM/yyyy').format(medicament.expiryDate),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Quantity',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    '${medicament.quantity} piece(s)',
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  // Handle edit action here
+                  // For example, navigate to an edit screen or show a modal bottom sheet for editing
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Center(
+                    child: Text(
+                      'Edit',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -174,8 +224,8 @@ class _StockScreenState extends State<StockScreen> {
       borderRadius: BorderRadius.circular(8.0),
       child: Image.asset(
         imagePath,
-        width: 50,
-        height: 50,
+        width: 90,
+        height: 90,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
           return Image.asset(
