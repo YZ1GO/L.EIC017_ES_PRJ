@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'navigation_menu.dart';
+import 'package:app/medicaments.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +13,7 @@ void main() async {
         projectId: 'pingupills'
       )
   );
+  await MedicamentStock().initDatabase();
   runApp(const MyApp());
 }
 

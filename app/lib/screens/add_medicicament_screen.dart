@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/medicaments.dart';
 
 class AddMedicamentPage extends StatefulWidget {
   final Map<dynamic, dynamic>? brand;
@@ -11,6 +12,8 @@ class AddMedicamentPage extends StatefulWidget {
 }
 
 class _AddMedicamentPageState extends State<AddMedicamentPage> {
+  final MedicamentStock _medicamentStock = MedicamentStock();
+
   int _quantity = 1;
   DateTime _expiryDate = DateTime.now();
   String _notes = '';
@@ -77,7 +80,6 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                           widget.brand!['brand_name'],
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-
                           ),
                         ),
                       ),
@@ -93,7 +95,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      _loadMedicamentImage(null), // Use default image
+                      _loadMedicamentImage(null),
                       SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
@@ -244,7 +246,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // to be add
+                      _saveMedicament();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(225, 95, 0, 1),
@@ -261,6 +263,31 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         ),
       ),
     );
+  }
+
+  void _saveMedicament() async {
+    try {
+      Medicament newMedicament = Medicament(
+        id: DateTime.now().millisecondsSinceEpoch,
+        name: widget.brand != null ? widget.brand!['brand_name'] : widget.customMedicamentName!,
+        quantity: _quantity,
+        expiryDate: _expiryDate,
+        notes: _notes,
+        brandId: widget.brand != null ? int.tryParse(widget.brand!['brand_id']) : null,
+      );
+
+      int result = await _medicamentStock.insertMedicament(newMedicament);
+      if (result != -1) {
+        print('Medicament added successfully');
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+      } else {
+        print('Failed to add medicament');
+      }
+    } catch (e) {
+      print('Error saving medicament: $e');
+    }
   }
 
   Widget _loadMedicamentImage(int? brandId) {
