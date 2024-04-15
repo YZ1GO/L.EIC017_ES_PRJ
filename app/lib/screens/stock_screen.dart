@@ -49,19 +49,6 @@ class _StockScreenState extends State<StockScreen> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Positioned(
-                        top: 0,
-                        right: 20,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _medicamentsFuture = getMedicaments();
-                            });
-                            print(Text('refresh button pressed'));
-                          },
-                          icon: Icon(Icons.refresh, color: Colors.white),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -72,18 +59,64 @@ class _StockScreenState extends State<StockScreen> {
                       context,
                       MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
                     );
+                    print(Text('Add new medicament button pressed'));
                   },
-                  child: Text(
-                    'Add New Medicament',
-                    style: TextStyle(
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                    ),
-                  ),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
+                    foregroundColor: Color.fromRGBO(199, 84, 0, 1),
                     backgroundColor: Color.fromRGBO(255, 200, 150, 1),
                     elevation: 4,
                     shadowColor: Colors.black.withOpacity(0.5),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        size: 14,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Add new medicament',
+                        style: TextStyle(
+                          color: Color.fromRGBO(199, 84, 0, 1),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _medicamentsFuture = getMedicaments();
+                    });
+                    print(Text('refresh button pressed'));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Color.fromRGBO(199, 84, 0, 1),
+                    backgroundColor: Color.fromRGBO(255, 200, 150, 1),
+                    elevation: 4,
+                    shadowColor: Colors.black.withOpacity(0.5),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.refresh,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        size: 14,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Refresh',
+                        style: TextStyle(
+                          color: Color.fromRGBO(199, 84, 0, 1),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 20),
