@@ -88,9 +88,8 @@ class _StockScreenState extends State<StockScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 50),
                 medicamentList(),
-                SizedBox(height: 40),
               ],
             ),
           ],
@@ -140,6 +139,7 @@ class _StockScreenState extends State<StockScreen> {
               );
               rows.add(row);
             }
+            rows.add(SizedBox(height: 20));
             rows.add(Center(
               child: Text(
                 '\"honk honk!\"',
