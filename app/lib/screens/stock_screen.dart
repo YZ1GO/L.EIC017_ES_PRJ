@@ -250,7 +250,7 @@ class _StockScreenState extends State<StockScreen> {
               SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
-                  print(Text('TO BE DONE'));
+                  _showEditConfirmationDialog(medicament);
                 },
                 child: Container(
                   width: double.infinity,
@@ -290,6 +290,121 @@ class _StockScreenState extends State<StockScreen> {
     return await MedicamentStock().getMedicaments();
   }
 
+  Future<void> _showEditConfirmationDialog(Medicament medicament) async {
+    TextEditingController nameController = TextEditingController(text: medicament.name);
+    TextEditingController quantityController = TextEditingController(text: medicament.quantity.toString());
+    TextEditingController expiryDateController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(medicament.expiryDate));
+    TextEditingController notesController = TextEditingController(text: medicament.notes);
+
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Medicament'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: 'Name'),
+                ),
+                TextField(
+                  controller: quantityController,
+                  decoration: InputDecoration(labelText: 'Quantity'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: expiryDateController,
+                  decoration: InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
+                ),
+                SizedBox(height: 10), // Add some spacing
+                // Display the notes with multiple lines
+                TextField(
+                  controller: notesController,
+                  decoration: InputDecoration(labelText: 'Notes'),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null, // Allow unlimited lines
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the medicament with the new information
+                _updateMedicament(
+                  medicament,
+                  nameController.text,
+                  int.parse(quantityController.text),
+                  DateFormat('dd/MM/yyyy').parse(expiryDateController.text),
+                  notesController.text,
+                );
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteMedicament(Medicament medicament) async {
+    try {
+      int result = await MedicamentStock().deleteMedicament(medicament.id);
+      if (result > 0) {
+        print('Medicament deleted successfully');
+        setState(() {
+          _medicamentsFuture = getMedicaments();
+        });
+      } else {
+        print('Failed to delete medicament');
+      }
+    } catch (e) {
+      print('Error deleting medicament: $e');
+    }
+  }
+
+  void _updateMedicament(
+      Medicament medicament,
+      String newName,
+      int newQuantity,
+      DateTime newExpiryDate,
+      String newNotes,
+      ) async {
+    // Create a new instance of the Medicament with updated information
+    Medicament updatedMedicament = Medicament(
+      id: medicament.id,
+      name: newName,
+      quantity: newQuantity,
+      expiryDate: newExpiryDate,
+      notes: newNotes,
+      brandId: medicament.brandId,
+    );
+
+    try {
+      // Update the medicament in the database
+      await MedicamentStock().updateMedicament(updatedMedicament);
+      print('Medicament updated successfully');
+      // Optionally, you can refresh the UI to reflect the changes
+      setState(() {
+        // Update the list of medicaments
+        _medicamentsFuture = getMedicaments();
+      });
+    } catch (e) {
+      print('Error updating medicament: $e');
+      // Handle any errors
+    }
+  }
+
+
   Widget _loadMedicamentImage(int? brandId) {
     String imagePath = brandId != null ? 'assets/database/$brandId.jpg' : 'assets/database/default.jpg';
     return ClipRRect(
@@ -302,8 +417,8 @@ class _StockScreenState extends State<StockScreen> {
         errorBuilder: (context, error, stackTrace) {
           return Image.asset(
             'assets/database/default.jpg',
-            width: 50,
-            height: 50,
+            width: 90,
+            height: 90,
             fit: BoxFit.cover,
           );
         },

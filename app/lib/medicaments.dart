@@ -118,4 +118,20 @@ class MedicamentStock {
       return -1;
     }
   }
+
+  Future<void> updateMedicament(Medicament updatedMedicament) async {
+    try {
+      await _database.update(
+        'medicaments',
+        updatedMedicament.toMap(),
+        where: 'id = ?',
+        whereArgs: [updatedMedicament.id],
+      );
+      print('Updated medicament ${updatedMedicament.name}');
+    } catch (e) {
+      print('Error updating medicament: $e');
+      // Handle any errors
+    }
+  }
+
 }
