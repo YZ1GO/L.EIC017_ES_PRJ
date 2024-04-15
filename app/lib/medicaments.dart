@@ -97,4 +97,25 @@ class MedicamentStock {
       return [];
     }
   }
+
+  Future<int> deleteMedicament(int id) async {
+    try {
+      int rowsDeleted = await _database.delete(
+        'medicaments',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (rowsDeleted > 0) {
+        print('Deleted medicament with ID: $id');
+      } else {
+        print('No medicament found with ID: $id');
+      }
+
+      return rowsDeleted;
+    } catch (e) {
+      print('Error deleting medicament: $e');
+      return -1;
+    }
+  }
 }
