@@ -278,12 +278,12 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         brandId: widget.brand != null ? widget.brand!['brand_id'] : null,
       );
 
-      // Insert the new medicament
       int result = await _medicamentStock.insertMedicament(newMedicament);
       if (result != -1) {
         print('Medicament added successfully');
-        // Navigate back after successful insertion
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
       } else {
         print('Failed to add medicament');
       }
