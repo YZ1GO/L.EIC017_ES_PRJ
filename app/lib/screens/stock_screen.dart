@@ -13,6 +13,7 @@ class StockScreen extends StatefulWidget {
 
 class _StockScreenState extends State<StockScreen> {
   late Future<List<Medicament>> _medicamentsFuture;
+  late Medicament _lastDeletedMedicament;
 
   @override
   void initState() {
@@ -446,13 +447,46 @@ class _StockScreenState extends State<StockScreen> {
       int result = await MedicamentStock().deleteMedicament(medicament.id);
       if (result > 0) {
         print('Medicament deleted successfully');
+        setState(() {
+          // Add the deleted medicament to the list of deleted items
+          _lastDeletedMedicament = medicament;
+        });
         refreshStockList();
+        _showUndoSnackbar(medicament);
       } else {
         print('Failed to delete medicament');
       }
     } catch (e) {
       print('Error deleting medicament: $e');
     }
+  }
+
+  void _undoDeleteMedicament(Medicament medicament) async {
+    try {
+      int result = await MedicamentStock().insertMedicament(medicament);
+      if (result != -1) {
+        print('Medicament restored successfully');
+        refreshStockList();
+      } else {
+        print('Failed to restore medicament');
+      }
+    } catch (e) {
+      print('Error restoring medicament: $e');
+    }
+  }
+
+  void _showUndoSnackbar(Medicament medicament) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Medicament ${medicament.name} deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            _undoDeleteMedicament(medicament);
+          },
+        ),
+      ),
+    );
   }
 
   void _updateMedicament(
