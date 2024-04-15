@@ -1,10 +1,23 @@
-import 'package:app/screens/add_medicicament_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/eclipse_background.dart';
-import 'database.dart';
+import 'package:app/widgets/eclipse_background.dart';
+import 'package:app/screens/database.dart';
+import 'package:app/medicaments.dart';
 
-class StockScreen extends StatelessWidget {
+class StockScreen extends StatefulWidget {
   const StockScreen({Key? key});
+
+  @override
+  _StockScreenState createState() => _StockScreenState();
+}
+
+class _StockScreenState extends State<StockScreen> {
+  late Future<List<Medicament>> _medicamentsFuture; // Declare as a member variable
+
+  @override
+  void initState() {
+    super.initState();
+    _medicamentsFuture = getMedicaments(); // Initialize the future in initState
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,234 +28,86 @@ class StockScreen extends StatelessWidget {
           Positioned.fill(
             child: eclipse_background(),
           ),
-          SingleChildScrollView(
-            physics: ScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(height: 60),
-                Container(
-                  height: kToolbarHeight,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      'MEDICINE STOCK',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        backgroundColor: Colors.transparent,
-                      ),
+          Column(
+            children: [
+              SizedBox(height: 60),
+              Container(
+                height: kToolbarHeight,
+                color: Colors.transparent,
+                child: Center(
+                  child: Text(
+                    'MEDICINE STOCK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      backgroundColor: Colors.transparent,
                     ),
                   ),
                 ),
-                SizedBox(height: 70),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 155,
-                          height: 240,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Container(
-                              width: 77,
-                              height: 77,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: Color.fromRGBO(58, 44, 0, 1),
-                                  width: 1.5,
-                                )
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 220, 194, 1),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
-                                      );
-                                    },
-                                    icon: Icon(Icons.add),
-                                    iconSize: 25,
-                                    color: Color.fromRGBO(58, 44, 0, 1),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 155,
-                          height: 240,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 220, 194, 1),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-
-                            },
-                            icon: Icon(Icons.medical_services_outlined),
-                            iconSize: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 155,
-                          height: 240,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 220, 194, 1),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              // Add your action here
-                            },
-                            icon: Icon(Icons.medical_services_outlined),
-                            iconSize: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 155,
-                          height: 240,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 220, 194, 1),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                            },
-                            icon: Icon(Icons.medical_services_outlined),
-                            iconSize: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 155,
-                          height: 240,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 220, 194, 1),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              // Add your action here
-                            },
-                            icon: Icon(Icons.medical_services_outlined),
-                            iconSize: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: kToolbarHeight,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      '\"honk honk! It\'s the end!\"',
-                      style: TextStyle(
-                        color: Color.fromRGBO(199,54,00,1),
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        backgroundColor: Colors.transparent,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 150),
-              ],
-            ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DatabaseContentScreen())
+                  );
+                },
+                child: Text('Add New Medicament'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _medicamentsFuture = getMedicaments(); // Update the future to refresh the stock
+                  });
+                },
+                child: Text('Refresh Stock'),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: medicamentList(),
+              ),
+              SizedBox(height: 150),
+            ],
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your action here
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Color.fromRGBO(255, 220, 194, 1),
-      ),
     );
+  }
+
+  Widget medicamentList() {
+    return FutureBuilder<List<Medicament>>(
+      future: _medicamentsFuture, // Use the member variable
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          List<Medicament>? medicaments = snapshot.data; // Get the medicaments from snapshot
+          print('Stock items ${medicaments?.length ?? 0}');
+          if (medicaments != null && medicaments.isNotEmpty) {
+            return ListView.builder(
+              itemCount: medicaments.length,
+              itemBuilder: (context, index) {
+                Medicament medicament = medicaments[index];
+                return ListTile(
+                  title: Text(medicament.name),
+                  subtitle: Text('Quantity: ${medicament.quantity}'),
+                );
+              },
+            );
+          } else {
+            return Center(child: Text('No medicaments in stock'));
+          }
+        }
+      },
+    );
+  }
+
+  Future<List<Medicament>> getMedicaments() async {
+    return await MedicamentStock().getMedicaments();
   }
 }

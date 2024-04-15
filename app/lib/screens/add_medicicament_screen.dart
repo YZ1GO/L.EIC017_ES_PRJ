@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/medicaments.dart';
 
 class AddMedicamentPage extends StatefulWidget {
   final Map<dynamic, dynamic>? brand;
@@ -11,6 +12,8 @@ class AddMedicamentPage extends StatefulWidget {
 }
 
 class _AddMedicamentPageState extends State<AddMedicamentPage> {
+  final MedicamentStock _medicamentStock = MedicamentStock();
+
   int _quantity = 1;
   DateTime _expiryDate = DateTime.now();
   String _notes = '';
@@ -244,7 +247,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // to be add
+                      _saveMedicament();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(225, 95, 0, 1),
@@ -262,6 +265,34 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       ),
     );
   }
+
+  void _saveMedicament() async {
+    try {
+      // Prepare Medicament object
+      Medicament newMedicament = Medicament(
+        id: DateTime.now().millisecondsSinceEpoch, // Unique ID
+        name: widget.brand != null ? widget.brand!['brand_name'] : widget.customMedicamentName!,
+        quantity: _quantity,
+        expiryDate: _expiryDate,
+        notes: _notes,
+        brandId: widget.brand != null ? widget.brand!['brand_id'] : null,
+      );
+
+      // Insert the new medicament
+      int result = await _medicamentStock.insertMedicament(newMedicament);
+      if (result != -1) {
+        print('Medicament added successfully');
+        // Navigate back after successful insertion
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+      } else {
+        print('Failed to add medicament');
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Error saving medicament: $e');
+    }
+  }
+
 
   Widget _loadMedicamentImage(int? brandId) {
     String imagePath = brandId != null ? 'assets/database/$brandId.jpg' : 'assets/database/default.jpg';
