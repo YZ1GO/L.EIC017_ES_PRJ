@@ -54,9 +54,7 @@ class _StockScreenState extends State<StockScreen> {
                         right: 20,
                         child: IconButton(
                           onPressed: () {
-                            setState(() {
-                              _medicamentsFuture = getMedicaments();
-                            });
+                            _medicamentsFuture = getMedicaments();
                           },
                           icon: Icon(Icons.refresh, color: Colors.white),
                         ),
@@ -123,22 +121,25 @@ class _StockScreenState extends State<StockScreen> {
             medicaments.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
             List<Widget> rows = [];
             for (int i = 0; i < medicaments.length; i += 2) {
+              bool isLastItem = i + 1 == medicaments.length;
+              bool isSingleItem = !isLastItem && i + 2 == medicaments.length;
               Widget row = Container(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
+                      flex: isSingleItem ? 1 : 0,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: _buildMedicamentCard(medicaments[i]),
+                        child: _buildMedicamentCard(medicaments[i], isLastItem, isSingleItem),
                       ),
                     ),
-                    if (i + 1 < medicaments.length)
+                    if (!isLastItem)
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: _buildMedicamentCard(medicaments[i + 1]),
+                          child: _buildMedicamentCard(medicaments[i + 1], false, false),
                         ),
                       ),
                   ],
@@ -157,7 +158,7 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
-  Widget _buildMedicamentCard(Medicament medicament) {
+  Widget _buildMedicamentCard(Medicament medicament, bool isLastItem, bool isSingleItem) {
     return Container(
       width: MediaQuery.of(context).size.width / 2 - 20,
       child: Card(
@@ -230,12 +231,12 @@ class _StockScreenState extends State<StockScreen> {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    '${medicament.quantity} piece(s)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                      fontSize: 12,
-                    )
+                      '${medicament.quantity} piece(s)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        fontSize: 12,
+                      )
                   ),
                 ],
               ),
@@ -277,7 +278,6 @@ class _StockScreenState extends State<StockScreen> {
       ),
     );
   }
-
 
   Future<List<Medicament>> getMedicaments() async {
     return await MedicamentStock().getMedicaments();

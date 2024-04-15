@@ -80,7 +80,6 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                           widget.brand!['brand_name'],
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-
                           ),
                         ),
                       ),
@@ -96,7 +95,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      _loadMedicamentImage(null), // Use default image
+                      _loadMedicamentImage(null),
                       SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
@@ -268,9 +267,8 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
 
   void _saveMedicament() async {
     try {
-      // Prepare Medicament object
       Medicament newMedicament = Medicament(
-        id: DateTime.now().millisecondsSinceEpoch, // Unique ID
+        id: DateTime.now().millisecondsSinceEpoch,
         name: widget.brand != null ? widget.brand!['brand_name'] : widget.customMedicamentName!,
         quantity: _quantity,
         expiryDate: _expiryDate,
@@ -292,7 +290,6 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       print('Error saving medicament: $e');
     }
   }
-
 
   Widget _loadMedicamentImage(int? brandId) {
     String imagePath = brandId != null ? 'assets/database/$brandId.jpg' : 'assets/database/default.jpg';
