@@ -90,19 +90,7 @@ class _StockScreenState extends State<StockScreen> {
                 ),
                 SizedBox(height: 20),
                 medicamentList(),
-                SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    '\"honk honk! It\'s the end!\"',
-                    style: TextStyle(
-                      color: Color.fromRGBO(199,54,00,1),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 160),
+                SizedBox(height: 40),
               ],
             ),
           ],
@@ -152,11 +140,39 @@ class _StockScreenState extends State<StockScreen> {
               );
               rows.add(row);
             }
+            rows.add(Center(
+              child: Text(
+                '\"honk honk!\"',
+                style: TextStyle(
+                  color: Color.fromRGBO(199,54,00,1),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+            ));
+            rows.add(Center(
+              child: Text(
+                'It\'s the end of the list\"',
+                style: TextStyle(
+                  color: Color.fromRGBO(199,54,00,1),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+            ));
+            rows.add(SizedBox(height: 160));
             return Column(
               children: rows,
             );
           } else {
-            return Center(child: Text('No medicaments in stock'));
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 125),
+                child: Text('No medicaments in stock'),
+              ),
+            );
           }
         }
       },
@@ -248,7 +264,7 @@ class _StockScreenState extends State<StockScreen> {
               SizedBox(height: 12),
               GestureDetector(
                 onTap: () {
-                  _showEditConfirmationDialog(medicament);
+                  _showEditPopUp(medicament);
                 },
                 child: Container(
                   width: double.infinity,
@@ -284,11 +300,7 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
-  Future<List<Medicament>> getMedicaments() async {
-    return await MedicamentStock().getMedicaments();
-  }
-
-  Future<void> _showEditConfirmationDialog(Medicament medicament) async {
+  Future<void> _showEditPopUp(Medicament medicament) async {
     TextEditingController nameController = TextEditingController(text: medicament.name);
     TextEditingController quantityController = TextEditingController(text: medicament.quantity.toString());
     TextEditingController expiryDateController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(medicament.expiryDate));
@@ -321,7 +333,7 @@ class _StockScreenState extends State<StockScreen> {
                   controller: notesController,
                   decoration: InputDecoration(labelText: 'Notes'),
                   keyboardType: TextInputType.multiline,
-                  maxLines: null, // Allow unlimited lines
+                  maxLines: null,
                 ),
               ],
             ),
@@ -336,7 +348,7 @@ class _StockScreenState extends State<StockScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _showDeleteConfirmationDialog(medicament);
+                _showDeleteConfirmationPopUp(medicament);
               },
               child: Text(
                 'Delete',
@@ -362,7 +374,7 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
-  Future<void> _showDeleteConfirmationDialog(Medicament medicament) async {
+  Future<void> _showDeleteConfirmationPopUp(Medicament medicament) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -372,7 +384,18 @@ class _StockScreenState extends State<StockScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure you want to delete ${medicament.name}?'),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Are you sure you want to delete '),
+                      TextSpan(
+                        text: medicament.name,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(text: '?'),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -387,7 +410,7 @@ class _StockScreenState extends State<StockScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _showEditConfirmationDialog(medicament);
+                _showEditPopUp(medicament);
               },
               child: Text('No'),
             ),
@@ -434,6 +457,10 @@ class _StockScreenState extends State<StockScreen> {
     } catch (e) {
       print('Error updating medicament: $e');
     }
+  }
+
+  Future<List<Medicament>> getMedicaments() async {
+    return await MedicamentStock().getMedicaments();
   }
 
   void refreshStockList() async {
