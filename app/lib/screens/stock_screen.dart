@@ -312,6 +312,7 @@ class _StockScreenState extends State<StockScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit Medicament'),
+          backgroundColor: Colors.white,
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -328,7 +329,6 @@ class _StockScreenState extends State<StockScreen> {
                   controller: expiryDateController,
                   decoration: InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
                 ),
-                SizedBox(height: 10),
                 TextField(
                   controller: notesController,
                   decoration: InputDecoration(labelText: 'Notes'),
@@ -343,7 +343,12 @@ class _StockScreenState extends State<StockScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Color.fromRGBO(100, 50, 13 ,1),
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -366,7 +371,12 @@ class _StockScreenState extends State<StockScreen> {
                 );
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: Text(
+                'Save',
+                style: TextStyle(
+                  color: Color.fromRGBO(100, 50, 13 ,1),
+                ),
+              ),
             ),
           ],
         );
@@ -381,6 +391,7 @@ class _StockScreenState extends State<StockScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Delete'),
+          backgroundColor: Colors.white,
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -405,14 +416,24 @@ class _StockScreenState extends State<StockScreen> {
                 _deleteMedicament(medicament);
                 Navigator.pop(context);
               },
-              child: Text('Yes'),
+              child: Text(
+                'Yes',
+                style: TextStyle(
+                  color: Color.fromRGBO(100, 50, 13 ,1),
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _showEditPopUp(medicament);
               },
-              child: Text('No'),
+              child: Text(
+                'No',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
             ),
           ],
         );
