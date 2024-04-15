@@ -60,9 +60,7 @@ class _StockScreenState extends State<StockScreen> {
                       MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
                     );
                     print(Text('Add new medicament button pressed'));
-                    setState(() {
-                      _medicamentsFuture = getMedicaments();
-                    });
+                    refreshStockList();
                     print(Text('Refreshed medicaments list'));
                   },
                   style: ElevatedButton.styleFrom(
@@ -296,7 +294,7 @@ class _StockScreenState extends State<StockScreen> {
     TextEditingController expiryDateController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(medicament.expiryDate));
     TextEditingController notesController = TextEditingController(text: medicament.notes);
 
-    return showDialog<void>(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -318,8 +316,7 @@ class _StockScreenState extends State<StockScreen> {
                   controller: expiryDateController,
                   decoration: InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
                 ),
-                SizedBox(height: 10), // Add some spacing
-                // Display the notes with multiple lines
+                SizedBox(height: 10),
                 TextField(
                   controller: notesController,
                   decoration: InputDecoration(labelText: 'Notes'),
@@ -338,7 +335,16 @@ class _StockScreenState extends State<StockScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Update the medicament with the new information
+                Navigator.of(context).pop();
+                _showDeleteConfirmationDialog(medicament);
+              },
+              child: Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
                 _updateMedicament(
                   medicament,
                   nameController.text,
@@ -356,14 +362,47 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
+  Future<void> _showDeleteConfirmationDialog(Medicament medicament) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Delete'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to delete ${medicament.name}?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _deleteMedicament(medicament);
+                Navigator.pop(context);
+              },
+              child: Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showEditConfirmationDialog(medicament);
+              },
+              child: Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _deleteMedicament(Medicament medicament) async {
     try {
       int result = await MedicamentStock().deleteMedicament(medicament.id);
       if (result > 0) {
         print('Medicament deleted successfully');
-        setState(() {
-          _medicamentsFuture = getMedicaments();
-        });
+        refreshStockList();
       } else {
         print('Failed to delete medicament');
       }
@@ -379,7 +418,6 @@ class _StockScreenState extends State<StockScreen> {
       DateTime newExpiryDate,
       String newNotes,
       ) async {
-    // Create a new instance of the Medicament with updated information
     Medicament updatedMedicament = Medicament(
       id: medicament.id,
       name: newName,
@@ -390,20 +428,19 @@ class _StockScreenState extends State<StockScreen> {
     );
 
     try {
-      // Update the medicament in the database
       await MedicamentStock().updateMedicament(updatedMedicament);
       print('Medicament updated successfully');
-      // Optionally, you can refresh the UI to reflect the changes
-      setState(() {
-        // Update the list of medicaments
-        _medicamentsFuture = getMedicaments();
-      });
+      refreshStockList();
     } catch (e) {
       print('Error updating medicament: $e');
-      // Handle any errors
     }
   }
 
+  void refreshStockList() async {
+    setState(() {
+      _medicamentsFuture = getMedicaments();
+    });
+  }
 
   Widget _loadMedicamentImage(int? brandId) {
     String imagePath = brandId != null ? 'assets/database/$brandId.jpg' : 'assets/database/default.jpg';
