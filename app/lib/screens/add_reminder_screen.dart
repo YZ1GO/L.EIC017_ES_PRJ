@@ -171,7 +171,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 22.0),
                     const Padding(
                       padding: EdgeInsets.only(left: 12.0),
                       child: Text(
