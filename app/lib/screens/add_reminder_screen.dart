@@ -7,6 +7,83 @@ class AddReminderPage extends StatefulWidget {
   _AddReminderPageState createState() => _AddReminderPageState();
 }
 
+class DaySelectionCircle extends StatefulWidget {
+  final bool isSelected;
+  final int index;
+  final Function(bool) onChanged;
+
+  DaySelectionCircle({
+    required this.isSelected,
+    required this.index,
+    required this.onChanged,
+  });
+
+  @override
+  _DaySelectionCircleState createState() => _DaySelectionCircleState();
+
+  static String _getDayName(int index) {
+    switch (index) {
+      case 0:
+        return 'Sun';
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+      default:
+        return '';
+    }
+  }
+}
+
+class _DaySelectionCircleState extends State<DaySelectionCircle> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _isSelected = !_isSelected;
+        });
+        widget.onChanged(_isSelected);
+      },
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: _isSelected ? const Color.fromRGBO(171, 58, 0, 1) : Colors.grey[300],
+        ),
+        child: Center(
+          child: Text(
+            DaySelectionCircle._getDayName(widget.index),
+            style: TextStyle(
+              color: _isSelected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _AddReminderPageState extends State<AddReminderPage> {
   String _reminderName = '';
   DateTime _startDate = DateTime.now();
@@ -15,6 +92,8 @@ class _AddReminderPageState extends State<AddReminderPage> {
     TimeOfDay(hour: 13, minute: 0),
     TimeOfDay(hour: 19, minute: 0),
   ]; // Default time
+  bool _everyDay = true;
+  List<bool> _selectedDays = [false, false, false, false, false, false, false];
 
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -84,6 +163,45 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         decoration: const InputDecoration(
                           hintText: 'Enter reminder name',
                           border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Frequency',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Color.fromRGBO(171, 58, 0, 1),
+                      ),
+                    ),
+                    SizedBox(height: 6.0),
+                    GestureDetector(
+                      onTap: () {
+                        _showFrequencyBottomSheet(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(225, 95, 0, 1),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.penToSquare,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              _everyDay ? 'Remind me everyday' : _getSelectedDaysText(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -271,5 +389,106 @@ class _AddReminderPageState extends State<AddReminderPage> {
     print('Reminder Name: $_reminderName');
     print('Start Date: $_startDate');
     print('Times: $_times');
+    print('Frequency: ${_everyDay ? 'Everyday' : 'Select days of week'}');
+  }
+
+  void _showFrequencyBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Text('Remind me everyday'),
+              onTap: () {
+                setState(() {
+                  _everyDay = true;
+                  _selectedDays = [false, false, false, false, false, false, false];
+                });
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Select days of week'),
+              onTap: () {
+                _everyDay = false;
+                _showDaysOfWeekBottomSheet(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDaysOfWeekBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close current modal sheet
+                  },
+                  icon: Icon(Icons.arrow_back), // Back button
+                ),
+                TextButton( // Changed from ElevatedButton to TextButton
+                  onPressed: () {
+                    Navigator.pop(context); // Close current modal sheet
+                  },
+                  child: const Text(
+                      'Done',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.grey,
+              thickness: 1,
+              height: 0,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  7,
+                      (index) => DaySelectionCircle(
+                    isSelected: _selectedDays[index],
+                    index: index,
+                    onChanged: (isSelected) {
+                      setState(() {
+                        _selectedDays[index] = isSelected;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  String _getSelectedDaysText() {
+    List<String> selectedDays = [];
+    for (int i = 0; i < _selectedDays.length; i++) {
+      if (_selectedDays[i]) {
+        selectedDays.add(DaySelectionCircle._getDayName(i));
+      }
+    }
+    return selectedDays.isEmpty ? 'Select days of week' : selectedDays.join(', ');
   }
 }
