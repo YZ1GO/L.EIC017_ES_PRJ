@@ -349,8 +349,8 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       Navigator.of(context).pop(); // Close the page
                     },
                     child: Container(
-                      padding: EdgeInsets.all(15.0),
-                      child: Icon(
+                      padding: const EdgeInsets.all(15.0),
+                      child: const Icon(
                         Icons.close,
                         color: Colors.black,
                         size: 28.0,
