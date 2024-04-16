@@ -142,258 +142,263 @@ class _AddReminderPageState extends State<AddReminderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 120),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 195, 150, 1),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        _reminderName = value;
-                      });
-                    },
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter reminder name',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 22.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    'Frequency',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color.fromRGBO(171, 58, 0, 1),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showFrequencyBottomSheet(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(225, 95, 0, 1),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          FontAwesomeIcons.penToSquare,
-                          color: Colors.white,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 120),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 195, 150, 1),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          _everyDay ? 'Remind me everyday' : _getSelectedDaysText(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              _reminderName = value;
+                            });
+                          },
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter reminder name',
+                            border: InputBorder.none,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    'Start Date',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color.fromRGBO(171, 58, 0, 1),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectStartDate(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(225, 95, 0, 1),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          FontAwesomeIcons.calendarCheck,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          DateFormat('MMMM d, y').format(_startDate),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                      ),
+                      const SizedBox(height: 22.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          'Frequency',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    'Time',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color.fromRGBO(171, 58, 0, 1),
-                    ),
-                  ),
-                ),
-                Column(
-                  children: _times
-                      .asMap()
-                      .map((index, time) => MapEntry(
-                    index,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _showFrequencyBottomSheet(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          child: Text(
-                            '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.penToSquare,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                _everyDay ? 'Remind me everyday' : _getSelectedDaysText(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 8.0),
-                        GestureDetector(
-                          onTap: () => _removeTime(index),
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 10.0),
-                            width: MediaQuery.of(context).size.width * 0.1,
-                            padding: const EdgeInsets.symmetric(vertical: 13.0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(0, 178, 65, 1),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 16.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))
-                      .values
-                      .toList(),
-                ),
-                const SizedBox(height: 8.0),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 45,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      _selectTime(context);
-                    },
-                    backgroundColor: const Color.fromRGBO(255, 195, 150, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add, color: Color.fromRGBO(215, 74, 0, 1)),
-                        Text(
-                          'Add',
+                      ),
+                      const SizedBox(height: 16.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          'Start Date',
                           style: TextStyle(
-                            color: Color.fromRGBO(215, 74, 0, 1),
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
                           ),
                         ),
-                      ],
+                      ),
+                      GestureDetector(
+                        onTap: () => _selectStartDate(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(225, 95, 0, 1),
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.calendarCheck,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                DateFormat('MMMM d, y').format(_startDate),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          'Time',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: _times
+                            .asMap()
+                            .map((index, time) => MapEntry(
+                          index,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10.0),
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(225, 95, 0, 1),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Text(
+                                  '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              GestureDetector(
+                                onTap: () => _removeTime(index),
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 10.0),
+                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  padding: const EdgeInsets.symmetric(vertical: 13.0),
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(0, 178, 65, 1),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                            .values
+                            .toList(),
+                      ),
+                      const SizedBox(height: 8.0),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 45,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            _selectTime(context);
+                          },
+                          backgroundColor: const Color.fromRGBO(255, 195, 150, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add, color: Color.fromRGBO(215, 74, 0, 1)),
+                              Text(
+                                'Add',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(215, 74, 0, 1),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24.0),
+                    ],
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: -15,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop(); // Close the page
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: const Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 28.0,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24.0), // Added some spacing at the bottom
-              ],
+                  Positioned(
+                    top: 17,
+                    left: (MediaQuery.of(context).size.width - 150) / 2,
+                    child: Image.asset(
+                      'assets/icons/pingu-transparent-shadow.png',
+                      width: 120,
+                      height: 120,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Positioned(
-              top: 10,
-              left: -15,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop(); // Close the page
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(15.0),
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 28.0,
+          ),
+          Container(
+            color: const Color.fromRGBO(215, 74, 0, 1),
+            width: double.infinity, // Occupies the whole width of the screen
+            child: GestureDetector(
+              onTap: () {
+                _saveReminder();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: const Text(
+                  'Done',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
-            Positioned(
-              top: 17,
-              left: (MediaQuery.of(context).size.width - 150) / 2,
-              child: Image.asset(
-                  'assets/icons/pingu-transparent-shadow.png',
-                  width: 120,
-                  height: 120,
-              ),
-            ),
-            Positioned(
-              bottom: 16,
-              left: 0,
-              right: 0,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle saving reminder here
-                    _saveReminder();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                  ),
-                  child: Text(
-                    'Done',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-
 
   void _saveReminder() {
     // Implement saving reminder logic here
