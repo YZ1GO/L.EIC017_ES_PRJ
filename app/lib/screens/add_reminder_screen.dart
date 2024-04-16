@@ -253,7 +253,46 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          'Medicament',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => {},
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(225, 95, 0, 1),
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.pills,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'To be Done',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
                       const Padding(
                         padding: EdgeInsets.only(left: 12.0),
                         child: Text(
