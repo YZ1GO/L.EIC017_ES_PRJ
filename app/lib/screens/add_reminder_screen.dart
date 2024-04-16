@@ -10,11 +10,13 @@ class AddReminderPage extends StatefulWidget {
 class DaySelectionCircle extends StatefulWidget {
   final bool isSelected;
   final int index;
+  final List<bool> selectedDays;
   final Function(bool) onChanged;
 
   DaySelectionCircle({
     required this.isSelected,
     required this.index,
+    required this.selectedDays,
     required this.onChanged,
   });
 
@@ -56,6 +58,9 @@ class _DaySelectionCircleState extends State<DaySelectionCircle> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if (!_isSelected && widget.selectedDays.where((day) => day).length >= 6) {
+          return;
+        }
         setState(() {
           _isSelected = !_isSelected;
         });
@@ -467,11 +472,15 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       (index) => DaySelectionCircle(
                     isSelected: _selectedDays[index],
                     index: index,
-                    onChanged: (isSelected) {
-                      setState(() {
-                        _selectedDays[index] = isSelected;
-                      });
-                    },
+                        selectedDays: _selectedDays,
+                        onChanged: (isSelected) {
+                          if (isSelected && _selectedDays.where((day) => day).length >= 6) {
+                            return;
+                          }
+                          setState(() {
+                            _selectedDays[index] = isSelected;
+                          });
+                        },
                   ),
                 ),
               ),
