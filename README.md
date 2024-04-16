@@ -175,7 +175,14 @@ Increment features that adds value to the end-user.
 </table>
 
 #### Reflection
+__Calendar:__
+Could've implemented local storage when taking medicament upon pressing 'Take' in a medication reminder. So if app was closed and reopened the specific reminder would show as taken and not reset to all as not taken.
 
->Could've implemented local storage when taking medicament upon pressing 'Take' in a medication reminder. So if app was closed and reopened the specific reminder would show as taken and not reset to all as not taken.
+The scrolling part of home screen was an issue due to the way calendar and medication reminder widgets were implemented.
 
->The scrolling part of home screen was an issue due to the way calendar and medication reminder widgets were implemented.
+__Stock:__
+During the implementation of the medicaments stock feature, we encountered several challenges, particularly when integrating it with the real-time Firebase database. Initially, we faced difficulties in understanding why the data was not appearing as expected. Eventually, we realized that our database was quite large, and each request to Firebase required data transfer, putting a strain on network performance. While this issue is common, it was not ideal for our project, as it impacted the user experience. We are gonna try to find another solution to as trying to save as cache the received data if possible.
+
+Another significant portion of our time was spent working on the local database solution. Initially, we attempted to use `shared_preferences` for managing the local medicaments stock, but it did not meet our expectations. Eventually, we transitioned to using `sqflite`, which proved to be more effective and reliable in storing and retrieving data locally.
+
+In terms of UI development, we encountered challenges with the layout of the stock screen, especially with implementing double columns. At the end of all, there are still some non-critical UI errors that need to be addressed, but we plan to address them once all the app features are implemented and tested thoroughly.
