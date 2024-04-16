@@ -57,7 +57,27 @@ The **mobile device** acts as **interaction platform** between the **user** and 
 
 <p align="center"><img src="assets/diagrams/physical/physical_architecture.png" width=60%></p>
 
-### Vertical Prototype
+## Sprint Backlogs
+
+### Beginning 
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_0.png">
+      <p align="center">Beginning 0</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_1.png">
+      <p align="center">Beginning 1</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_initial_2.png">
+      <p align="center">Beginning 2</p>
+    </td>
+  </tr>
+</table>
+
+### Sprint 0 - Vertical Prototype
 Develop screens showcasing various features for demonstration purposes.
 
 - __UI and buttons:__ Colors and Icons combinations.
@@ -99,30 +119,48 @@ Develop screens showcasing various features for demonstration purposes.
   </tr>
 </table>
 
-### Backlog
+### Sprint 1
+Increment features that adds value to the end-user.
+
+#### Backlog screenshots
 <table>
   <tr>
     <td align="center">
-      <img src="assets/backlog/backlog_initial_0.png">
-      <p align="center">Beginning 0</p>
+      <img src="assets/backlog/backlog_sprint1_initial_0.png">
+      <p align="center">Sprint 1 - Initial 0</p>
     </td>
     <td align="center">
-      <img src="assets/backlog/backlog_initial_1.png">
-      <p align="center">Beginning 1</p>
-    </td>
-    <td align="center">
-      <img src="assets/backlog/backlog_initial_2.png">
-      <p align="center">Beginning 2</p>
+      <img src="assets/backlog/backlog_sprint1_initial_1.png">
+      <p align="center">Sprint 1 - Initial 1</p>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="assets/backlog/backlog_sprint0_initial_0.png">
-      <p align="center">Sprint 0 - Initial 0</p>
-    </td>
-    <td align="center">
-      <img src="assets/backlog/backlog_sprint0_initial_1.png">
-      <p align="center">Sprint 0 - Initial 1</p>
+      <img src="assets/backlog/backlog_sprint1_final.png">
+      <p align="center">Sprint 1 - Final </p>
     </td>
   </tr>
 </table>
+
+#### Implemented User Stories
+- [Calendar within the app to visualize all my medication schedules](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56155588)
+
+![](gif)
+
+- [Option to cancel a scheduled medication intake or to cancel a missclick as medication taken](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917359)
+
+![](gif)
+
+- [Have access to the newest medicaments database](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=57633051)
+
+![](gif)
+
+- [Suggest medicaments when adding a new medicament to the stock (like an autofill)](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56912518)
+
+![](gif)
+
+- [Add medicaments to the app's stock and specify the remaining quantity and expiration date](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56157786)
+
+![](gif)
+
+
