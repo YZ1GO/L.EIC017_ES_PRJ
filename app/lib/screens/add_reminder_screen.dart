@@ -172,15 +172,17 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    const Text(
-                      'Frequency',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Color.fromRGBO(171, 58, 0, 1),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 12.0),
+                      child: Text(
+                        'Frequency',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Color.fromRGBO(171, 58, 0, 1),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 6.0),
                     GestureDetector(
                       onTap: () {
                         _showFrequencyBottomSheet(context);
@@ -211,15 +213,17 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    const Text(
-                      'Start Date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Color.fromRGBO(171, 58, 0, 1),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 12.0),
+                      child: Text(
+                        'Start Date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Color.fromRGBO(171, 58, 0, 1),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 6.0),
                     GestureDetector(
                       onTap: () => _selectStartDate(context),
                       child: Container(
@@ -248,15 +252,17 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    const Text(
-                      'Times',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Color.fromRGBO(171, 58, 0, 1),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 12.0),
+                      child: Text(
+                        'Time',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Color.fromRGBO(171, 58, 0, 1),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 6.0),
                     Column(
                       children: _times
                           .asMap()
