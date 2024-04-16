@@ -143,24 +143,35 @@ Increment features that adds value to the end-user.
 </table>
 
 #### Implemented User Stories
-- [Calendar within the app to visualize all my medication schedules](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56155588)
+1. [Calendar within the app to visualize all my medication schedules](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56155588)
 
-![](gif)
+<p align="center"><img src="assets/gifs/sprint1/Sprint1_Calendar.gif" width=33%></p>
 
-- [Option to cancel a scheduled medication intake or to cancel a missclick as medication taken](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917359)
+2. [Option to cancel a scheduled medication intake or to cancel a missclick as medication taken](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917359)
 
-![](gif)
+<p align="center"><img src="assets/gifs/sprint1/Sprint1_Take.gif" width=33%></p>
 
-- [Have access to the newest medicaments database](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=57633051)
+3. [Have access to the newest medicaments database](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=57633051)
 
-![](gif)
+4. [Suggest medicaments when adding a new medicament to the stock (like an autofill)](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56912518)
 
-- [Suggest medicaments when adding a new medicament to the stock (like an autofill)](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56912518)
+5. [Add medicaments to the app's stock and specify the remaining quantity and expiration date](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56157786)
 
-![](gif)
-
-- [Add medicaments to the app's stock and specify the remaining quantity and expiration date](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56157786)
-
-![](gif)
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/gifs/sprint1/Sprint1_Add_medicament.gif" width=80%>
+      <p align="center">Add a new medicament</p>
+    </td>
+    <td align="center">
+      <img src="assets/gifs/sprint1/Sprint1_Edit_medicament.gif" width=80%>
+      <p align="center">Edit medicament information</p>
+    </td>
+    <td align="center">
+      <img src="assets/gifs/sprint1/Sprint1_Delete_Undo.gif" width=80%>
+      <p align="center">Undo delete medicament action</p>
+    </td>
+  </tr>
+</table>
 
 
