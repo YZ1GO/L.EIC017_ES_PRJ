@@ -1,5 +1,7 @@
+import 'package:app/screens/add_reminder_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 
 void showControlCenter(BuildContext context) {
   showModalBottomSheet(
@@ -26,6 +28,10 @@ void showControlCenter(BuildContext context) {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddReminderPage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
