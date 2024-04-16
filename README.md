@@ -174,4 +174,8 @@ Increment features that adds value to the end-user.
   </tr>
 </table>
 
+#### Reflection
 
+>Could've implemented local storage when taking medicament upon pressing 'Take' in a medication reminder. So if app was closed and reopened the specific reminder would show as taken and not reset to all as not taken.
+
+>The scrolling part of home screen was an issue due to the way calendar and medication reminder widgets were implemented.
