@@ -97,6 +97,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
     TimeOfDay(hour: 13, minute: 0),
     TimeOfDay(hour: 19, minute: 0),
   ]; // Default time
+  String _medicament = 'Paracetamol (Test)';
   bool _everyDay = true;
   List<bool> _selectedDays = [false, false, false, false, false, false, false];
 
@@ -429,12 +430,14 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   void _saveReminder() {
-    // Implement saving reminder logic here
-    // For now, you can print reminder details
-    print('Reminder Name: $_reminderName');
-    print('Start Date: $_startDate');
-    print('Times: $_times');
-    print('Frequency: ${_everyDay ? 'Everyday' : 'Select days of week'}');
+    Navigator.pop(context, {
+      'reminderName': _reminderName,
+      'everyDay': _everyDay,
+      'selectedDays': _selectedDays,
+      'startDate': _startDate,
+      'medicament': _medicament,
+      'times': _times,
+    });
   }
 
   void _showFrequencyBottomSheet(BuildContext context) {
@@ -483,9 +486,10 @@ class _AddReminderPageState extends State<AddReminderPage> {
                   },
                   icon: Icon(Icons.arrow_back), // Back button
                 ),
-                TextButton( // Changed from ElevatedButton to TextButton
+                TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close current modal sheet
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                       'Done',
