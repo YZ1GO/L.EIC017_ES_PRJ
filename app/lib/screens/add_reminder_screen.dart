@@ -73,7 +73,7 @@ class _DaySelectionCircleState extends State<DaySelectionCircle> {
         height: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: _isSelected ? const Color.fromRGBO(171, 58, 0, 1) : Colors.grey[300],
+          color: _isSelected ? const Color.fromRGBO(243, 83, 0, 1) : Colors.grey[300],
         ),
         child: Center(
           child: Text(
@@ -417,7 +417,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         style: TextStyle(
                           color: Color.fromRGBO(215, 74, 0, 1),
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 22,
                         ),
                       ),
                     ),
