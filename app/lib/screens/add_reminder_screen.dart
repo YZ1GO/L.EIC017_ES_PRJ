@@ -142,11 +142,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Stack(
                 children: [
@@ -409,32 +405,25 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       height: 120,
                     ),
                   ),
+                  Positioned(
+                    top: 22,
+                    right: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        _saveReminder();
+                      },
+                      child: const Text(
+                        'Done',
+                        style: TextStyle(
+                          color: Color.fromRGBO(215, 74, 0, 1),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
-          Container(
-            color: const Color.fromRGBO(215, 74, 0, 1),
-            width: double.infinity, // Occupies the whole width of the screen
-            child: GestureDetector(
-              onTap: () {
-                _saveReminder();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: const Text(
-                  'Done',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
