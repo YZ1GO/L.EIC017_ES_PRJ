@@ -3,6 +3,7 @@ import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/medicaments.dart';
 import 'package:intl/intl.dart';
+import 'package:app/widgets/system_notification_test_widget.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({Key? key});
@@ -14,6 +15,8 @@ class StockScreen extends StatefulWidget {
 class _StockScreenState extends State<StockScreen> {
   late Future<List<Medicament>> _medicamentsFuture;
   late Medicament _lastDeletedMedicament;
+
+  static int quantityLimit = 0;
 
   @override
   void initState() {
