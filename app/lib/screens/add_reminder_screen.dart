@@ -493,10 +493,15 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   void _saveReminder() {
+    if (_everyDay) {
+      setState(() {
+        _selectedDays = List.generate(7, (index) => true);
+      });
+    }
+
     // Save reminder details
     Map<String, dynamic> reminderDetails = {
       'reminderName': _reminderName,
-      'everyDay': _everyDay,
       'selectedDays': _selectedDays,
       'startDate': _startDate,
       'medicament': _medicament,
