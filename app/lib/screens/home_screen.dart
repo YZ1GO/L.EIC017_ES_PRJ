@@ -19,6 +19,13 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print('Reminder details home screen: ${widget.reminderDetails}');
+    Map<String, dynamic>? reminderDetails = widget.reminderDetails;
+    String reminderName = reminderDetails?['reminderName'] ?? '';
+    List<bool> selectedDays = reminderDetails?['selectedDays'] ?? [];
+    DateTime startDay = reminderDetails?['startDate'] ?? DateTime.now();
+    String medicamentName = reminderDetails?['medicament'] ?? '';
+    List<TimeOfDay> times = reminderDetails?['times'] ?? [];
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
@@ -30,13 +37,11 @@ class HomeScreenState extends State<HomeScreen> {
             right: 0,
             top: 250,
             child: MedicationReminderWidget(
-              medicamentName: 'Paracetamol', // Default medicament name
-              dayAdded: DateTime.now(), // Today's date
-              frequencies: [
-                TimeOfDay(hour: 12, minute: 0),
-                TimeOfDay(hour: 16, minute: 0),
-                TimeOfDay(hour: 20, minute: 0),
-              ], // Custom frequency
+              reminderName: reminderName,
+              selectedDays: selectedDays,
+              startDay: startDay,
+              medicamentName: medicamentName,
+              times: times,
             ),
           ),
           /*Positioned(
