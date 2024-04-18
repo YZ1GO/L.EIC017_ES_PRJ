@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:app/widgets/system_notification_test_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:app/widgets/system_notification_test_widget.dart';
+import 'package:app/widgets/system_notification.dart';
 
 class Medicament {
   final int id;
@@ -157,6 +156,10 @@ class MedicamentStock {
   }
 
   Future<void> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
+    if (newQuantity < 0) {
+      print('Quantity cannot be negative integer');
+      return;
+    }
     try {
       List<Medicament> currentMedicament = (await getMedicamentById(medicament.id)) as List<Medicament>;
 

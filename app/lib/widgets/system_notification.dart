@@ -4,16 +4,19 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:app/medicaments.dart';
 import 'package:app/CONTANTS.dart';
 
-void verifyStockRunningLow( Medicament medicament) {
-  if (medicament.quantity <= CONSTANTS.lowQuantity) {
+void verifyStockRunningLow(Medicament medicament) async {
+  CONSTANTS constants = CONSTANTS();
+  int lowQuantity = await constants.getLowQuantity();
+
+  if (medicament.quantity <= lowQuantity) {
     String title = 'Stock is Running Low!';
     String body;
     if (medicament.quantity == 1) {
-      body = '${medicament.name} only has 1 peace remaining';
+      body = '${medicament.name} only has 1 piece remaining';
     } else if (medicament.quantity == 0) {
       body = '${medicament.name} is out of stock';
     } else {
-      body = '${medicament.name} only has ${medicament.quantity} peaces remaining';
+      body = '${medicament.name} only has ${medicament.quantity} pieces remaining';
     }
     quantityLowNotificationHandler(title, body);
   }

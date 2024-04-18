@@ -3,7 +3,6 @@ import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/medicaments.dart';
 import 'package:intl/intl.dart';
-import 'package:app/widgets/system_notification_test_widget.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({Key? key});
@@ -255,13 +254,21 @@ class _StockScreenState extends State<StockScreen> {
                     ),
                   ),
                   SizedBox(width: 4),
-                  Text(
-                      '${medicament.quantity} piece(s)',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(199, 84, 0, 1),
-                        fontSize: 12,
-                      )
+                  medicament.quantity > 0
+                      ? Text(
+                    '${medicament.quantity} piece(s)',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 12,
+                    ),
+                  ) : Text(
+                    'Out of stock',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.red,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),

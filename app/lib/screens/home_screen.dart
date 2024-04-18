@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/calendar_widget.dart';
 import '../widgets/medication_reminder_widget.dart';
-import '../widgets/system_notification_test_widget.dart';
 import '../widgets/eclipse_background.dart';
-import '../database/database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
