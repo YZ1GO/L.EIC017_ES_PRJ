@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
-import 'package:app/screens/database.dart';
+import 'package:app/database/database.dart';
 import 'package:app/medicaments.dart';
 import 'package:intl/intl.dart';
 

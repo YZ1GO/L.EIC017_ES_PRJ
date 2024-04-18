@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'navigation_menu.dart';
 import 'package:app/medicaments.dart';
-import 'package:app/env.dart';
+import 'package:app/database/env.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
         apiKey: Env.API_KEY,
         appId: Env.APP_ID,
         messagingSenderId: Env.MESSAGING_SENDER_ID,

@@ -44,5 +44,7 @@ app.*.map.json
 .idea/
 .dart_tool/
 
-.env
-env.g.dart
+# this should be there because it is about firebase api key information, but whatever
+# not important for this case
+#.env
+#env.g.dart
