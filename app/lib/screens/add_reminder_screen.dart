@@ -105,9 +105,19 @@ class _AddReminderPageState extends State<AddReminderPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _startDate,
-      firstDate: DateTime(DateTime.now().year, 1, 1), // Set the first date to January 1st of the current year
+      firstDate: DateTime(DateTime.now().year, 1, 1),
       lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color.fromRGBO(243, 83, 0, 1),
+            colorScheme: const ColorScheme.light(primary: Color.fromRGBO(243, 83, 0, 1),),
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null && picked != _startDate) {
       setState(() {
         _startDate = picked;
@@ -115,15 +125,20 @@ class _AddReminderPageState extends State<AddReminderPage> {
     }
   }
 
-  Future<void> _selectTime(BuildContext context) async {
+
+  Future<void> _selectTime(BuildContext context, [TimeOfDay? initialTime]) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(hour: 8, minute: 0),
+      initialTime: initialTime ?? TimeOfDay(hour: 8, minute: 0),
     );
     if (picked != null) {
       final newTime = picked;
       if (!_times.any((time) => time.hour == newTime.hour && time.minute == newTime.minute)) {
         setState(() {
+          if (initialTime != null) {
+            // If editing an existing time, remove the old time first
+            _times.removeWhere((time) => time.hour == initialTime.hour && time.minute == initialTime.minute);
+          }
           _times.add(picked);
           _times.sort((a, b) => _timeOfDayToInt(a).compareTo(_timeOfDayToInt(b)));
         });
@@ -310,10 +325,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
+                                child: GestureDetector(
+                                  onTap: () => _selectTime(context, time),
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 10.0),
-                                    width: MediaQuery.of(context).size.width * 0.8,
-                                    padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
+                                    margin: const EdgeInsets.only(bottom: 10.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                                     decoration: BoxDecoration(
                                       color: const Color.fromRGBO(225, 95, 0, 1),
                                       borderRadius: BorderRadius.circular(16.0),
@@ -327,6 +343,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
+                                ),
                               ),
                               const SizedBox(width: 8.0),
                               GestureDetector(
