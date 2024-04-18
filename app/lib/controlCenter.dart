@@ -10,7 +10,7 @@ void showControlCenter(BuildContext context) {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 239,
+            height: 259,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: const BorderRadius.only(
@@ -22,7 +22,7 @@ void showControlCenter(BuildContext context) {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: 55),
+                  SizedBox(height: 50),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 44,
@@ -64,12 +64,33 @@ void showControlCenter(BuildContext context) {
                       label: Text("Manage reminders"),
                     ),
                   ),
+                  SizedBox(height: 30),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: 44,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        print(Text('Settings button pressed'));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Color.fromRGBO(199, 84, 0, 1),
+                        backgroundColor: Color.fromRGBO(255, 198, 157, 1),
+                        elevation: 4,
+                        shadowColor: Colors.black.withOpacity(0.5),
+                      ),
+                      icon: Icon(
+                        Icons.settings,
+                        size: 17,
+                      ),
+                      label: Text("Settings"),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
           Positioned(
-            bottom: 222,
+            bottom: 242,
             left: (MediaQuery.of(context).size.width - 120) / 2,
             child:
             Image.asset(
