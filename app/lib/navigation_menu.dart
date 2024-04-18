@@ -27,6 +27,7 @@ class NavigationMenuState extends State<NavigationMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
