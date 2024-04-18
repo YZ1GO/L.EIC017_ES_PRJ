@@ -11,16 +11,20 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class NavigationMenuState extends State<NavigationMenu> {
+  Map<String, dynamic>? reminderDetails;
+
   // Method to handle the reminder saved callback
-  void _handleReminderSaved(Map<String, dynamic> reminderDetails) {
-    // Process the reminder details here, such as updating state or performing any other action
+  void _handleReminderSaved(Map<String, dynamic> details) {
+    setState(() {
+      reminderDetails = details;
+    });
     print("Reminder details received: $reminderDetails");
   }
 
   int selectedIndex = 0;
 
-  static final List<Widget> screens = <Widget>[
-    const HomeScreen(),
+  List<Widget> get screens => [
+    HomeScreen(reminderDetails: reminderDetails),
     const StockScreen(),
   ];
 

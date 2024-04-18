@@ -6,15 +6,19 @@ import '../widgets/eclipse_background.dart';
 import 'database.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key});
+  final Map<String, dynamic>? reminderDetails;
+
+  const HomeScreen({Key? key, this.reminderDetails}) : super(key: key);
 
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
+
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print('Reminder details home screen: ${widget.reminderDetails}');
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
