@@ -309,22 +309,24 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10.0),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(225, 95, 0, 1),
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                child: Text(
-                                  '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.only(bottom: 10.0),
+                                    width: MediaQuery.of(context).size.width * 0.8,
+                                    padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromRGBO(225, 95, 0, 1),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Text(
+                                      '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
                               ),
                               const SizedBox(width: 8.0),
                               GestureDetector(
