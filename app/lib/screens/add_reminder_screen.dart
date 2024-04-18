@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddReminderPage extends StatefulWidget {
   @override
@@ -125,21 +126,60 @@ class _AddReminderPageState extends State<AddReminderPage> {
     }
   }
 
-
   Future<void> _selectTime(BuildContext context, [TimeOfDay? initialTime]) async {
-    final TimeOfDay? picked = await showTimePicker(
+    TimeOfDay pickedTime = initialTime ?? TimeOfDay(hour: 8, minute: 0);
+
+    final TimeOfDay? newPickedTime = await showModalBottomSheet<TimeOfDay>(
       context: context,
-      initialTime: initialTime ?? TimeOfDay(hour: 8, minute: 0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.time,
+                      initialDateTime: DateTime(2024, 1, 1, pickedTime.hour, pickedTime.minute),
+                      onDateTimeChanged: (DateTime newDateTime) {
+                        setState(() {
+                          pickedTime = TimeOfDay.fromDateTime(newDateTime);
+                        });
+                      },
+                    ),
+                  ),
+                  const Divider(),
+                  CupertinoButton(
+                    child: Text(
+                        '${pickedTime.hour}:${pickedTime.minute.toString().padLeft(2, '0')}',
+                        style: const TextStyle(
+                          color: Color.fromRGBO(243, 83, 0, 1),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context, pickedTime);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
-    if (picked != null) {
-      final newTime = picked;
+
+    if (newPickedTime != null) {
+      final newTime = newPickedTime;
       if (!_times.any((time) => time.hour == newTime.hour && time.minute == newTime.minute)) {
         setState(() {
           if (initialTime != null) {
             // If editing an existing time, remove the old time first
             _times.removeWhere((time) => time.hour == initialTime.hour && time.minute == initialTime.minute);
           }
-          _times.add(picked);
+          _times.add(newTime);
           _times.sort((a, b) => _timeOfDayToInt(a).compareTo(_timeOfDayToInt(b)));
         });
       }
