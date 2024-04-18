@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/release
 .idea/
 .dart_tool/
+
+.env
+env.g.dart
