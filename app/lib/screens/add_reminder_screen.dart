@@ -4,6 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddReminderPage extends StatefulWidget {
+  final Function(Map<String, dynamic>) onReminderSaved;
+
+  const AddReminderPage({Key? key, required this.onReminderSaved}) : super(key: key);
+
   @override
   _AddReminderPageState createState() => _AddReminderPageState();
 }
@@ -489,15 +493,23 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   void _saveReminder() {
-    Navigator.pop(context, {
+    // Save reminder details
+    Map<String, dynamic> reminderDetails = {
       'reminderName': _reminderName,
       'everyDay': _everyDay,
       'selectedDays': _selectedDays,
       'startDate': _startDate,
       'medicament': _medicament,
       'times': _times,
-    });
+    };
+
+    // Call the callback function to pass reminder details back to the parent widget
+    widget.onReminderSaved(reminderDetails);
+
+    // Close the AddReminderPage
+    Navigator.pop(context);
   }
+
 
   void _showFrequencyBottomSheet(BuildContext context) {
     showModalBottomSheet(
