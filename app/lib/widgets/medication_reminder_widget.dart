@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MedicationReminderWidget extends StatelessWidget {
+  final String reminderName;
+  final List<bool> selectedDays;
+  final DateTime startDay;
   final String medicamentName;
-  final DateTime dayAdded;
-  final List<TimeOfDay> frequencies;
+  final List<TimeOfDay> times;
 
   const MedicationReminderWidget({super.key,
+    required this.reminderName,
+    required this.selectedDays,
+    required this.startDay,
     required this.medicamentName,
-    required this.dayAdded,
-    required this.frequencies,
+    required this.times,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: frequencies.map((time) {
+      children: times.map((time) {
         return MedicationReminderCard(
           medicamentName: medicamentName,
           time: time,
