@@ -567,7 +567,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
     );
   }
 
-
   void _showDaysOfWeekBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -586,6 +585,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 ),
                 TextButton(
                   onPressed: () {
+                    if (_selectedDays.every((day) => !day)) {
+                      setState(() {
+                        _everyDay = true;
+                      });
+                    }
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
