@@ -7,16 +7,16 @@ import 'package:app/database/env.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
+      options: FirebaseOptions(
         apiKey: Env.API_KEY,
         appId: Env.APP_ID,
         messagingSenderId: Env.MESSAGING_SENDER_ID,
         projectId: Env.PROJECT_ID
       )
     );
-    await MedicamentStock().initDatabase();
-    runApp(const MyApp());
-  }
+  await MedicamentStock().initDatabase();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
