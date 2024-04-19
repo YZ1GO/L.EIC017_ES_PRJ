@@ -15,8 +15,8 @@ void main() async {
         projectId: Env.PROJECT_ID
       )
     );
-  await MedicamentStock().initDatabase();
   await ReminderDatabase().initDatabase();
+  await MedicamentStock().initDatabase();
   runApp(const MyApp());
 }
 

@@ -11,20 +11,10 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class NavigationMenuState extends State<NavigationMenu> {
-  Map<String, dynamic>? reminderDetails;
-
-  // Method to handle the reminder saved callback
-  void _handleReminderSaved(Map<String, dynamic> details) {
-    setState(() {
-      reminderDetails = details;
-    });
-    print("Reminder details received: $reminderDetails");
-  }
-
   int selectedIndex = 0;
 
   List<Widget> get screens => [
-    HomeScreen(reminderDetails: reminderDetails),
+    const HomeScreen(),
     const StockScreen(),
   ];
 
@@ -55,7 +45,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
               onPressed: () {
-                showControlCenter(context, _handleReminderSaved);
+                showControlCenter(context);
               },
               elevation: 0,
               highlightElevation: 0,

@@ -24,7 +24,7 @@ class Reminder {
     return {
       'id': id,
       'reminderName': reminderName,
-      'selectedDays': selectedDays.join(','), // Convert list to string
+      'selectedDays': selectedDays.join(','),
       'startDate': startDate.millisecondsSinceEpoch,
       'medicament': medicament,
       'times': times.map((time) => time.hour * 60 + time.minute).toList().join(','), // Convert list to string
@@ -110,8 +110,7 @@ class ReminderDatabase {
 
   Future<List<Reminder>> getReminders() async {
     try {
-      final List<Map<String, dynamic>> maps = await _database.query(
-          'reminders');
+      final List<Map<String, dynamic>> maps = await _database.query('reminders');
       print('Getting reminders list');
       return List.generate(maps.length, (i) {
         return Reminder.fromMap(maps[i]);

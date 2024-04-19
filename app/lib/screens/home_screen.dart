@@ -7,14 +7,11 @@ import '../widgets/eclipse_background.dart';
 late Future<List<Reminder>> _remindersFuture;
 
 class HomeScreen extends StatefulWidget {
-  final Map<String, dynamic>? reminderDetails;
-
-  const HomeScreen({Key? key, this.reminderDetails}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   HomeScreenState createState() => HomeScreenState();
 }
-
 
 class HomeScreenState extends State<HomeScreen> {
   @override
@@ -25,14 +22,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /*print('Reminder details home screen: ${widget.reminderDetails}');
-    Map<String, dynamic>? reminderDetails = widget.reminderDetails;
-    String reminderName = reminderDetails?['reminderName'] ?? '';
-    List<bool> selectedDays = reminderDetails?['selectedDays'] ?? [];
-    DateTime startDay = reminderDetails?['startDate'] ?? DateTime.now();
-    String medicamentName = reminderDetails?['medicament'] ?? '';
-    List<TimeOfDay> times = reminderDetails?['times'] ?? [];*/
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
@@ -44,13 +33,6 @@ class HomeScreenState extends State<HomeScreen> {
             right: 0,
             top: 250,
             child: _buildMedicationReminderWidget(),
-            /*child: MedicationReminderWidget(
-              reminderName: reminderName,
-              selectedDays: selectedDays,
-              startDay: startDay,
-              medicamentName: medicamentName,
-              times: times,
-            ),*/
           ),
           /*Positioned(
             left: 0,
@@ -104,31 +86,28 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void refreshReminderList() async {
-    await _loadReminders();
-    setState(() {});
-  }
-
-  Future<void> _loadReminders() async {
-    _remindersFuture = getReminders();
+    setState(() {
+      _remindersFuture = getReminders();
+    });
   }
 
   Widget _buildMedicationReminderWidget() {
     return FutureBuilder<List<Reminder>>(
       future: _remindersFuture,
       builder: (context, snapshot) {
-        List<Reminder> reminders = snapshot.data!;
+        List<Reminder>? reminders = snapshot.data;
         print('Reminders ${reminders?.length ?? 0}');
-        if (reminders.isEmpty) {
-          return Text('No reminders found');
-        } else {
-        final Reminder firstReminder = reminders.first;
-        return MedicationReminderWidget(
+        if (reminders != null && reminders.isNotEmpty) {
+          final Reminder firstReminder = reminders.first;
+          return MedicationReminderWidget(
             reminderName: firstReminder.reminderName,
             selectedDays: firstReminder.selectedDays,
             startDay: firstReminder.startDate,
             medicamentName: firstReminder.medicament,
             times: firstReminder.times,
           );
+        } else {
+          return Text('No reminders found');
         }
       },
     );
