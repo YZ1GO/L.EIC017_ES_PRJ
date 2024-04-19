@@ -22,6 +22,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    refreshReminderList();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
@@ -33,6 +34,15 @@ class HomeScreenState extends State<HomeScreen> {
             right: 0,
             top: 250,
             child: _buildMedicationReminderWidget(),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 100,
+            child: ElevatedButton(
+              onPressed: _clearRemindersDatabase,
+              child: Text('Clear Reminders'),
+            ),
           ),
           /*Positioned(
             left: 0,
@@ -111,5 +121,12 @@ class HomeScreenState extends State<HomeScreen> {
         }
       },
     );
+  }
+
+  void _clearRemindersDatabase() async {
+    await ReminderDatabase().clearReminders();
+    setState(() {
+      _remindersFuture = Future.value([]); // Reset future to empty list
+    });
   }
 }

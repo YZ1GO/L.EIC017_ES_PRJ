@@ -121,6 +121,15 @@ class ReminderDatabase {
     }
   }
 
+  Future<void> clearReminders() async {
+    try {
+      await _database.delete('reminders');
+      print('Cleared all reminders from the database');
+    } catch (e) {
+      print('Error clearing reminders: $e');
+    }
+  }
+
   Future<int> deleteReminder(int id) async {
     try {
       int rowsDeleted = await _database.delete(
