@@ -38,10 +38,21 @@ class HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 0,
             right: 0,
-            top: 100,
+            top: 700,
             child: ElevatedButton(
               onPressed: _clearRemindersDatabase,
               child: Text('Clear Reminders'),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 600,
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {});
+              },
+              child: Text('REFRESH'),
             ),
           ),
           /*Positioned(
