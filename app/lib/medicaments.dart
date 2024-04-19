@@ -2,13 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:app/widgets/system_notification.dart';
 
 class Medicament {
   final int id;
-  final String name;
-  final int quantity;
-  final DateTime expiryDate;
-  final String notes;
+  String name;
+  int quantity;
+  DateTime expiryDate;
+  String notes;
   final int? brandId;
 
   Medicament({
@@ -85,6 +86,26 @@ class MedicamentStock {
     }
   }
 
+  Future<Medicament?> getMedicamentById(int id) async {
+    try {
+      List<Map<String, dynamic>> maps = await _database.query(
+        'medicaments',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (maps.isNotEmpty) {
+        return Medicament.fromMap(maps.first);
+      } else {
+        print('Medicament not found with ID: $id');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching medicament: $e');
+      return null;
+    }
+  }
+
   Future<List<Medicament>> getMedicaments() async {
     try {
       final List<Map<String, dynamic>> maps = await _database.query('medicaments');
@@ -128,10 +149,29 @@ class MedicamentStock {
         whereArgs: [updatedMedicament.id],
       );
       print('Updated medicament ${updatedMedicament.name}');
+      verifyStockRunningLow(updatedMedicament);
     } catch (e) {
       print('Error updating medicament: $e');
-      // Handle any errors
     }
   }
 
+  Future<void> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
+    if (newQuantity < 0) {
+      print('Quantity cannot be negative integer');
+      return;
+    }
+    try {
+      List<Medicament> currentMedicament = (await getMedicamentById(medicament.id)) as List<Medicament>;
+
+      if (currentMedicament != null) {
+        currentMedicament.first.quantity = newQuantity;
+        print('Updated quantity for medicament ${medicament.name} to $newQuantity');
+        verifyStockRunningLow(currentMedicament.first);
+      } else {
+        print('Medicament not found in the database');
+      }
+    } catch (e) {
+      print('Error changing medicament quantity: $e');
+    }
+  }
 }

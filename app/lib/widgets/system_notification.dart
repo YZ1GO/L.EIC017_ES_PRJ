@@ -1,12 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:app/medicaments.dart';
+import 'package:app/preferences.dart';
+import 'package:app/screens/stock_screen.dart';
+import 'dart:async';
 
-Future<void> requestNotificationPermission(BuildContext context) async {
-  // Check if notification permission is granted
+void verifyStockRunningLow(Medicament medicament) async {
+  int lowQuantity = await Preferences().getLowQuantity();
+
+  if (medicament.quantity <= lowQuantity) {
+    String title = 'Stock is Running Low!';
+    String body;
+    if (medicament.quantity == 1) {
+      body = '${medicament.name} only has 1 piece remaining';
+    } else if (medicament.quantity == 0) {
+      body = '${medicament.name} is out of stock';
+    } else {
+      body = '${medicament.name} only has ${medicament.quantity} pieces remaining';
+    }
+    quantityLowNotificationHandler(title, body);
+  }
+}
+
+void quantityLowNotificationHandler(String title, String body) async {
+  await showNotification(title, body);
+}
+
+Future<void> requestNotificationPermission(BuildContext context, String notification_title, String notification_text) async {
   var status = await Permission.notification.status;
   if (!status.isGranted) {
-    // If permission is not granted, show a dialog to request permission
     var result = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -30,17 +53,15 @@ Future<void> requestNotificationPermission(BuildContext context) async {
         );
       },
     );
-    // If user grants permission, show the notification
     if (result == true) {
-      await showNotification();
+      await showNotification(notification_title,notification_text);
     }
   } else {
-    // If permission is already granted, show the notification
-    await showNotification();
+    await showNotification(notification_title,notification_text);
   }
 }
 
-Future<void> showNotification() async {
+Future<void> showNotification(String notification_title, String notification_text) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
     'default_channel_id',
@@ -48,14 +69,14 @@ Future<void> showNotification() async {
     importance: Importance.max,
     priority: Priority.high,
     ticker: 'ticker',
-    icon: '@mipmap/ic_launcher', // flutter default icon
+    icon: '@mipmap/ic_launcher',
   );
   const NotificationDetails platformChannelSpecifics =
   NotificationDetails(android: androidPlatformChannelSpecifics);
   await FlutterLocalNotificationsPlugin().show(
     0,
-    'Test Notification',
-    'Time to take medicine',
+    notification_title,
+    notification_text,
     platformChannelSpecifics,
     payload: 'item x',
   );

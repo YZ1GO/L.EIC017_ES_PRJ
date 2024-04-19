@@ -210,14 +210,14 @@ class BrandSearchDelegate extends SearchDelegate<String> {
       borderRadius: BorderRadius.circular(8.0),
       child: Image.asset(
         imagePath,
-        width: 50,
-        height: 50,
+        width: 48,
+        height: 48,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
           return Image.asset(
             'assets/database/default.jpg',
-            width: 50,
-            height: 50,
+            width: 48,
+            height:48,
             fit: BoxFit.cover,
           );
         },

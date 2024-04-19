@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/add_reminder_screen.dart';
+import 'package:app/screens/settings_screen.dart';
 
 typedef void ReminderCallback(Map<String, dynamic> reminderDetails);
 
@@ -80,7 +81,11 @@ void showControlCenter(BuildContext context, ReminderCallback reminderCallback) 
                     height: 44,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        print(Text('Settings button pressed'));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SettingsScreen()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Color.fromRGBO(199, 84, 0, 1),
