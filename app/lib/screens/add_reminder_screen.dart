@@ -515,7 +515,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
     Navigator.pop(context);
   }
 
-
   void _showFrequencyBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -523,28 +522,51 @@ class _AddReminderPageState extends State<AddReminderPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            ListTile(
-              title: Text('Remind me everyday'),
-              onTap: () {
-                setState(() {
-                  _everyDay = true;
-                  _selectedDays = [false, false, false, false, false, false, false];
-                });
-                Navigator.pop(context);
-              },
+            SizedBox(
+              height: 70,
+              child: ListTile(
+                title: const Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    'Remind me everyday',
+                    style: TextStyle(
+                       fontSize: 20,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    _everyDay = true;
+                    _selectedDays = [false, false, false, false, false, false, false];
+                  });
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            ListTile(
-              title: const Text('Select days of week'),
-              onTap: () {
-                _everyDay = false;
-                _showDaysOfWeekBottomSheet(context);
-              },
+            SizedBox(
+              height: 70,
+              child: ListTile(
+                title: const Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    'Select days of week',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  _everyDay = false;
+                  _showDaysOfWeekBottomSheet(context);
+                },
+              ),
             ),
           ],
         );
       },
     );
   }
+
 
   void _showDaysOfWeekBottomSheet(BuildContext context) {
     showModalBottomSheet(
