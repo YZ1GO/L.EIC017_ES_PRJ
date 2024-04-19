@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app/screens/add_reminder_screen.dart';
 
-void showControlCenter(BuildContext context) {
+typedef void ReminderCallback(Map<String, dynamic> reminderDetails);
+
+void showControlCenter(BuildContext context, ReminderCallback reminderCallback) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -29,6 +31,14 @@ void showControlCenter(BuildContext context) {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddReminderPage(
+                              onReminderSaved: reminderCallback, // Pass the callback function here
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
