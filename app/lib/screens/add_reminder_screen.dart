@@ -1,3 +1,4 @@
+import 'package:app/reminders.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -95,6 +96,8 @@ class _DaySelectionCircleState extends State<DaySelectionCircle> {
 }
 
 class _AddReminderPageState extends State<AddReminderPage> {
+  final ReminderDatabase _reminderDatabase = ReminderDatabase();
+
   String _reminderName = '';
   DateTime _startDate = DateTime.now();
   List<TimeOfDay> _times = [
@@ -492,14 +495,42 @@ class _AddReminderPageState extends State<AddReminderPage> {
     );
   }
 
-  void _saveReminder() {
+  void _saveReminder() async{
     if (_everyDay) {
       setState(() {
         _selectedDays = List.generate(7, (index) => true);
       });
     }
 
-    // Save reminder details
+    try {
+      Reminder newReminder = Reminder(
+          id: DateTime.now().millisecondsSinceEpoch,
+          reminderName: _reminderName,
+          selectedDays: _selectedDays,
+          startDate: _startDate,
+          medicament: _medicament,
+          times: _times,
+      );
+
+      int result = await _reminderDatabase.insertReminder(newReminder);
+      if (result != -1) {
+        print('Reminder added successfully');
+        print('Reminder Details:');
+        print('ID: ${newReminder.id}');
+        print('Name: ${newReminder.reminderName}');
+        print('Selected Days: ${newReminder.selectedDays}');
+        print('Start Date: ${newReminder.startDate}');
+        print('Medicament: ${newReminder.medicament}');
+        print('Times: ${newReminder.times}');
+        Navigator.pop(context);
+      } else {
+        print('Failed to add reminder');
+      }
+    } catch (e) {
+      print('Error saving reminder: $e');
+    }
+
+    /*// Save reminder details
     Map<String, dynamic> reminderDetails = {
       'reminderName': _reminderName,
       'selectedDays': _selectedDays,
@@ -512,7 +543,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
     widget.onReminderSaved(reminderDetails);
 
     // Close the AddReminderPage
-    Navigator.pop(context);
+    Navigator.pop(context);*/
   }
 
   void _showFrequencyBottomSheet(BuildContext context) {
