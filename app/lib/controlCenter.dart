@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app/screens/settings_screen.dart';
 
 void showControlCenter(BuildContext context) {
   showModalBottomSheet(
@@ -70,7 +71,11 @@ void showControlCenter(BuildContext context) {
                     height: 44,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        print(Text('Settings button pressed'));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SettingsScreen()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Color.fromRGBO(199, 84, 0, 1),

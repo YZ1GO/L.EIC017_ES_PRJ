@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:app/medicaments.dart';
-import 'package:app/CONTANTS.dart';
+import 'package:app/preferences.dart';
+import 'package:app/screens/stock_screen.dart';
+import 'dart:async';
 
 void verifyStockRunningLow(Medicament medicament) async {
-  CONSTANTS constants = CONSTANTS();
-  int lowQuantity = await constants.getLowQuantity();
+  int lowQuantity = await Preferences().getLowQuantity();
 
   if (medicament.quantity <= lowQuantity) {
     String title = 'Stock is Running Low!';
