@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:app/screens/add_medicicament_screen.dart';
+import 'package:app/screens/add_medicament_screen.dart';
 
 class DatabaseContentScreen extends StatefulWidget {
   @override
