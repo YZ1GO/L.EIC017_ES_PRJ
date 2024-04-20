@@ -135,13 +135,17 @@ class HomeScreenState extends State<HomeScreen> {
                 return FutureBuilder<Medicament?>(
                   future: MedicamentStock().getMedicamentById(reminder.medicament), // Assuming -1 as default or error value
                   builder: (context, snapshot) {
-                    return MedicationReminderWidget(
-                      reminderName: reminder.reminderName,
-                      selectedDays: reminder.selectedDays,
-                      startDay: reminder.startDate,
-                      medicament: snapshot.data!,
-                      times: reminder.times,
-                    );
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else {
+                      return MedicationReminderWidget(
+                        reminderName: reminder.reminderName,
+                        selectedDays: reminder.selectedDays,
+                        startDay: reminder.startDate,
+                        medicament: snapshot.data!,
+                        times: reminder.times,
+                      );
+                    }
                   },
                 );
               }).toList(),
