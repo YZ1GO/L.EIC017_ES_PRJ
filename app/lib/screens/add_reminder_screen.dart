@@ -1,4 +1,5 @@
 import 'package:app/reminders.dart';
+import 'package:app/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -325,7 +326,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StockScreen(selectionMode: true,))),
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
