@@ -20,16 +20,26 @@ class MedicationReminderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: times.map((time) {
-        return MedicationReminderCard(
-          medicament: medicament,
-          time: time,
-          onPressed: () {
-            },
-        );
-      }).toList(),
+    return FutureBuilder<void>(
+      future: Future.delayed(const Duration(milliseconds: 200)),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SizedBox(); // Return an empty SizedBox while waiting
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: times.map((time) {
+              return MedicationReminderCard(
+                medicament: medicament,
+                time: time,
+                onPressed: () {
+                  // Handle onPressed event if needed
+                },
+              );
+            }).toList(),
+          );
+        }
+      },
     );
   }
 }
