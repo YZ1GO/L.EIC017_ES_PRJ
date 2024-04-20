@@ -16,10 +16,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  late DateTime _selectedDay = DateTime.now();
+
   @override
   void initState() {
     super.initState();
     _remindersFuture = getReminders();
+  }
+
+  void _handleDaySelected(DateTime selectedDay) {
+    setState(() {
+      _selectedDay = selectedDay;
+    });
   }
 
   @override
@@ -30,7 +38,9 @@ class HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           eclipse_background(),
-          const CalendarWidget(),
+          CalendarWidget(
+            onDaySelected: _handleDaySelected,
+          ),
           Positioned(
             left: 0,
             right: 0,
@@ -44,6 +54,32 @@ class HomeScreenState extends State<HomeScreen> {
             child: ElevatedButton(
               onPressed: _clearRemindersDatabase,
               child: Text('Clear Reminders'),
+            ),
+          ),
+          Positioned(
+            left: 16,
+            top: 16,
+            child: ElevatedButton(
+              onPressed: () {
+                // Action to perform when the button is pressed
+                // For example, you can show a dialog with the selected day
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Selected Day'),
+                    content: Text('Selected day is: $_selectedDay'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Text('Selected Day: $_selectedDay'),
             ),
           ),
           /*Positioned(
