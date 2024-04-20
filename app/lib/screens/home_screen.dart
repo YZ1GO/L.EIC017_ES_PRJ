@@ -146,17 +146,29 @@ class HomeScreenState extends State<HomeScreen> {
         List<Reminder>? reminders = snapshot.data;
         print('Reminders ${reminders?.length ?? 0}');
         if (reminders != null && reminders.isNotEmpty) {
-          final Reminder firstReminder = reminders.first;
-          return MedicationReminderWidget(
-            reminderName: firstReminder.reminderName,
-            selectedDays: firstReminder.selectedDays,
-            startDay: firstReminder.startDate,
-            medicamentName: firstReminder.medicament,
-            times: firstReminder.times,
-          );
-        } else {
-          return noRemindersCard();
+          List<Reminder> applicableReminders = reminders.where((reminder) {
+            if (reminder.startDate.isBefore(_selectedDay) ||
+                reminder.startDate.isAtSameMomentAs(_selectedDay)) {
+              int selectedDayIndex = _selectedDay.weekday % 7;
+              return reminder.selectedDays[selectedDayIndex];
+            }
+            return false;
+          }).toList();
+          if (applicableReminders.isNotEmpty) {
+            return Column(
+              children: applicableReminders.map((reminder) {
+                return MedicationReminderWidget(
+                  reminderName: reminder.reminderName,
+                  selectedDays: reminder.selectedDays,
+                  startDay: reminder.startDate,
+                  medicamentName: reminder.medicament,
+                  times: reminder.times,
+                );
+              }).toList(),
+            );
+          }
         }
+        return noRemindersCard();
       },
     );
   }
