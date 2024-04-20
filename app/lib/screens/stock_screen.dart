@@ -76,7 +76,7 @@ class _StockScreenState extends State<StockScreen> {
                       Center(
                         child: Text(
                           widget.selectionMode ?
-                          (selectedMedicament == null ? 'SELECT MEDICAMENT' : selectedMedicament!.name)
+                          (selectedMedicament == null ? 'SELECT MEDICAMENT' : '')
                               : 'MEDICINE STOCK',
                           style: const TextStyle(
                             color: Colors.white,

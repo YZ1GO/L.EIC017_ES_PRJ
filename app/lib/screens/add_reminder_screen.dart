@@ -509,13 +509,21 @@ class _AddReminderPageState extends State<AddReminderPage> {
         _selectedDays = List.generate(7, (index) => true);
       });
     }
-    if (_times.isEmpty) {
+    if (_times.isEmpty || _medicament == null) {
+      String? message;
+      if (_times.isEmpty && _medicament == null) {
+        message = 'Please select a medicament and at least one time for the reminder';
+      } else if (_times.isEmpty) {
+        message = 'Please select at least one time for the reminder';
+      } else if (_medicament == null) {
+        message = 'Please select a medicament for the reminder';
+      }
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Please select at least one time for the reminder'),
+              title: const Text('ERROR'),
+              content: Text(message!),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -532,30 +540,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
             );
           }
       );
-    }
-    if (_medicament == null) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Please select a medicament'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Color.fromRGBO(215, 74, 0, 1),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-      );
+      return;
     }
     try {
       Reminder newReminder = Reminder(
