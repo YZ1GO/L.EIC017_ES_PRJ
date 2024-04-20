@@ -128,7 +128,7 @@ class HomeScreenState extends State<HomeScreen> {
             times: firstReminder.times,
           );
         } else {
-          return Text('No reminders found');
+          return noRemindersCard();
         }
       },
     );
@@ -140,4 +140,34 @@ class HomeScreenState extends State<HomeScreen> {
       _remindersFuture = Future.value([]); // Reset future to empty list
     });
   }
+
+  Widget noRemindersCard() {
+    return Center(
+      child: FractionallySizedBox(
+        widthFactor: 0.9,
+        child: Card(
+          margin: const EdgeInsets.symmetric(vertical: 7),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 5,
+          color: const Color.fromRGBO(255, 218, 190, 1),
+          child: const SizedBox(
+            height: 150,
+            child: Center(
+              child: Text(
+                "There is no registered pill",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(225, 95, 0, 1),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

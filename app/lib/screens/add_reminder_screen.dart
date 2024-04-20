@@ -542,7 +542,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 title: const Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Text(
-                    'Remind me everyday',
+                    'Daily',
                     style: TextStyle(
                        fontSize: 20,
                     ),
@@ -563,7 +563,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 title: const Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Text(
-                    'Select days of week',
+                    'Specific Days',
                     style: TextStyle(
                       fontSize: 20,
                     ),
