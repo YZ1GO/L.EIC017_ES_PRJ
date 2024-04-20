@@ -639,6 +639,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           }
                           setState(() {
                             _selectedDays[index] = isSelected;
+                            _everyDay = false;
                           });
                         },
                   ),
@@ -658,6 +659,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
         selectedDays.add(DaySelectionCircle._getDayName(i));
       }
     }
-    return selectedDays.isEmpty ? 'Select days of week' : selectedDays.join(', ');
+    if (selectedDays.isEmpty) {
+      _everyDay = true;
+      return 'Remind me everyday';
+    } else {
+      return selectedDays.join(', ');
+    }
   }
 }
