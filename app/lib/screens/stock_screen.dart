@@ -203,140 +203,24 @@ class _StockScreenState extends State<StockScreen> {
   }
 
   Widget _buildMedicamentCard(Medicament medicament, bool isLastItem, bool isSingleItem, bool selectionMode) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 2 - 20,
-      child: Card(
-        color: Color.fromRGBO(255, 220, 194, 1),
-        elevation: 3,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              Container(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: _loadMedicamentImage(medicament.brandId),
-                ),
-              ),
-              SizedBox(height: 6),
-              Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
-              SizedBox(height: 2),
-              Center(
-                child: Text(
-                  medicament.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(199, 84, 0, 1),
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              SizedBox(height: 2),
-              Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
-              SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    ' Expiry',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    DateFormat('dd/MM/yyyy').format(medicament.expiryDate),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    ' Quantity',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  medicament.quantity > 0
-                      ? Text(
-                    '${medicament.quantity} piece(s)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(199, 84, 0, 1),
-                      fontSize: 12,
-                    ),
-                  ) : Text(
-                    'Out of stock',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.red,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: !widget.selectionMode,
-                child: SizedBox(height: 12),
-              ),
-              Visibility(
-                visible: !widget.selectionMode,
-                child: GestureDetector(
-                  onTap: () {
-                    _showEditPopUp(medicament);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(225, 95, 0, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: EdgeInsets.all(6),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          color: Color.fromRGBO(255, 220, 194, 1),
-                          size: 14,
-                        ),
-                        SizedBox(width: 9),
-                        Text(
-                          'Edit',
-                          style: TextStyle(
-                            color: Color.fromRGBO(255, 220, 194, 1),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              if (selectionMode)
-                Positioned(
-                  top: 8,
-                  right: 8,
+    return GestureDetector(
+      onTap: selectionMode ? () => toggleSelection(medicament) : null,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 - 20,
+        child: Card(
+          color: widget.selectionMode
+            ? (selectedMedicament == medicament ? Color.fromRGBO(255, 200, 150, 1) : Color.fromRGBO(255, 220, 194, 0.5))
+            : Color.fromRGBO(255, 220, 194, 1),
+          elevation: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Visibility(
+                  visible: widget.selectionMode,
                   child: GestureDetector(
                     onTap: () {
-                      // Toggle selection logic
                       toggleSelection(medicament);
                     },
                     child: Container(
@@ -345,8 +229,8 @@ class _StockScreenState extends State<StockScreen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: selectedMedicament == medicament
-                            ? Color.fromRGBO(243, 83, 0, 1) // Selected color
-                            : Colors.grey[300], // Default color
+                            ? Color.fromRGBO(243, 83, 0, 1)
+                            : Colors.grey[300],
                       ),
                       child: Icon(
                         Icons.check,
@@ -356,7 +240,132 @@ class _StockScreenState extends State<StockScreen> {
                     ),
                   ),
                 ),
-            ],
+                SizedBox(height: 10),
+                Container(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: widget.selectionMode
+                      ? ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            selectedMedicament == medicament ? Colors.white.withOpacity(0) : Colors.white.withOpacity(0.5),
+                            BlendMode.srcATop,
+                          ),
+                          child: _loadMedicamentImage(medicament.brandId),
+                      ) : _loadMedicamentImage(medicament.brandId),
+                  ),
+                ),
+                SizedBox(height: 6),
+                Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+                SizedBox(height: 2),
+                Center(
+                  child: Text(
+                    medicament.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(199, 84, 0, 1),
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(height: 2),
+                Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+                SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' Expiry',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        fontSize: 12,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      DateFormat('dd/MM/yyyy').format(medicament.expiryDate),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' Quantity',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        fontSize: 12,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    medicament.quantity > 0
+                        ? Text(
+                      '${medicament.quantity} piece(s)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(199, 84, 0, 1),
+                        fontSize: 12,
+                      ),
+                    ) : Text(
+                      'Out of stock',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                Visibility(
+                  visible: !widget.selectionMode,
+                  child: SizedBox(height: 12),
+                ),
+                Visibility(
+                  visible: !widget.selectionMode,
+                  child: GestureDetector(
+                    onTap: () {
+                      _showEditPopUp(medicament);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(225, 95, 0, 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      padding: EdgeInsets.all(6),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            color: Color.fromRGBO(255, 220, 194, 1),
+                            size: 14,
+                          ),
+                          SizedBox(width: 9),
+                          Text(
+                            'Edit',
+                            style: TextStyle(
+                              color: Color.fromRGBO(255, 220, 194, 1),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
