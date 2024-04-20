@@ -19,7 +19,7 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> get screens => [
     HomeScreen(onReminderSaved: _refreshHomeScreenOnReminderSaved),
-    const StockScreen(),
+    const StockScreen(selectionMode: false,),
   ];
 
   void onItemTapped(int index) {

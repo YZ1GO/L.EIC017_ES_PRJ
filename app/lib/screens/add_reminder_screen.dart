@@ -1,4 +1,6 @@
+import 'package:app/medicaments.dart';
 import 'package:app/reminders.dart';
+import 'package:app/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -105,7 +107,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
     TimeOfDay(hour: 13, minute: 0),
     TimeOfDay(hour: 19, minute: 0),
   ]; // Default time
-  String _medicament = 'Paracetamol (Test)';
+  Medicament? _medicament;
   bool _everyDay = true;
   List<bool> _selectedDays = [false, false, false, false, false, false, false];
 
@@ -134,7 +136,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   Future<void> _selectTime(BuildContext context, [TimeOfDay? initialTime]) async {
-    TimeOfDay pickedTime = initialTime ?? TimeOfDay(hour: 8, minute: 0);
+    TimeOfDay pickedTime = initialTime ?? const TimeOfDay(hour: 8, minute: 0);
 
     final TimeOfDay? newPickedTime = await showModalBottomSheet<TimeOfDay>(
       context: context,
@@ -325,24 +327,30 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StockScreen(selectionMode: true,))).then((selectedMedicament) {
+                            setState(() {
+                              _medicament = selectedMedicament;
+                            });
+                          })
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 FontAwesomeIcons.pills,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(
-                                'To be Done',
-                                style: TextStyle(
+                                _medicament != null ? _medicament!.name : 'Select medicament',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -508,7 +516,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
           reminderName: _reminderName,
           selectedDays: _selectedDays,
           startDate: _startDate,
-          medicament: _medicament,
+          medicament: _medicament!.id,
           times: _times,
       );
 
