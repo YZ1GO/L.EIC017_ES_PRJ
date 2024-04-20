@@ -509,7 +509,54 @@ class _AddReminderPageState extends State<AddReminderPage> {
         _selectedDays = List.generate(7, (index) => true);
       });
     }
-
+    if (_times.isEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('Please select at least one time for the reminder'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color.fromRGBO(215, 74, 0, 1),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+      );
+    }
+    if (_medicament == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('Please select a medicament'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color.fromRGBO(215, 74, 0, 1),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+      );
+    }
     try {
       Reminder newReminder = Reminder(
           id: DateTime.now().millisecondsSinceEpoch,
