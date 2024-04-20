@@ -54,10 +54,25 @@ class _StockScreenState extends State<StockScreen> {
                   color: Colors.transparent,
                   child: Stack(
                     children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 2),
+                        child: Visibility(
+                          visible: widget.selectionMode,
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Close current modal sheet
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ), // Back button
+                          ),
+                        ),
+                      ),
                       Center(
                         child: Text(
                           widget.selectionMode ?
-                            (selectedMedicament == null ? 'SELECT MEDICAMENT' : selectedMedicament!.name)
+                          (selectedMedicament == null ? 'SELECT MEDICAMENT' : selectedMedicament!.name)
                               : 'MEDICINE STOCK',
                           style: const TextStyle(
                             color: Colors.white,
@@ -66,6 +81,53 @@ class _StockScreenState extends State<StockScreen> {
                             backgroundColor: Colors.transparent,
                           ),
                           textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Visibility(
+                        visible: selectedMedicament != null,
+                        child: Center(
+                          child: Container(
+                            width: 120,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                print('Selected Medicament Details:');
+                                print('ID: ${selectedMedicament!.id}');
+                                print('Name: ${selectedMedicament!.name}');
+                                print('Quantity: ${selectedMedicament!.quantity}');
+                                print('Expiry Date: ${selectedMedicament!.expiryDate}');
+                                print('Notes: ${selectedMedicament!.notes}');
+                                print('Brand ID: ${selectedMedicament!.brandId}');
+                                Navigator.pop(context); // Close current modal sheet
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: const Color.fromRGBO(215, 74, 0, 1),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              child: const Text(
+                                'Done',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
