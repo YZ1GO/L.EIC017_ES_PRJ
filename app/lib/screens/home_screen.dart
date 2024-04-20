@@ -56,32 +56,6 @@ class HomeScreenState extends State<HomeScreen> {
               child: Text('Clear Reminders'),
             ),
           ),
-          Positioned(
-            left: 16,
-            top: 16,
-            child: ElevatedButton(
-              onPressed: () {
-                // Action to perform when the button is pressed
-                // For example, you can show a dialog with the selected day
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Selected Day'),
-                    content: Text('Selected day is: $_selectedDay'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('Close'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Text('Selected Day: $_selectedDay'),
-            ),
-          ),
           /*Positioned(
             left: 0,
             right: 0,
