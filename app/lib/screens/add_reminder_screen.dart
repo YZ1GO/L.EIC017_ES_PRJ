@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddReminderPage extends StatefulWidget {
-  const AddReminderPage({Key? key}) : super(key: key);
+  final VoidCallback onReminderSaved;
+
+  const AddReminderPage({Key? key, required this.onReminderSaved}) : super(key: key);
 
   @override
   _AddReminderPageState createState() => _AddReminderPageState();
@@ -520,6 +522,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
         print('Start Date: ${newReminder.startDate}');
         print('Medicament: ${newReminder.medicament}');
         print('Times: ${newReminder.times}');
+        widget.onReminderSaved();
         Navigator.pop(context);
       } else {
         print('Failed to add reminder');

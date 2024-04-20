@@ -7,7 +7,9 @@ import '../widgets/eclipse_background.dart';
 late Future<List<Reminder>> _remindersFuture;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final VoidCallback onReminderSaved;
+
+  const HomeScreen({super.key, required this.onReminderSaved});
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -42,17 +44,6 @@ class HomeScreenState extends State<HomeScreen> {
             child: ElevatedButton(
               onPressed: _clearRemindersDatabase,
               child: Text('Clear Reminders'),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 600,
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {});
-              },
-              child: Text('REFRESH'),
             ),
           ),
           /*Positioned(
@@ -137,7 +128,7 @@ class HomeScreenState extends State<HomeScreen> {
   void _clearRemindersDatabase() async {
     await ReminderDatabase().clearReminders();
     setState(() {
-      _remindersFuture = Future.value([]); // Reset future to empty list
+      _remindersFuture = getReminders();
     });
   }
 

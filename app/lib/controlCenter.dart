@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/screens/add_reminder_screen.dart';
 import 'package:app/screens/settings_screen.dart';
 
-void showControlCenter(BuildContext context) {
+void showControlCenter(BuildContext context, VoidCallback onReminderSaved) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -33,7 +33,9 @@ void showControlCenter(BuildContext context) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddReminderPage(),
+                            builder: (context) => AddReminderPage(
+                              onReminderSaved: onReminderSaved,
+                            ),
                           ),
                         );
                       },

@@ -11,10 +11,14 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class NavigationMenuState extends State<NavigationMenu> {
+  void _refreshHomeScreenOnReminderSaved() {
+    setState(() {});
+  }
+
   int selectedIndex = 0;
 
   List<Widget> get screens => [
-    const HomeScreen(),
+    HomeScreen(onReminderSaved: _refreshHomeScreenOnReminderSaved),
     const StockScreen(),
   ];
 
@@ -45,7 +49,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
               onPressed: () {
-                showControlCenter(context);
+                showControlCenter(context, _refreshHomeScreenOnReminderSaved);
               },
               elevation: 0,
               highlightElevation: 0,
