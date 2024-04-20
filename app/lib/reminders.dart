@@ -8,7 +8,7 @@ class Reminder {
   String reminderName;
   List<bool> selectedDays;
   DateTime startDate;
-  String medicament;
+  int medicament;
   List<TimeOfDay> times;
 
   Reminder({
@@ -37,7 +37,7 @@ class Reminder {
       reminderName: map['reminderName'],
       selectedDays: (map['selectedDays'] as String).split(',').map((e) => e == 'true').toList(),
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
-      medicament: map['medicament'],
+      medicament: int.parse(map['medicament']),
       times: (map['times'] as String)
           .split(',')
           .map((e) => TimeOfDay(hour: int.parse(e) ~/ 60, minute: int.parse(e) % 60))
@@ -68,7 +68,7 @@ class ReminderDatabase {
             reminderName TEXT,
             selectedDays TEXT,
             startDate INTEGER,
-            medicament TEXT,
+            medicament INTEGER,
             times TEXT
           )
           ''',

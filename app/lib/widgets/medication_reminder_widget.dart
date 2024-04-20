@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../medicaments.dart';
+
 class MedicationReminderWidget extends StatelessWidget {
   final String reminderName;
   final List<bool> selectedDays;
   final DateTime startDay;
-  final String medicamentName;
+  final Medicament? medicament;
   final List<TimeOfDay> times;
 
   const MedicationReminderWidget({super.key,
     required this.reminderName,
     required this.selectedDays,
     required this.startDay,
-    required this.medicamentName,
+    required this.medicament,
     required this.times,
   });
 
@@ -22,7 +24,7 @@ class MedicationReminderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: times.map((time) {
         return MedicationReminderCard(
-          medicamentName: medicamentName,
+          medicament: medicament,
           time: time,
           onPressed: () {
             },
@@ -33,12 +35,12 @@ class MedicationReminderWidget extends StatelessWidget {
 }
 
 class MedicationReminderCard extends StatefulWidget {
-  final String medicamentName;
+  final Medicament? medicament;
   final TimeOfDay time;
   final VoidCallback onPressed;
 
   const MedicationReminderCard({
-    required this.medicamentName,
+    required this.medicament,
     required this.time,
     required this.onPressed,
   });
@@ -108,7 +110,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                             ],
                           ),
                           Text(
-                            widget.medicamentName,
+                            widget.medicament!.name,
                             style: TextStyle(
                               fontFamily: 'Open_Sans',
                               fontWeight: FontWeight.bold,

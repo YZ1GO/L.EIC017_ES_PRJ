@@ -31,6 +31,10 @@ class _StockScreenState extends State<StockScreen> {
     });
   }
 
+  Medicament? getSelectedMedicament() {
+    return selectedMedicament;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -103,14 +107,20 @@ class _StockScreenState extends State<StockScreen> {
                             ),
                             child: ElevatedButton(
                               onPressed: () {
-                                print('Selected Medicament Details:');
-                                print('ID: ${selectedMedicament!.id}');
-                                print('Name: ${selectedMedicament!.name}');
-                                print('Quantity: ${selectedMedicament!.quantity}');
-                                print('Expiry Date: ${selectedMedicament!.expiryDate}');
-                                print('Notes: ${selectedMedicament!.notes}');
-                                print('Brand ID: ${selectedMedicament!.brandId}');
-                                Navigator.pop(context); // Close current modal sheet
+                                Medicament? selectedMedicament = getSelectedMedicament();
+                                if (selectedMedicament != null) {
+                                  print('Selected Medicament Details:');
+                                  print('ID: ${selectedMedicament!.id}');
+                                  print('Name: ${selectedMedicament!.name}');
+                                  print('Quantity: ${selectedMedicament!.quantity}');
+                                  print('Expiry Date: ${selectedMedicament!.expiryDate}');
+                                  print('Notes: ${selectedMedicament!.notes}');
+                                  print('Brand ID: ${selectedMedicament!.brandId}');
+                                  Navigator.pop(context, selectedMedicament);
+                                } else {
+                                  print('Error selecting medicament (stock_screen)');
+                                  Navigator.pop(context); // Close current modal sheet
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: const Color.fromRGBO(215, 74, 0, 1),
