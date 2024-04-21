@@ -42,6 +42,10 @@ class Medicament {
       brandId: map['brandId'],
     );
   }
+
+  bool checkExpired() {
+    return this.expiryDate.isBefore(DateTime.now());
+  }
 }
 
 class MedicamentStock {
