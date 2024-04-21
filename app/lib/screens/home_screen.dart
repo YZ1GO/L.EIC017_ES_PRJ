@@ -129,11 +129,16 @@ class HomeScreenState extends State<HomeScreen> {
             }
             return false;
           }).toList();
+
+          applicableReminders.sort((a, b) {
+            return a.times[0].hour.compareTo(b.times[0].hour);
+          });
+
           if (applicableReminders.isNotEmpty) {
             return Column(
               children: applicableReminders.map((reminder) {
                 return FutureBuilder<Medicament?>(
-                  future: MedicamentStock().getMedicamentById(reminder.medicament), // Assuming -1 as default or error value
+                  future: MedicamentStock().getMedicamentById(reminder.medicament),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container();
