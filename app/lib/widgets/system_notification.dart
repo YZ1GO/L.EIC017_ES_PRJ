@@ -27,6 +27,15 @@ void quantityLowNotificationHandler(String title, String body) async {
   await showNotification(title, body);
 }
 
+void medicametionReminderNotification(Medicament medicament, TimeOfDay timeToTakeMeds) async {
+  int hour = timeToTakeMeds.hour;
+  int minute = timeToTakeMeds.minute;
+  String title = 'It\'s time to take your {$hour:$minute} meds!';
+  String body = 'Don\'t forget to mark as taken';
+
+  await showNotification(title, body);
+}
+
 Future<void> requestNotificationPermission(BuildContext context, String notification_title, String notification_text) async {
   var status = await Permission.notification.status;
   if (!status.isGranted) {
