@@ -6,6 +6,10 @@ import 'package:intl/intl.dart';
 
 late Future<List<Medicament>> _medicamentsFuture;
 
+Future<List<Medicament>> getMedicamentsList() {
+  return _medicamentsFuture;
+}
+
 class StockScreen extends StatefulWidget {
   final bool selectionMode;
 
@@ -702,6 +706,4 @@ class _StockScreenState extends State<StockScreen> {
   }
 }
 
-Future<List<Medicament>> getMedicamentsList() {
-  return _medicamentsFuture;
-}
+
