@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'navigation_menu.dart';
 import 'package:app/medicaments.dart';
-import 'package:app/database/env.dart';
+import 'package:app/env/env.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
