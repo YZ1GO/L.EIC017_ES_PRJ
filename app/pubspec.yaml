@@ -45,6 +45,7 @@ dependencies:
   envied: ^0.5.4+1
   analyzer: ^5.13.0
   envify: ^2.0.3
+  bdd_widget_test: ^1.7.3
 
 dev_dependencies:
   flutter_test:
