@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:app/preferences.dart';
+import 'package:app/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -177,5 +179,31 @@ class MedicamentStock {
     } catch (e) {
       print('Error changing medicament quantity: $e');
     }
+  }
+
+  Future<List<Medicament>> getMedicamentsCloseToExpire() async {
+    int daysBeforeExpiredValue = await Preferences().getDaysBeforeExpiry();
+    List<Medicament> closeToExpiryMedicaments = [];
+    List<Medicament> currentMedicamentsStock = await getMedicamentsList();
+
+    DateTime now = DateTime.now();
+    for (Medicament medicament in currentMedicamentsStock) {
+      if (medicament.expiryDate.difference(now).inDays <= daysBeforeExpiredValue) {
+        closeToExpiryMedicaments.add(medicament);
+      }
+    }
+    return closeToExpiryMedicaments;
+  }
+
+  Future<List<Medicament>> getExpiredMedicaments() async {
+    List<Medicament> expiredMedicaments = [];
+    List<Medicament> currentMedicamentsStock = await getMedicamentsList();
+    DateTime now = DateTime.now();
+    for (Medicament medicament in currentMedicamentsStock) {
+      if (medicament.expiryDate.isBefore(now)) {
+        expiredMedicaments.add(medicament);
+      }
+    }
+    return expiredMedicaments;
   }
 }
