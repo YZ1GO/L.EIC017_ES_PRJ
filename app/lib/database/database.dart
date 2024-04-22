@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:app/screens/add_medicicament_screen.dart';
+import 'package:app/screens/add_medicament_screen.dart';
 
 class DatabaseContentScreen extends StatefulWidget {
   @override
@@ -178,23 +178,7 @@ class BrandSearchDelegate extends SearchDelegate<String> {
                 var imageUrl = 'assets/database/${brand['brand_id']}.jpg';
                 return ListTile(
                   title: Text(brand['brand_name'] ?? ''),
-                  subtitle: Text(
-                    'Form: ${brand['form'] ?? ''}, Strength: ${brand['strength'] ?? ''}',
-                  ),
-                  leading: Image.asset(
-                    imageUrl,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/database/default.jpg',
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  ),
+                  leading: loadBrandImage(int.tryParse(brand['brand_id'])),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -219,4 +203,26 @@ class BrandSearchDelegate extends SearchDelegate<String> {
         .where((brand) => brand['brand_name'].toString().toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
+
+  Widget loadBrandImage(int? brandId) {
+    String imagePath = 'assets/database/$brandId.jpg';
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: Image.asset(
+        imagePath,
+        width: 48,
+        height: 48,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            'assets/database/default.jpg',
+            width: 48,
+            height:48,
+            fit: BoxFit.cover,
+          );
+        },
+      ),
+    );
+  }
+
 }

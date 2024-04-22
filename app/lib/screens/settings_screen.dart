@@ -7,27 +7,45 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late bool isToggleEnabled;
+  late int lowQuantity;
+  late int daysBeforeExpiry;
 
   @override
   void initState() {
     super.initState();
-    isToggleEnabled = false;
-    loadToggleState();
+    lowQuantity = 0;
+    daysBeforeExpiry = 1;
+    loadLowQuantity();
+    loadDaysBeforeExpiry();
   }
 
-  Future<void> loadToggleState() async {
+  Future<void> loadLowQuantity() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      isToggleEnabled = prefs.getBool('toggle') ?? false;
+      lowQuantity = prefs.getInt('lowQuantity') ?? 0;
     });
   }
 
-  Future<void> saveToggleState(bool newValue) async {
+  Future<void> saveLowQuantity(int newValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('toggle', newValue);
+    await prefs.setInt('lowQuantity', newValue);
     setState(() {
-      isToggleEnabled = newValue;
+      lowQuantity = newValue;
+    });
+  }
+
+  Future<void> loadDaysBeforeExpiry() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      daysBeforeExpiry = prefs.getInt('daysBeforeExpiry') ?? 1;
+    });
+  }
+
+  Future<void> saveDaysBeforeExpiry(int newValue) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('daysBeforeExpiry', newValue);
+    setState(() {
+      daysBeforeExpiry = newValue;
     });
   }
 
@@ -37,29 +55,145 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              isToggleEnabled ? 'Enabled' : 'Disabled',
-              style: TextStyle(
-                color: isToggleEnabled ? Colors.red : null,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 20),
-            Switch(
-              value: isToggleEnabled,
-              onChanged: (newValue) {
-                saveToggleState(newValue);
-              },
-              activeColor: Colors.red,
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Notifications',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Color.fromRGBO(158, 66, 0, 1),
+                  ),
+                ),
+                Divider(color: Color.fromRGBO(158, 66, 0, 0.5)),
+                SizedBox(height: 16),
+                Text(
+                  'Quantity to notify low stock',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color.fromRGBO(158, 66, 0, 1),
+                  ),
+                ),
+                SizedBox(height: 6.0),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(225, 95, 0, 1),
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        blurRadius: 4,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (lowQuantity > 1) lowQuantity--;
+                            saveLowQuantity(lowQuantity);
+                          });
+                        },
+                      ),
+                      Text(
+                        '$lowQuantity',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            lowQuantity++;
+                            saveLowQuantity(lowQuantity);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Days before medicament expiry',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color.fromRGBO(158, 66, 0, 1),
+                  ),
+                ),
+                SizedBox(height: 6.0),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(225, 95, 0, 1),
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        blurRadius: 4,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (daysBeforeExpiry > 1) daysBeforeExpiry--;
+                            saveDaysBeforeExpiry(daysBeforeExpiry);
+                          });
+                        },
+                      ),
+                      Text(
+                        '$daysBeforeExpiry',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            daysBeforeExpiry++;
+                            saveDaysBeforeExpiry(daysBeforeExpiry);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ]
+          ),
         ),
       ),
     );
   }
-
 }

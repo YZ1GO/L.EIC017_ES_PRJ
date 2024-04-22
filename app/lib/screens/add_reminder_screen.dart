@@ -1,10 +1,13 @@
+import 'package:app/medicaments.dart';
+import 'package:app/reminders.dart';
+import 'package:app/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddReminderPage extends StatefulWidget {
-  final Function(Map<String, dynamic>) onReminderSaved;
+  final VoidCallback onReminderSaved;
 
   const AddReminderPage({Key? key, required this.onReminderSaved}) : super(key: key);
 
@@ -95,6 +98,8 @@ class _DaySelectionCircleState extends State<DaySelectionCircle> {
 }
 
 class _AddReminderPageState extends State<AddReminderPage> {
+  final ReminderDatabase _reminderDatabase = ReminderDatabase();
+
   String _reminderName = '';
   DateTime _startDate = DateTime.now();
   List<TimeOfDay> _times = [
@@ -102,7 +107,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
     TimeOfDay(hour: 13, minute: 0),
     TimeOfDay(hour: 19, minute: 0),
   ]; // Default time
-  String _medicament = 'Paracetamol (Test)';
+  Medicament? _medicament;
   bool _everyDay = true;
   List<bool> _selectedDays = [false, false, false, false, false, false, false];
 
@@ -131,7 +136,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   Future<void> _selectTime(BuildContext context, [TimeOfDay? initialTime]) async {
-    TimeOfDay pickedTime = initialTime ?? TimeOfDay(hour: 8, minute: 0);
+    TimeOfDay pickedTime = initialTime ?? const TimeOfDay(hour: 8, minute: 0);
 
     final TimeOfDay? newPickedTime = await showModalBottomSheet<TimeOfDay>(
       context: context,
@@ -322,24 +327,30 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StockScreen(selectionMode: true,))).then((selectedMedicament) {
+                            setState(() {
+                              _medicament = selectedMedicament;
+                            });
+                          })
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 FontAwesomeIcons.pills,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(
-                                'To be Done',
-                                style: TextStyle(
+                                _medicament != null ? _medicament!.name : 'Select medicament',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -492,27 +503,73 @@ class _AddReminderPageState extends State<AddReminderPage> {
     );
   }
 
-  void _saveReminder() {
+  void _saveReminder() async{
     if (_everyDay) {
       setState(() {
         _selectedDays = List.generate(7, (index) => true);
       });
     }
+    if (_times.isEmpty || _medicament == null) {
+      String? message;
+      if (_times.isEmpty && _medicament == null) {
+        message = 'Please select a medicament and at least one time for the reminder';
+      } else if (_times.isEmpty) {
+        message = 'Please select at least one time for the reminder';
+      } else if (_medicament == null) {
+        message = 'Please select a medicament for the reminder';
+      }
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('ERROR'),
+              content: Text(message!),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color.fromRGBO(215, 74, 0, 1),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+      );
+      return;
+    }
+    try {
+      Reminder newReminder = Reminder(
+          id: DateTime.now().millisecondsSinceEpoch,
+          reminderName: _reminderName,
+          selectedDays: _selectedDays,
+          startDate: _startDate,
+          medicament: _medicament!.id,
+          times: _times,
+      );
 
-    // Save reminder details
-    Map<String, dynamic> reminderDetails = {
-      'reminderName': _reminderName,
-      'selectedDays': _selectedDays,
-      'startDate': _startDate,
-      'medicament': _medicament,
-      'times': _times,
-    };
-
-    // Call the callback function to pass reminder details back to the parent widget
-    widget.onReminderSaved(reminderDetails);
-
-    // Close the AddReminderPage
-    Navigator.pop(context);
+      int result = await _reminderDatabase.insertReminder(newReminder);
+      if (result != -1) {
+        print('Reminder added successfully');
+        print('Reminder Details:');
+        print('ID: ${newReminder.id}');
+        print('Name: ${newReminder.reminderName}');
+        print('Selected Days: ${newReminder.selectedDays}');
+        print('Start Date: ${newReminder.startDate}');
+        print('Medicament: ${newReminder.medicament}');
+        print('Times: ${newReminder.times}');
+        widget.onReminderSaved();
+        Navigator.pop(context);
+      } else {
+        print('Failed to add reminder');
+      }
+    } catch (e) {
+      print('Error saving reminder: $e');
+    }
   }
 
   void _showFrequencyBottomSheet(BuildContext context) {
@@ -528,7 +585,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 title: const Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Text(
-                    'Remind me everyday',
+                    'Daily',
                     style: TextStyle(
                        fontSize: 20,
                     ),
@@ -549,7 +606,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 title: const Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Text(
-                    'Select days of week',
+                    'Specific Days',
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -625,6 +682,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           }
                           setState(() {
                             _selectedDays[index] = isSelected;
+                            _everyDay = false;
                           });
                         },
                   ),
@@ -644,6 +702,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
         selectedDays.add(DaySelectionCircle._getDayName(i));
       }
     }
-    return selectedDays.isEmpty ? 'Select days of week' : selectedDays.join(', ');
+    if (selectedDays.isEmpty) {
+      _everyDay = true;
+      return 'Remind me everyday';
+    } else {
+      return selectedDays.join(', ');
+    }
   }
 }

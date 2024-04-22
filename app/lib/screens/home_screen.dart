@@ -1,47 +1,60 @@
 import 'package:flutter/material.dart';
+import '../medicaments.dart';
+import '../reminders.dart';
 import '../widgets/calendar_widget.dart';
 import '../widgets/medication_reminder_widget.dart';
-import '../widgets/system_notification_test_widget.dart';
 import '../widgets/eclipse_background.dart';
-import 'database.dart';
+
+late Future<List<Reminder>> _remindersFuture;
 
 class HomeScreen extends StatefulWidget {
-  final Map<String, dynamic>? reminderDetails;
+  final VoidCallback onReminderSaved;
 
-  const HomeScreen({Key? key, this.reminderDetails}) : super(key: key);
+  const HomeScreen({super.key, required this.onReminderSaved});
 
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
-
 class HomeScreenState extends State<HomeScreen> {
+  late DateTime _selectedDay = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _remindersFuture = getReminders();
+  }
+
+  void _handleDaySelected(DateTime selectedDay) {
+    setState(() {
+      _selectedDay = selectedDay;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('Reminder details home screen: ${widget.reminderDetails}');
-    Map<String, dynamic>? reminderDetails = widget.reminderDetails;
-    String reminderName = reminderDetails?['reminderName'] ?? '';
-    List<bool> selectedDays = reminderDetails?['selectedDays'] ?? [];
-    DateTime startDay = reminderDetails?['startDate'] ?? DateTime.now();
-    String medicamentName = reminderDetails?['medicament'] ?? '';
-    List<TimeOfDay> times = reminderDetails?['times'] ?? [];
-
+    refreshReminderList();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
         children: [
           eclipse_background(),
-          const CalendarWidget(),
+          CalendarWidget(
+            onDaySelected: _handleDaySelected,
+          ),
           Positioned(
             left: 0,
             right: 0,
             top: 250,
-            child: MedicationReminderWidget(
-              reminderName: reminderName,
-              selectedDays: selectedDays,
-              startDay: startDay,
-              medicamentName: medicamentName,
-              times: times,
+            child: _buildMedicationReminderWidget(),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 700,
+            child: ElevatedButton(
+              onPressed: _clearRemindersDatabase,
+              child: Text('Clear Reminders'),
             ),
           ),
           /*Positioned(
@@ -90,4 +103,99 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Future<List<Reminder>> getReminders() async {
+    return await ReminderDatabase().getReminders();
+  }
+
+  void refreshReminderList() async {
+    setState(() {
+      _remindersFuture = getReminders();
+    });
+  }
+
+  Widget _buildMedicationReminderWidget() {
+    return FutureBuilder<List<Reminder>>(
+      future: _remindersFuture,
+      builder: (context, snapshot) {
+        List<Reminder>? reminders = snapshot.data;
+        print('Reminders ${reminders?.length ?? 0}');
+        if (reminders != null && reminders.isNotEmpty) {
+          List<Reminder> applicableReminders = reminders.where((reminder) {
+            if (reminder.startDate.isBefore(_selectedDay) ||
+                reminder.startDate.isAtSameMomentAs(_selectedDay)) {
+              int selectedDayIndex = _selectedDay.weekday % 7;
+              return reminder.selectedDays[selectedDayIndex];
+            }
+            return false;
+          }).toList();
+
+          applicableReminders.sort((a, b) {
+            return a.times[0].hour.compareTo(b.times[0].hour);
+          });
+
+          if (applicableReminders.isNotEmpty) {
+            return Column(
+              children: applicableReminders.map((reminder) {
+                return FutureBuilder<Medicament?>(
+                  future: MedicamentStock().getMedicamentById(reminder.medicament),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else {
+                      return MedicationReminderWidget(
+                        reminderName: reminder.reminderName,
+                        selectedDays: reminder.selectedDays,
+                        startDay: reminder.startDate,
+                        medicament: snapshot.data!,
+                        times: reminder.times,
+                      );
+                    }
+                  },
+                );
+              }).toList(),
+            );
+          }
+        }
+        return noRemindersCard();
+      },
+    );
+  }
+
+  void _clearRemindersDatabase() async {
+    await ReminderDatabase().clearReminders();
+    setState(() {
+      _remindersFuture = getReminders();
+    });
+  }
+
+  Widget noRemindersCard() {
+    return Center(
+      child: FractionallySizedBox(
+        widthFactor: 0.9,
+        child: Card(
+          margin: const EdgeInsets.symmetric(vertical: 7),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 5,
+          color: const Color.fromRGBO(255, 218, 190, 1),
+          child: const SizedBox(
+            height: 150,
+            child: Center(
+              child: Text(
+                "There is no registered pill",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(225, 95, 0, 1),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

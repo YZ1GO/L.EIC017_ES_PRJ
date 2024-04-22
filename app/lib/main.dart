@@ -1,18 +1,21 @@
+import 'package:app/reminders.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'navigation_menu.dart';
 import 'package:app/medicaments.dart';
+import 'package:app/database/env.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyDbpqjXP_NGAngNv-M8wRPdeesCLRyGvcc',
-        appId: '1:981114628978:android:606d661c3d68e159264beb',
-        messagingSenderId: '981114628978',
-        projectId: 'pingupills'
+      options: FirebaseOptions(
+        apiKey: Env.API_KEY,
+        appId: Env.APP_ID,
+        messagingSenderId: Env.MESSAGING_SENDER_ID,
+        projectId: Env.PROJECT_ID
       )
-  );
+    );
+  await ReminderDatabase().initDatabase();
   await MedicamentStock().initDatabase();
   runApp(const MyApp());
 }

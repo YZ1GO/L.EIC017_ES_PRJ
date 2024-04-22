@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final Function(DateTime) onDaySelected;
+
+  const CalendarWidget({super.key, required this.onDaySelected});
 
   @override
   CalendarWidgetState createState() => CalendarWidgetState();
@@ -24,12 +26,20 @@ class CalendarWidgetState extends State<CalendarWidget> {
     pageController.addListener(() {
       // Calculate the new selectedDate based on the current page
       final newPageIndex = pageController.page!.round();
-      final newSelectedDate = DateTime(DateTime.now().year, 1, 1).add(Duration(days: newPageIndex));
+      final newSelectedDate = DateTime(
+        DateTime.now().year,
+        1,
+        1,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
+      ).add(Duration(days: newPageIndex));
 
       // Update selectedDate if it's changed
       if (newSelectedDate != selectedDate) {
         setState(() {
           selectedDate = newSelectedDate;
+          widget.onDaySelected(selectedDate);
         });
       }
     });
@@ -255,7 +265,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
     } else if (d.year == today.year && d.month == today.month && d.day == today.day - 1) {
       return 'Yesterday';
     } else {
-      return getDayOfWeekComplete(selectedDate.weekday);
+      return getDayOfWeekComplete(d.weekday);
     }
   }
 
