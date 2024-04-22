@@ -150,6 +150,7 @@ class _StockScreenState extends State<StockScreen> {
                 Visibility(
                   visible: !widget.selectionMode,
                     child: ElevatedButton(
+                      key: Key('add new medicament button'),
                       onPressed: () async {
                         await Navigator.push(
                           context,
