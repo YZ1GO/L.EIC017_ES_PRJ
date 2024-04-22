@@ -45,10 +45,13 @@ class HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 0,
             right: 0,
-            top: 250,
-            child: _buildMedicationReminderWidget(),
+            top: MediaQuery.of(context).size.height * 0.25,
+            bottom: MediaQuery.of(context).size.height * 0.05,
+            child: SingleChildScrollView(
+              child: _buildMedicationReminderWidget(),
+            ),
           ),
-          Positioned(
+          /*Positioned(
             left: 0,
             right: 0,
             top: 700,
@@ -56,7 +59,7 @@ class HomeScreenState extends State<HomeScreen> {
               onPressed: _clearRemindersDatabase,
               child: Text('Clear Reminders'),
             ),
-          ),
+          ),*/
           /*Positioned(
             left: 0,
             right: 0,
@@ -136,24 +139,27 @@ class HomeScreenState extends State<HomeScreen> {
 
           if (applicableReminders.isNotEmpty) {
             return Column(
-              children: applicableReminders.map((reminder) {
-                return FutureBuilder<Medicament?>(
-                  future: MedicamentStock().getMedicamentById(reminder.medicament),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container();
-                    } else {
-                      return MedicationReminderWidget(
-                        reminderName: reminder.reminderName,
-                        selectedDays: reminder.selectedDays,
-                        startDay: reminder.startDate,
-                        medicament: snapshot.data!,
-                        times: reminder.times,
-                      );
-                    }
-                  },
-                );
-              }).toList(),
+              children: [
+                ...applicableReminders.map((reminder) {
+                  return FutureBuilder<Medicament?>(
+                    future: MedicamentStock().getMedicamentById(reminder.medicament),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      } else {
+                        return MedicationReminderWidget(
+                          reminderName: reminder.reminderName,
+                          selectedDays: reminder.selectedDays,
+                          startDay: reminder.startDate,
+                          medicament: snapshot.data!,
+                          times: reminder.times,
+                        );
+                      }
+                    },
+                  );
+                }),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              ],
             );
           }
         }
@@ -197,5 +203,4 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
