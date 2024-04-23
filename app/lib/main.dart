@@ -18,7 +18,7 @@ void main() async {
     );
   await ReminderDatabase().initDatabase();
   await MedicamentStock().initDatabase();
-  checkDayChange();
+  checkDayChangeInit();
   runApp(const MyApp());
 }
 

@@ -188,7 +188,7 @@ class MedicamentStock {
 
     DateTime now = DateTime.now();
     for (Medicament medicament in currentMedicamentsStock) {
-      if (medicament.expiryDate.difference(now).inDays <= daysBeforeExpiredValue) {
+      if (now.difference(medicament.expiryDate).inDays == daysBeforeExpiredValue) {
         closeToExpiryMedicaments.add(medicament);
       }
     }
@@ -200,7 +200,7 @@ class MedicamentStock {
     List<Medicament> currentMedicamentsStock = await getMedicamentsList();
     DateTime now = DateTime.now();
     for (Medicament medicament in currentMedicamentsStock) {
-      if (medicament.expiryDate.isBefore(now)) {
+      if (/*medicament.expiryDate.isBefore(now)*/ medicament.expiryDate.isAtSameMomentAs(now)) {
         expiredMedicaments.add(medicament);
       }
     }

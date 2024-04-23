@@ -35,6 +35,7 @@ void checkMedicamentsCloseToExpire() async {
 
   for (Medicament medicament in medicamentsToNotify) {
     String medicamentName = medicament.name;
+    print('{$medicamentName} is close to expiry date');
     String title = '$medicamentName is close to its expiration date!';
     String body = 'Don\'t forget to replenish the stock';
 
@@ -51,6 +52,7 @@ void checkMedicamentsExpired() async {
 
   for (Medicament medicament in medicamentsToNotify) {
     String medicamentName = medicament.name;
+    print('{$medicamentName} is expired');
     String title = '$medicamentName has expired!';
     String body = 'Don\'t forget to replenish the stock';
 
