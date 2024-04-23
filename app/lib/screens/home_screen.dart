@@ -125,12 +125,14 @@ class HomeScreenState extends State<HomeScreen> {
         print('Reminders ${reminders?.length ?? 0}');
         if (reminders != null && reminders.isNotEmpty) {
           List<Reminder> applicableReminders = reminders.where((reminder) {
-            if (reminder.startDate.isBefore(_selectedDay) ||
-                reminder.startDate.isAtSameMomentAs(_selectedDay)) {
-              int selectedDayIndex = _selectedDay.weekday % 7;
-              return reminder.selectedDays[selectedDayIndex];
-            }
-            return false;
+            int selectedDayIndex = _selectedDay.weekday % 7;
+            bool isBeforeEndDate = reminder.endDate.isAfter(_selectedDay) ||
+                reminder.endDate.isAtSameMomentAs(_selectedDay..add(const Duration(days: 1)));
+            bool isAfterStartDate = reminder.startDate.isBefore(_selectedDay) ||
+                reminder.startDate.isAtSameMomentAs(_selectedDay);
+            bool isSelectedDay = reminder.selectedDays[selectedDayIndex];
+
+            return isBeforeEndDate && isAfterStartDate && isSelectedDay;
           }).toList();
 
           applicableReminders.sort((a, b) {

@@ -8,6 +8,7 @@ class Reminder {
   String reminderName;
   List<bool> selectedDays;
   DateTime startDate;
+  DateTime endDate;
   int medicament;
   List<TimeOfDay> times;
 
@@ -16,6 +17,7 @@ class Reminder {
     required this.reminderName,
     required this.selectedDays,
     required this.startDate,
+    required this.endDate,
     required this.medicament,
     required this.times,
   });
@@ -26,6 +28,7 @@ class Reminder {
       'reminderName': reminderName,
       'selectedDays': selectedDays.join(','),
       'startDate': startDate.millisecondsSinceEpoch,
+      'endDate': endDate.millisecondsSinceEpoch,
       'medicament': medicament,
       'times': times.map((time) => time.hour * 60 + time.minute).toList().join(','), // Convert list to string
     };
@@ -37,6 +40,7 @@ class Reminder {
       reminderName: map['reminderName'],
       selectedDays: (map['selectedDays'] as String).split(',').map((e) => e == 'true').toList(),
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
       medicament: map['medicament'],
       times: (map['times'] as String)
           .split(',')
@@ -99,7 +103,7 @@ class ReminderDatabase {
     final String path = join(await getDatabasesPath(), 'reminders_database.db');
     _database = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (Database db, int version) async {
         await db.execute(
           '''
@@ -108,6 +112,7 @@ class ReminderDatabase {
             reminderName TEXT,
             selectedDays TEXT,
             startDate INTEGER,
+            endDate INTEGER,
             medicament INTEGER,
             times TEXT
           )
