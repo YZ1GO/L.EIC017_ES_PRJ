@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../medicaments.dart';
 
 class MedicationReminderWidget extends StatelessWidget {
+  final int reminderId;
   final String reminderName;
   final List<bool> selectedDays;
   final DateTime startDay;
@@ -11,6 +12,7 @@ class MedicationReminderWidget extends StatelessWidget {
   final List<TimeOfDay> times;
 
   const MedicationReminderWidget({super.key,
+    required this.reminderId,
     required this.reminderName,
     required this.selectedDays,
     required this.startDay,
