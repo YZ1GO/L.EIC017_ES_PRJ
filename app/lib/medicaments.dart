@@ -44,7 +44,9 @@ class Medicament {
   }
 
   bool checkExpired() {
-    return this.expiryDate.isBefore(DateTime.now());
+    DateTime currentDate = DateTime.now();
+    int differenceInDays = expiryDate.difference(currentDate).inDays;
+    return differenceInDays < 0;
   }
 }
 
