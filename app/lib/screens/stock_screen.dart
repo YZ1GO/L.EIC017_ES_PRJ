@@ -581,7 +581,7 @@ class _StockScreenState extends State<StockScreen> {
               child: Text(
                 'Yes',
                 style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+                  color: Colors.red,
                 ),
               ),
             ),
@@ -593,7 +593,7 @@ class _StockScreenState extends State<StockScreen> {
               child: Text(
                 'No',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Color.fromRGBO(100, 50, 13 ,1),
                 ),
               ),
             ),
