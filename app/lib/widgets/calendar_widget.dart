@@ -45,6 +45,9 @@ class CalendarWidgetState extends State<CalendarWidget> {
     });
   }
 
+  // Calculate the number of days in the year (365 or 366)
+  final daysInYear = DateTime(DateTime.now().year + 1, 1, 1).difference(DateTime(DateTime.now().year, 1, 1)).inDays;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -101,7 +104,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
             child: SizedBox(
               height: 100,
               child: PageView.builder(
-                itemCount: null, // Infinite scrolling
+                itemCount: daysInYear,
                 controller: pageController,
                 itemBuilder: (context, index) {
                   final date = DateTime.now().subtract(Duration(days: initialPage - index));

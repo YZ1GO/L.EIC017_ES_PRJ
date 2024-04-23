@@ -37,7 +37,7 @@ class Reminder {
       reminderName: map['reminderName'],
       selectedDays: (map['selectedDays'] as String).split(',').map((e) => e == 'true').toList(),
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
-      medicament: int.parse(map['medicament']),
+      medicament: map['medicament'],
       times: (map['times'] as String)
           .split(',')
           .map((e) => TimeOfDay(hour: int.parse(e) ~/ 60, minute: int.parse(e) % 60))
@@ -109,8 +109,9 @@ class ReminderDatabase {
   }
 
   Future<List<Reminder>> getReminders() async {
+    List<Map<String, dynamic>> maps = [];
     try {
-      final List<Map<String, dynamic>> maps = await _database.query('reminders');
+      maps = await _database.query('reminders');
       print('Getting reminders list');
       return List.generate(maps.length, (i) {
         return Reminder.fromMap(maps[i]);
