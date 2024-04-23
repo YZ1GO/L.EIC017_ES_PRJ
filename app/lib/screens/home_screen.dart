@@ -45,21 +45,21 @@ class HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 0,
             right: 0,
-            top: MediaQuery.of(context).size.height * 0.25,
+            top: 230,
             bottom: MediaQuery.of(context).size.height * 0.05,
             child: SingleChildScrollView(
               child: _buildMedicationReminderWidget(),
             ),
           ),
-          /*Positioned(
-            left: 0,
+          Positioned(
+            left: 300,
             right: 0,
-            top: 700,
+            top: 50,
             child: ElevatedButton(
               onPressed: _clearRemindersDatabase,
-              child: Text('Clear Reminders'),
+              child: Text('Clear'),
             ),
-          ),*/
+          ),
           /*Positioned(
             left: 0,
             right: 0,
@@ -158,7 +158,7 @@ class HomeScreenState extends State<HomeScreen> {
                     },
                   );
                 }),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                SizedBox(height: 150),
               ],
             );
           }
