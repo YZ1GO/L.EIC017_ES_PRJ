@@ -102,6 +102,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
   String _reminderName = '';
   DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now().add(const Duration(days: 1));
   List<TimeOfDay> _times = [
     TimeOfDay(hour: 8, minute: 0),
     TimeOfDay(hour: 13, minute: 0),
@@ -131,6 +132,31 @@ class _AddReminderPageState extends State<AddReminderPage> {
     if (picked != null && picked != _startDate) {
       setState(() {
         _startDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectEndDate(BuildContext context) async {
+    final DateTime minEndDate = _startDate.add(const Duration(days: 1));
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _endDate,
+      firstDate: minEndDate,
+      lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color.fromRGBO(243, 83, 0, 1),
+            colorScheme: const ColorScheme.light(primary: Color.fromRGBO(243, 83, 0, 1),),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != _endDate) {
+      setState(() {
+        _endDate = picked;
       });
     }
   }
@@ -305,6 +331,45 @@ class _AddReminderPageState extends State<AddReminderPage> {
                               const SizedBox(width: 10),
                               Text(
                                 DateFormat('MMMM d, y').format(_startDate),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          'End Date',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => _selectEndDate(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(225, 95, 0, 1),
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.calendarCheck,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                DateFormat('MMMM d, y').format(_endDate),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -548,6 +613,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
           reminderName: _reminderName,
           selectedDays: _selectedDays,
           startDate: _startDate,
+          endDate: _endDate,
           medicament: _medicament!.id,
           times: _times,
       );
@@ -560,6 +626,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
         print('Name: ${newReminder.reminderName}');
         print('Selected Days: ${newReminder.selectedDays}');
         print('Start Date: ${newReminder.startDate}');
+        print('End Date: ${newReminder.endDate}');
         print('Medicament: ${newReminder.medicament}');
         print('Times: ${newReminder.times}');
         widget.onReminderSaved();
@@ -570,7 +637,12 @@ class _AddReminderPageState extends State<AddReminderPage> {
     } catch (e) {
       print('Error saving reminder: $e');
     }
+    //saveReminderCards();
   }
+
+  /*void saveReminderCards() {
+
+  }*/
 
   void _showFrequencyBottomSheet(BuildContext context) {
     showModalBottomSheet(

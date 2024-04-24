@@ -125,12 +125,14 @@ class HomeScreenState extends State<HomeScreen> {
         print('Reminders ${reminders?.length ?? 0}');
         if (reminders != null && reminders.isNotEmpty) {
           List<Reminder> applicableReminders = reminders.where((reminder) {
-            if (reminder.startDate.isBefore(_selectedDay) ||
-                reminder.startDate.isAtSameMomentAs(_selectedDay)) {
-              int selectedDayIndex = _selectedDay.weekday % 7;
-              return reminder.selectedDays[selectedDayIndex];
-            }
-            return false;
+            int selectedDayIndex = _selectedDay.weekday % 7;
+            bool isBeforeOrAtEndDate = reminder.endDate.isAfter(_selectedDay.subtract(const Duration(days: 1))) ||
+                reminder.endDate.isAtSameMomentAs(_selectedDay);
+            bool isAfterStartDate = reminder.startDate.isBefore(_selectedDay) ||
+                reminder.startDate.isAtSameMomentAs(_selectedDay);
+            bool isSelectedDay = reminder.selectedDays[selectedDayIndex];
+
+            return isBeforeOrAtEndDate && isAfterStartDate && isSelectedDay;
           }).toList();
 
           applicableReminders.sort((a, b) {
@@ -148,9 +150,9 @@ class HomeScreenState extends State<HomeScreen> {
                         return Container();
                       } else {
                         return MedicationReminderWidget(
+                          reminderId: reminder.id,
                           reminderName: reminder.reminderName,
-                          selectedDays: reminder.selectedDays,
-                          startDay: reminder.startDate,
+                          selectedDay: _selectedDay,
                           medicament: snapshot.data!,
                           times: reminder.times,
                         );

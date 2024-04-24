@@ -8,6 +8,7 @@ class Reminder {
   String reminderName;
   List<bool> selectedDays;
   DateTime startDate;
+  DateTime endDate;
   int medicament;
   List<TimeOfDay> times;
 
@@ -16,6 +17,7 @@ class Reminder {
     required this.reminderName,
     required this.selectedDays,
     required this.startDate,
+    required this.endDate,
     required this.medicament,
     required this.times,
   });
@@ -26,6 +28,7 @@ class Reminder {
       'reminderName': reminderName,
       'selectedDays': selectedDays.join(','),
       'startDate': startDate.millisecondsSinceEpoch,
+      'endDate': endDate.millisecondsSinceEpoch,
       'medicament': medicament,
       'times': times.map((time) => time.hour * 60 + time.minute).toList().join(','), // Convert list to string
     };
@@ -37,11 +40,52 @@ class Reminder {
       reminderName: map['reminderName'],
       selectedDays: (map['selectedDays'] as String).split(',').map((e) => e == 'true').toList(),
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
       medicament: map['medicament'],
       times: (map['times'] as String)
           .split(',')
           .map((e) => TimeOfDay(hour: int.parse(e) ~/ 60, minute: int.parse(e) % 60))
           .toList(),
+    );
+  }
+}
+
+class ReminderCard {
+  final int cardId; // composed by reminderId + day + time
+  final int reminderId;
+  final DateTime day;
+  final TimeOfDay time;
+  bool isTaken;
+  bool isJumped;
+
+  ReminderCard({
+    required this.cardId,
+    required this.reminderId,
+    required this.day,
+    required this.time,
+    this.isTaken = false,
+    this.isJumped = false,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'cardId': cardId,
+      'reminderId': reminderId,
+      'day': day.millisecondsSinceEpoch,
+      'time': time.hour * 60 + time.minute,
+      'isTaken': isTaken ? 1 : 0,
+      'isJumped': isJumped ? 1 : 0,
+    };
+  }
+
+  factory ReminderCard.fromMap(Map<String, dynamic> map) {
+    return ReminderCard(
+      cardId: map['cardId'],
+      reminderId: map['reminderId'],
+      day: DateTime.fromMillisecondsSinceEpoch(map['day']),
+      time: TimeOfDay(hour: map['time'] ~/ 60, minute: map['time'] % 60),
+      isTaken: map['isTaken'] == 1,
+      isJumped: map['isJumped'] == 1,
     );
   }
 }
@@ -59,7 +103,7 @@ class ReminderDatabase {
     final String path = join(await getDatabasesPath(), 'reminders_database.db');
     _database = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (Database db, int version) async {
         await db.execute(
           '''
@@ -68,8 +112,23 @@ class ReminderDatabase {
             reminderName TEXT,
             selectedDays TEXT,
             startDate INTEGER,
+            endDate INTEGER,
             medicament INTEGER,
             times TEXT
+          )
+          ''',
+        );
+
+        await db.execute(
+          '''
+          CREATE TABLE reminder_cards(
+            cardId INTEGER PRIMARY KEY,
+            reminderId INTEGER,
+            day INTEGER,
+            time INTEGER,
+            isTaken INTEGER,
+            isJumped INTEGER,
+          FOREIGN KEY (reminderId) REFERENCES reminders(id)
           )
           ''',
         );
@@ -149,6 +208,53 @@ class ReminderDatabase {
     } catch (e) {
       print('Error deleting reminder: $e');
       return -1;
+    }
+  }
+
+  /***************************REMINDER CARD***************************/
+
+  Future<int> insertReminderCard(ReminderCard card) async {
+    try {
+      final int id = await _database.insert('reminder_cards', card.toMap());
+      print('Inserted reminder card $id');
+      return id;
+    } catch (e) {
+      print('Error inserting reminder card: $e');
+      return -1;
+    }
+  }
+
+  Future<int> updateReminderCard(ReminderCard card) async {
+    try {
+      final int rowsAffected = await _database.update(
+        'reminder_cards',
+        card.toMap(),
+        where: 'cardId = ?',
+        whereArgs: [card.cardId],
+      );
+      print('Updated reminder card $rowsAffected');
+      return rowsAffected;
+    } catch (e) {
+      print('Error updating reminder card: $e');
+      return -1;
+    }
+  }
+
+  Future<List<ReminderCard>> getReminderCards(int reminderId) async {
+    List<Map<String, dynamic>> maps = [];
+    try {
+      maps = await _database.query(
+        'reminder_cards',
+        where: 'reminderId = ?',
+        whereArgs: [reminderId],
+      );
+      print('Getting reminder cards for reminder ID: $reminderId');
+      return List.generate(maps.length, (i) {
+        return ReminderCard.fromMap(maps[i]);
+      });
+    } catch (e) {
+      print('Error fetching reminder cards: $e');
+      return [];
     }
   }
 }
