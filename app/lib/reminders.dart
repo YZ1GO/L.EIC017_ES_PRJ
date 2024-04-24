@@ -55,16 +55,16 @@ class ReminderCard {
   final int reminderId;
   final DateTime day;
   final TimeOfDay time;
-  bool isTaken;
-  bool isJumped;
+  final bool isTaken;
+  final bool isJumped;
 
   ReminderCard({
     required this.cardId,
     required this.reminderId,
     required this.day,
     required this.time,
-    this.isTaken = false,
-    this.isJumped = false,
+    required this.isTaken,
+    required this.isJumped,
   });
 
   Map<String, dynamic> toMap() {
