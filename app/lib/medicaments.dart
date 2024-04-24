@@ -171,7 +171,7 @@ class MedicamentStock {
 
       if (currentMedicament != null) {
         currentMedicament.quantity = newQuantity;
-        await updateMedicament(currentMedicament); // Update the quantity in the database
+        await updateMedicament(currentMedicament);
         print('Updated quantity for medicament ${medicament.name} to $newQuantity');
         verifyStockRunningLow(currentMedicament);
       } else {

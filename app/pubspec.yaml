@@ -48,6 +48,7 @@ dependencies:
   bdd_widget_test: ^1.7.3
   gherkin: ^3.1.0
   sqflite_common_ffi: ^2.3.3
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
