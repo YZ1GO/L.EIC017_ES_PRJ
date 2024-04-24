@@ -23,7 +23,7 @@ Future<void> initializeTestEnvironment() async {
 
 /// Usage: the user is in "Stock Screen"
 Future<void> theUserIsInStockScreen(WidgetTester tester) async {
-  await initializeTestEnvironment();
+  //await initializeTestEnvironment();
   await tester.pumpWidget(MyApp());
   await tester.tap(find.byKey(Key('stock screen button')));
   await tester.pumpAndSettle();

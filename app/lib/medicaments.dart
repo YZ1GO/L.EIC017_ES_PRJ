@@ -167,12 +167,13 @@ class MedicamentStock {
       return;
     }
     try {
-      List<Medicament> currentMedicament = (await getMedicamentById(medicament.id)) as List<Medicament>;
+      Medicament? currentMedicament = await getMedicamentById(medicament.id);
 
       if (currentMedicament != null) {
-        currentMedicament.first.quantity = newQuantity;
+        currentMedicament.quantity = newQuantity;
+        await updateMedicament(currentMedicament); // Update the quantity in the database
         print('Updated quantity for medicament ${medicament.name} to $newQuantity');
-        verifyStockRunningLow(currentMedicament.first);
+        verifyStockRunningLow(currentMedicament);
       } else {
         print('Medicament not found in the database');
       }
@@ -180,4 +181,5 @@ class MedicamentStock {
       print('Error changing medicament quantity: $e');
     }
   }
+
 }
