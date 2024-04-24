@@ -185,6 +185,8 @@ class ReminderDatabase {
     try {
       await _database.delete('reminders');
       print('Cleared all reminders from the database');
+      await _database.delete('reminder_cards');
+      print('Cleared all reminder cards from the database');
     } catch (e) {
       print('Error clearing reminders: $e');
     }
