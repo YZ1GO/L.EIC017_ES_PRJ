@@ -114,12 +114,12 @@ class _StockScreenState extends State<StockScreen> {
                                 Medicament? selectedMedicament = getSelectedMedicament();
                                 if (selectedMedicament != null) {
                                   print('Selected Medicament Details:');
-                                  print('ID: ${selectedMedicament!.id}');
-                                  print('Name: ${selectedMedicament!.name}');
-                                  print('Quantity: ${selectedMedicament!.quantity}');
-                                  print('Expiry Date: ${selectedMedicament!.expiryDate}');
-                                  print('Notes: ${selectedMedicament!.notes}');
-                                  print('Brand ID: ${selectedMedicament!.brandId}');
+                                  print('ID: ${selectedMedicament.id}');
+                                  print('Name: ${selectedMedicament.name}');
+                                  print('Quantity: ${selectedMedicament.quantity}');
+                                  print('Expiry Date: ${selectedMedicament.expiryDate}');
+                                  print('Notes: ${selectedMedicament.notes}');
+                                  print('Brand ID: ${selectedMedicament.brandId}');
                                   Navigator.pop(context, selectedMedicament);
                                 } else {
                                   print('Error selecting medicament (stock_screen)');
