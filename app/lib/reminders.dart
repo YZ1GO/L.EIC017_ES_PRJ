@@ -51,7 +51,7 @@ class Reminder {
 }
 
 class ReminderCard {
-  final int cardId; // composed by reminderId + day + time
+  final String cardId; // composed by reminderId + day + time
   final int reminderId;
   final DateTime day;
   final TimeOfDay time;
@@ -122,7 +122,7 @@ class ReminderDatabase {
         await db.execute(
           '''
           CREATE TABLE reminder_cards(
-            cardId INTEGER PRIMARY KEY,
+            cardId TEXT PRIMARY KEY,
             reminderId INTEGER,
             day INTEGER,
             time INTEGER,
@@ -215,14 +215,25 @@ class ReminderDatabase {
 
   /***************************REMINDER CARD***************************/
 
-  Future<int> insertReminderCard(ReminderCard card) async {
+  Future<String> insertReminderCard(ReminderCard card) async {
     try {
-      final int id = await _database.insert('reminder_cards', card.toMap());
-      print('Inserted reminder card $id');
-      return id;
+      final existingCard = await _database.query(
+        'reminder_cards',
+        where: 'cardId = ?',
+        whereArgs: [card.cardId],
+      );
+
+      if (existingCard.isEmpty) {
+        await _database.insert('reminder_cards', card.toMap());
+        print('Inserted reminder card ${card.cardId}');
+        return card.cardId;
+      } else {
+        print('Reminder card with the same ID already exists');
+        return '-1';
+      }
     } catch (e) {
       print('Error inserting reminder card: $e');
-      return -1;
+      return '-1';
     }
   }
 
@@ -250,7 +261,6 @@ class ReminderDatabase {
         where: 'reminderId = ?',
         whereArgs: [reminderId],
       );
-      print('Getting reminder cards for reminder ID: $reminderId');
       return List.generate(maps.length, (i) {
         return ReminderCard.fromMap(maps[i]);
       });
@@ -259,4 +269,5 @@ class ReminderDatabase {
       return [];
     }
   }
+
 }
