@@ -152,8 +152,7 @@ class HomeScreenState extends State<HomeScreen> {
                         return MedicationReminderWidget(
                           reminderId: reminder.id,
                           reminderName: reminder.reminderName,
-                          selectedDays: reminder.selectedDays,
-                          startDay: reminder.startDate,
+                          selectedDay: _selectedDay,
                           medicament: snapshot.data!,
                           times: reminder.times,
                         );
