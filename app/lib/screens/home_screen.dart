@@ -45,16 +45,19 @@ class HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 0,
             right: 0,
-            top: 250,
-            child: _buildMedicationReminderWidget(),
+            top: 230,
+            bottom: MediaQuery.of(context).size.height * 0.05,
+            child: SingleChildScrollView(
+              child: _buildMedicationReminderWidget(),
+            ),
           ),
           Positioned(
-            left: 0,
+            left: 300,
             right: 0,
-            top: 700,
+            top: 50,
             child: ElevatedButton(
               onPressed: _clearRemindersDatabase,
-              child: Text('Clear Reminders'),
+              child: Text('Clear'),
             ),
           ),
           /*Positioned(
@@ -122,12 +125,14 @@ class HomeScreenState extends State<HomeScreen> {
         print('Reminders ${reminders?.length ?? 0}');
         if (reminders != null && reminders.isNotEmpty) {
           List<Reminder> applicableReminders = reminders.where((reminder) {
-            if (reminder.startDate.isBefore(_selectedDay) ||
-                reminder.startDate.isAtSameMomentAs(_selectedDay)) {
-              int selectedDayIndex = _selectedDay.weekday % 7;
-              return reminder.selectedDays[selectedDayIndex];
-            }
-            return false;
+            int selectedDayIndex = _selectedDay.weekday % 7;
+            bool isBeforeOrAtEndDate = reminder.endDate.isAfter(_selectedDay.subtract(const Duration(days: 1))) ||
+                reminder.endDate.isAtSameMomentAs(_selectedDay);
+            bool isAfterStartDate = reminder.startDate.isBefore(_selectedDay) ||
+                reminder.startDate.isAtSameMomentAs(_selectedDay);
+            bool isSelectedDay = reminder.selectedDays[selectedDayIndex];
+
+            return isBeforeOrAtEndDate && isAfterStartDate && isSelectedDay;
           }).toList();
 
           applicableReminders.sort((a, b) {
@@ -136,24 +141,27 @@ class HomeScreenState extends State<HomeScreen> {
 
           if (applicableReminders.isNotEmpty) {
             return Column(
-              children: applicableReminders.map((reminder) {
-                return FutureBuilder<Medicament?>(
-                  future: MedicamentStock().getMedicamentById(reminder.medicament),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container();
-                    } else {
-                      return MedicationReminderWidget(
-                        reminderName: reminder.reminderName,
-                        selectedDays: reminder.selectedDays,
-                        startDay: reminder.startDate,
-                        medicament: snapshot.data!,
-                        times: reminder.times,
-                      );
-                    }
-                  },
-                );
-              }).toList(),
+              children: [
+                ...applicableReminders.map((reminder) {
+                  return FutureBuilder<Medicament?>(
+                    future: MedicamentStock().getMedicamentById(reminder.medicament),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      } else {
+                        return MedicationReminderWidget(
+                          reminderId: reminder.id,
+                          reminderName: reminder.reminderName,
+                          selectedDay: _selectedDay,
+                          medicament: snapshot.data!,
+                          times: reminder.times,
+                        );
+                      }
+                    },
+                  );
+                }),
+                SizedBox(height: 150),
+              ],
             );
           }
         }
@@ -197,5 +205,4 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }

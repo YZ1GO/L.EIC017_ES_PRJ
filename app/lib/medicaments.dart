@@ -46,7 +46,9 @@ class Medicament {
   }
 
   bool checkExpired() {
-    return this.expiryDate.isBefore(DateTime.now());
+    DateTime currentDate = DateTime.now();
+    int differenceInDays = expiryDate.difference(currentDate).inDays;
+    return differenceInDays < 0;
   }
 }
 
@@ -167,12 +169,13 @@ class MedicamentStock {
       return;
     }
     try {
-      List<Medicament> currentMedicament = (await getMedicamentById(medicament.id)) as List<Medicament>;
+      Medicament? currentMedicament = await getMedicamentById(medicament.id);
 
       if (currentMedicament != null) {
-        currentMedicament.first.quantity = newQuantity;
+        currentMedicament.quantity = newQuantity;
+        await updateMedicament(currentMedicament);
         print('Updated quantity for medicament ${medicament.name} to $newQuantity');
-        verifyStockRunningLow(currentMedicament.first);
+        verifyStockRunningLow(currentMedicament);
       } else {
         print('Medicament not found in the database');
       }

@@ -114,12 +114,12 @@ class _StockScreenState extends State<StockScreen> {
                                 Medicament? selectedMedicament = getSelectedMedicament();
                                 if (selectedMedicament != null) {
                                   print('Selected Medicament Details:');
-                                  print('ID: ${selectedMedicament!.id}');
-                                  print('Name: ${selectedMedicament!.name}');
-                                  print('Quantity: ${selectedMedicament!.quantity}');
-                                  print('Expiry Date: ${selectedMedicament!.expiryDate}');
-                                  print('Notes: ${selectedMedicament!.notes}');
-                                  print('Brand ID: ${selectedMedicament!.brandId}');
+                                  print('ID: ${selectedMedicament.id}');
+                                  print('Name: ${selectedMedicament.name}');
+                                  print('Quantity: ${selectedMedicament.quantity}');
+                                  print('Expiry Date: ${selectedMedicament.expiryDate}');
+                                  print('Notes: ${selectedMedicament.notes}');
+                                  print('Brand ID: ${selectedMedicament.brandId}');
                                   Navigator.pop(context, selectedMedicament);
                                 } else {
                                   print('Error selecting medicament (stock_screen)');
@@ -154,6 +154,7 @@ class _StockScreenState extends State<StockScreen> {
                 Visibility(
                   visible: !widget.selectionMode,
                     child: ElevatedButton(
+                      key: Key('add new medicament button'),
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -580,7 +581,7 @@ class _StockScreenState extends State<StockScreen> {
               child: Text(
                 'Yes',
                 style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+                  color: Colors.red,
                 ),
               ),
             ),
@@ -592,7 +593,7 @@ class _StockScreenState extends State<StockScreen> {
               child: Text(
                 'No',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Color.fromRGBO(100, 50, 13 ,1),
                 ),
               ),
             ),

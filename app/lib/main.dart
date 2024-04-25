@@ -9,13 +9,13 @@ import 'package:app/env/env.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: Env.API_KEY,
-        appId: Env.APP_ID,
-        messagingSenderId: Env.MESSAGING_SENDER_ID,
-        projectId: Env.PROJECT_ID
-      )
-    );
+    options: FirebaseOptions(
+      apiKey: Env.API_KEY,
+      appId: Env.APP_ID,
+      messagingSenderId: Env.MESSAGING_SENDER_ID,
+      projectId: Env.PROJECT_ID
+    )
+  );
   await ReminderDatabase().initDatabase();
   await MedicamentStock().initDatabase();
   checkDayChangeInit();
@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Vertical Prototype',
+      title: 'PinguPills',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: const NavigationMenu(),
       debugShowCheckedModeBanner: false,

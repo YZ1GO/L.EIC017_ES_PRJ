@@ -110,6 +110,7 @@ class NavigationMenuState extends State<NavigationMenu> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: IconButton(
+                    key: Key('stock screen button'),
                     icon: ColorFiltered(
                       colorFilter: ColorFilter.mode(
                         selectedIndex == 1 ? const Color.fromRGBO(185, 137, 102, 1) : const Color.fromRGBO(230, 217, 206, 1),

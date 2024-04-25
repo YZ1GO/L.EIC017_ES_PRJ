@@ -9,16 +9,19 @@ DateTime _lastCalledDay = DateTime.now();
 
 void checkDayChangeInit() {
   checkDayChange();
-  const oneDay = Duration(seconds: 2);
-  Timer.periodic(oneDay, (Timer timer) {
-    checkDayChange();
+  final now = DateTime.now();
+  final midnight = DateTime(now.year, now.month, now.day + 1);
+  final durationUntilMidnight = midnight.difference(now);
+
+  Timer(durationUntilMidnight, () {
+    checkDayChangeInit();
   });
 }
 
 void checkDayChange() {
-  print('check days called');
-  DateTime now = DateTime.now();
-  if (_lastCalledDay.day != now.day) {
+  print('Check days called');
+  final now = DateTime.now();
+  if (_lastCalledDay == null || _lastCalledDay.day != now.day) {
     checkMedicamentsCloseToExpire();
     checkMedicamentsExpired();
 
