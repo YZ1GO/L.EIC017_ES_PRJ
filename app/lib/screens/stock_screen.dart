@@ -640,8 +640,10 @@ class _StockScreenState extends State<StockScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Medicament ${medicament.name} deleted'),
+        backgroundColor: Colors.orange,
         action: SnackBarAction(
           label: 'Undo',
+          textColor: Color.fromRGBO(199, 84, 0, 1),
           onPressed: () {
             _undoDeleteMedicament(medicament);
           },
