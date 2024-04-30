@@ -186,3 +186,46 @@ During the implementation of the medicaments stock feature, we encountered sever
 Another significant portion of our time was spent working on the local database solution. Initially, we attempted to use `shared_preferences` for managing the local medicaments stock, but it did not meet our expectations. Eventually, we transitioned to using `sqflite`, which proved to be more effective and reliable in storing and retrieving data locally.
 
 In terms of UI development, we encountered challenges with the layout of the stock screen, especially with implementing double columns. At the end of all, there are still some non-critical UI errors that need to be addressed, but we plan to address them once all the app features are implemented and tested thoroughly.
+
+### Sprint 2
+Increment features that adds value to the end-user.
+
+#### Backlog screenshots
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_sprint2_initial.png">
+      <p align="center">Sprint 2 - Initial</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_sprint2_final_0.png">
+      <p align="center">Sprint 2 - Final 1</p>
+    </td>
+    <td align="center">
+      <img src="assets/backlog/backlog_sprint2_final_1.png">
+      <p align="center">Sprint 2 - Final 2</p>
+    </td>
+  </tr>
+</table>
+
+#### Implemented User Stories
+1. [Remind user when the medicament is running low to replenish the stock](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917478)
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/gifs/sprint2/Sprint2_notification_running_low.gif">
+      <p align="center">Notification - running low</p>
+    </td>
+    <td align="center">
+      <img src="assets/gifs/sprint2/Sprint2_notification_out_of_stock.gif">
+      <p align="center">Notification - out of stock</p>
+    </td>
+  </tr>
+</table>
+
+2. [Remind user a specified number of days before a medication expires](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917507)
+
+3. [Log the time period for taking the medication, including the initial time to took it](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56913292)
