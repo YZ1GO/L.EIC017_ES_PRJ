@@ -254,4 +254,9 @@ Added some unit tests for the code related to the medicament stock and reminders
 __UI:__
 We're struggling to fix the "Pingu\'s" deformation caused by the appearance of the `undo snackbar` at the bottom of the screen. Trying to move the snackbar to the top hasn't worked out; it keeps overflowing the screen.
 
+__Reminders:__
+It became apparent that managing the medication intake history, particularly with reminder cards, posed more challenges than initially anticipated. To address this, we realized the necessity of storing each card as an individual object in a local database. This approach enables us to accurately track its "taken" status and intake time, offering a more robust solution.
 
+Initially, our implementation stored reminders as a collective entity, accompanied by a list of times. However, the complexities associated with the reminder cards prompted us to reconsider our approach. Consequently, a significant portion of the existing code required refactoring to accommodate this new requirement.
+
+The difficulties with managing medication intake history, especially with reminder cards, led to incomplete progress on the related user story.
