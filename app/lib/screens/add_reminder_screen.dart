@@ -655,14 +655,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
             isJumped: false,
           );
 
-          print('This is before adding');
-          print('ReminderCard Details:');
-          print('CardID (Type: ${reminderCard.cardId.runtimeType}): ${reminderCard.cardId}');
-          print('ReminderID (Type: ${reminderCard.reminderId.runtimeType}): ${reminderCard.reminderId}');
-          print('Day (Type: ${reminderCard.day.runtimeType}): ${reminderCard.day}');
-          print('Time (Type: ${reminderCard.time.runtimeType}): ${reminderCard.time}');
-          print('isTaken (Type: ${reminderCard.isTaken.runtimeType}): ${reminderCard.isTaken}');
-          print('isJumped (Type: ${reminderCard.isJumped.runtimeType}): ${reminderCard.isJumped}');
           String result = await _reminderDatabase.insertReminderCard(reminderCard);
           if (result != '-1') {
             print('ReminderCard added successfully');
