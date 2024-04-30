@@ -68,6 +68,13 @@ class ReminderCard {
   });
 
   Map<String, dynamic> toMap() {
+    print('ReminderCard toMap:');
+    print('cardId (Type: ${cardId.runtimeType}): $cardId');
+    print('reminderId (Type: ${reminderId.runtimeType}): $reminderId');
+    print('day (Type: ${day.runtimeType}): $day');
+    print('time (Type: ${time.runtimeType}): $time');
+    print('isTaken (Type: ${isTaken.runtimeType}): $isTaken');
+    print('isJumped (Type: ${isJumped.runtimeType}): $isJumped');
     return {
       'cardId': cardId,
       'reminderId': reminderId,

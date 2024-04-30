@@ -608,8 +608,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
       return;
     }
     try {
+      int reminderId = DateTime.now().millisecondsSinceEpoch;
       Reminder newReminder = Reminder(
-          id: DateTime.now().millisecondsSinceEpoch,
+          id: reminderId,
           reminderName: _reminderName,
           selectedDays: _selectedDays,
           startDate: _startDate,
@@ -629,6 +630,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
         print('End Date: ${newReminder.endDate}');
         print('Medicament: ${newReminder.medicament}');
         print('Times: ${newReminder.times}');
+        saveReminderCards(reminderId);
         widget.onReminderSaved();
         Navigator.pop(context);
       } else {
@@ -637,12 +639,47 @@ class _AddReminderPageState extends State<AddReminderPage> {
     } catch (e) {
       print('Error saving reminder: $e');
     }
-    //saveReminderCards();
   }
 
-  /*void saveReminderCards() {
+  void saveReminderCards(int reminderId) async {
+    try {
+      for (DateTime date = _startDate; date.isBefore(_endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
+        for (TimeOfDay time in _times) {
+          final cardId = '${reminderId}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
+          ReminderCard reminderCard = ReminderCard(
+            cardId: cardId,
+            reminderId: reminderId,
+            day: date,
+            time: time,
+            isTaken: false,
+            isJumped: false,
+          );
 
-  }*/
+          print('This is before adding');
+          print('ReminderCard Details:');
+          print('CardID (Type: ${reminderCard.cardId.runtimeType}): ${reminderCard.cardId}');
+          print('ReminderID (Type: ${reminderCard.reminderId.runtimeType}): ${reminderCard.reminderId}');
+          print('Day (Type: ${reminderCard.day.runtimeType}): ${reminderCard.day}');
+          print('Time (Type: ${reminderCard.time.runtimeType}): ${reminderCard.time}');
+          print('isTaken (Type: ${reminderCard.isTaken.runtimeType}): ${reminderCard.isTaken}');
+          print('isJumped (Type: ${reminderCard.isJumped.runtimeType}): ${reminderCard.isJumped}');
+          String result = await _reminderDatabase.insertReminderCard(reminderCard);
+          if (result != '-1') {
+            print('ReminderCard added successfully');
+            print('ReminderCard Details:');
+            print('CardID (Type: ${cardId.runtimeType}): $cardId');
+            print('ReminderID (Type: ${reminderId.runtimeType}): $reminderId');
+            print('Day (Type: ${date.runtimeType}): $date');
+            print('Time (Type: ${time.runtimeType}): $time');
+          } else {
+            print('Failed to add reminderCard');
+          }
+        }
+      }
+    } catch (e) {
+      print('Error saving reminderCard: $e');
+    }
+  }
 
   void _showFrequencyBottomSheet(BuildContext context) {
     showModalBottomSheet(

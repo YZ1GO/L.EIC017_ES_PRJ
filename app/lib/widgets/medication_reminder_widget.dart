@@ -30,16 +30,6 @@ class MedicationReminderWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: times.map((time) {
-              final cardId = '${reminderId}_${selectedDay.day}_${selectedDay.month}_${selectedDay.year}_${time.hour}_${time.minute}';
-              final reminderCard = ReminderCard(
-                cardId: cardId,
-                reminderId: reminderId,
-                day: selectedDay,
-                time: time,
-                isTaken: false,
-                isJumped: false,
-              );
-
               return MedicationReminderCard(
                 medicament: medicament,
                 day: selectedDay,
