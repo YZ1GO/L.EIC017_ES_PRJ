@@ -229,3 +229,29 @@ Increment features that adds value to the end-user.
 2. [Remind user a specified number of days before a medication expires](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917507)
 
 3. [Log the time period for taking the medication, including the initial time to took it](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56913292)
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/gifs/sprint2/Sprint2_add_medicament.png">
+      <p align="center">Reminder card - add new card</p>
+    </td>
+    <td align="center">
+      <img src="assets/gifs/sprint2/Sprint2_add_medicament_1.png">
+      <p align="center">Reminder card - select medicament</p>
+    </td>
+    <td align="center">
+      <img src="assets/gifs/sprint2/Sprint2_add_medicament_2.png">
+      <p align="center">Reminder card - show</p>
+    </td>
+  </tr>
+</table>
+
+#### Reflection
+__Tests:__
+Added some unit tests for the code related to the medicament stock and reminders. However, we hit a snag with testing the notification feature for expired medicaments because it relies on the current system time, making it hard to simulate different scenarios for testing. We'll keep trying on it, but no success guaranteed.
+
+__UI:__
+We're struggling to fix the "Pingu\'s" deformation caused by the appearance of the `undo snackbar` at the bottom of the screen. Trying to move the snackbar to the top hasn't worked out; it keeps overflowing the screen.
+
+
