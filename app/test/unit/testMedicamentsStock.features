@@ -1,0 +1,37 @@
+Feature: Medicament Stock Management
+
+  Scenario: Insert and remove medicament
+    Given the medicament stock is initialized
+    When a medicament with ID 99900099900, name 'Test Medicament', quantity 10, expiry date 2022-04-25, and notes 'Test notes' is inserted
+    Then the inserted medicament ID should be 99900099900
+    And the medicament with ID 99900099900 should be removed
+
+  Scenario: Insert and retrieve medicament
+    Given the medicament stock is initialized
+    When a medicament with ID 99900099900, name 'Test Medicament', quantity 10, expiry date 2022-04-25, and notes 'Test notes' is inserted
+    Then the inserted medicament ID should be 99900099900
+    And the retrieved medicament should match the inserted data
+
+  Scenario: Insert and update medicament quantity
+    Given the medicament stock is initialized
+    When a medicament with ID 99900099900, name 'Test Medicament', quantity 10, expiry date 2022-04-25, and notes 'Test notes' is inserted
+    And the quantity of the medicament is updated to 9
+    Then the quantity of the medicament should be 9
+
+  Scenario: Insert and update medicament information
+    Given the medicament stock is initialized
+    When a medicament with ID 99900099900, name 'Test Medicament 1', quantity 10000000000, expiry date 2022-04-25, and notes 'Test notes 1' is inserted
+    And the information of the medicament is updated to ID 99900099900, name 'Test Medicament 2', quantity 10000000001, expiry date 1234-04-25, and notes 'Test notes 2'
+    Then the retrieved medicament should match the updated information
+
+Feature: Medicaments related to Notification
+
+  Scenario: Check if medicament is expired
+    Given the current date and time
+    When a medicament with expiry date 1 day ago is checked
+    Then it should be considered as expired
+
+  Scenario: Check if medicament is not expired
+    Given the current date and time
+    When medicaments with expiry dates today and 10 days from now are checked
+    Then they should not be considered as expired

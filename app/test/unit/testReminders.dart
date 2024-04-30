@@ -77,8 +77,8 @@ void main() {
 
       final retrievedCards = await reminderDatabase.getReminderCards(1);
       expect(retrievedCards.length, 1);
-      /*expect(retrievedCards[0].cardId, '11713990594727480');
-      expect(retrievedCards[0].reminderId, 1);*/
+      expect(retrievedCards[0].cardId, '11713990594727480');
+      expect(retrievedCards[0].reminderId, 1);
     });
   });
 }

@@ -118,4 +118,21 @@ void main() {
       expect(retrievedMedicament?.brandId, 124);
     });
   });
+
+  group('Medicaments related to Notification', () {
+    test('check medicament is expired', () {
+      final now = DateTime.now();
+      final medicamentNotExpired = Medicament(id: 1, name: 'Med1', expiryDate: now.subtract(Duration(days: 1)), quantity: 0, notes: '');
+      expect(medicamentNotExpired.checkExpired(), true);
+    });
+
+    test('check medicament is not expired', () {
+      final now = DateTime.now();
+      final medicamentNotExpired1 = Medicament(id: 1, name: 'Med1', expiryDate: now, quantity: 0, notes: '');
+      final medicamentNotExpired2 = Medicament(id: 2, name: 'Med2', expiryDate: now.add(Duration(days: 10)), quantity: 0, notes: '');
+      expect(medicamentNotExpired1.checkExpired(), false);
+      expect(medicamentNotExpired2.checkExpired(), false);
+    });
+  });
+
 }
