@@ -10,6 +10,7 @@ class Reminder {
   DateTime startDate;
   DateTime endDate;
   int medicament;
+  int intakeQuantity;
   List<TimeOfDay> times;
 
   Reminder({
@@ -19,6 +20,7 @@ class Reminder {
     required this.startDate,
     required this.endDate,
     required this.medicament,
+    required this.intakeQuantity,
     required this.times,
   });
 
@@ -30,6 +32,7 @@ class Reminder {
       'startDate': startDate.millisecondsSinceEpoch,
       'endDate': endDate.millisecondsSinceEpoch,
       'medicament': medicament,
+      'intakeQuantity': intakeQuantity,
       'times': times.map((time) => time.hour * 60 + time.minute).toList().join(','), // Convert list to string
     };
   }
@@ -42,6 +45,7 @@ class Reminder {
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
       endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
       medicament: map['medicament'],
+      intakeQuantity: map['intakeQuantity'],
       times: (map['times'] as String)
           .split(',')
           .map((e) => TimeOfDay(hour: int.parse(e) ~/ 60, minute: int.parse(e) % 60))
@@ -55,6 +59,7 @@ class ReminderCard {
   final int reminderId;
   final DateTime day;
   final TimeOfDay time;
+  final int intakeQuantity;
   final bool isTaken;
   final bool isJumped;
   final TimeOfDay? pressedTime;
@@ -64,6 +69,7 @@ class ReminderCard {
     required this.reminderId,
     required this.day,
     required this.time,
+    required this.intakeQuantity,
     required this.isTaken,
     required this.isJumped,
     this.pressedTime,
@@ -75,6 +81,7 @@ class ReminderCard {
       'reminderId': reminderId,
       'day': day.millisecondsSinceEpoch,
       'time': time.hour * 60 + time.minute,
+      'intakeQuantity': intakeQuantity,
       'isTaken': isTaken ? 1 : 0,
       'isJumped': isJumped ? 1 : 0,
       'pressedTime': pressedTime != null ? pressedTime!.hour * 60 + pressedTime!.minute : null,
@@ -87,6 +94,7 @@ class ReminderCard {
       reminderId: map['reminderId'],
       day: DateTime.fromMillisecondsSinceEpoch(map['day']),
       time: TimeOfDay(hour: map['time'] ~/ 60, minute: map['time'] % 60),
+      intakeQuantity: map['intakeQuantity'],
       isTaken: map['isTaken'] == 1,
       isJumped: map['isJumped'] == 1,
       pressedTime: map['pressedTime'] != null ? TimeOfDay(hour: map['pressedTime'] ~/ 60, minute: map['pressedTime'] % 60) : null,
@@ -118,6 +126,7 @@ class ReminderDatabase {
             startDate INTEGER,
             endDate INTEGER,
             medicament INTEGER,
+            intakeQuantity INTEGER,
             times TEXT
           )
           ''',
@@ -130,6 +139,7 @@ class ReminderDatabase {
             reminderId INTEGER,
             day INTEGER,
             time INTEGER,
+            intakeQuantity INTEGER,
             isTaken INTEGER,
             isJumped INTEGER,
             pressedTime INTEGER,
@@ -282,5 +292,4 @@ class ReminderDatabase {
       return [];
     }
   }
-
 }

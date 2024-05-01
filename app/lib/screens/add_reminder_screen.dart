@@ -111,6 +111,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   Medicament? _medicament;
   bool _everyDay = true;
   List<bool> _selectedDays = [false, false, false, false, false, false, false];
+  int _intakeQuantity = 1;
 
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -428,6 +429,57 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       const Padding(
                         padding: EdgeInsets.only(left: 12.0),
                         child: Text(
+                          'Intake Quantity',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color.fromRGBO(171, 58, 0, 1),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(225, 95, 0, 1),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (_intakeQuantity > 1) _intakeQuantity --;
+                                });
+                              },
+                            ),
+                            Text(
+                              '$_intakeQuantity',
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _intakeQuantity ++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Text(
                           'Time',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
@@ -616,6 +668,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
           startDate: _startDate,
           endDate: _endDate,
           medicament: _medicament!.id,
+          intakeQuantity: _intakeQuantity,
           times: _times,
       );
 
@@ -651,6 +704,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
             reminderId: reminderId,
             day: date,
             time: time,
+            intakeQuantity: _intakeQuantity,
             isTaken: false,
             isJumped: false,
           );

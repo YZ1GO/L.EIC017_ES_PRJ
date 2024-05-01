@@ -43,6 +43,7 @@ class MedicationReminderWidget extends StatelessWidget {
                       medicament: medicament,
                       day: reminderCard.day,
                       time: reminderCard.time,
+                      intakeQuantity: reminderCard.intakeQuantity,
                       isTaken: reminderCard.isTaken,
                       isJumped: reminderCard.isJumped,
                       pressedTime: reminderCard.pressedTime,
@@ -68,6 +69,7 @@ class MedicationReminderCard extends StatefulWidget {
   final Medicament? medicament;
   final DateTime day;
   final TimeOfDay time;
+  final int intakeQuantity;
   final bool isTaken;
   final bool isJumped;
   final TimeOfDay? pressedTime;
@@ -78,6 +80,7 @@ class MedicationReminderCard extends StatefulWidget {
     required this.medicament,
     required this.day,
     required this.time,
+    required this.intakeQuantity,
     required this.isTaken,
     required this.isJumped,
     this.pressedTime,
@@ -92,6 +95,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
   late bool isJumped;
   late TimeOfDay? pressedTime;
   late bool isTakeButton;
+
   @override
   void initState() {
     super.initState();
@@ -406,11 +410,16 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
   Future<void> _takeMedicament(BuildContext context) async {
     TimeOfDay now = TimeOfDay.now();
 
+    int newQuantity = widget.medicament!.quantity - widget.intakeQuantity;
+
+    await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+
     final updatedCard = ReminderCard(
       cardId: widget.cardId,
       reminderId: widget.reminderId,
       day: widget.day,
       time: widget.time,
+      intakeQuantity: widget.intakeQuantity,
       isTaken: true,
       isJumped: false,
       pressedTime: now,
@@ -428,11 +437,16 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
   }
 
   Future<void> _unTakeMedicament(BuildContext context) async {
+    int newQuantity = widget.medicament!.quantity + widget.intakeQuantity;
+
+    await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+
     final updatedCard = ReminderCard(
       cardId: widget.cardId,
       reminderId: widget.reminderId,
       day: widget.day,
       time: widget.time,
+      intakeQuantity: widget.intakeQuantity,
       isTaken: false,
       isJumped: false,
       pressedTime: null,
@@ -455,6 +469,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       reminderId: widget.reminderId,
       day: widget.day,
       time: widget.time,
+      intakeQuantity: widget.intakeQuantity,
       isTaken: false,
       isJumped: true,
       pressedTime: null,
@@ -477,6 +492,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       reminderId: widget.reminderId,
       day: widget.day,
       time: widget.time,
+      intakeQuantity: widget.intakeQuantity,
       isTaken: false,
       isJumped: false,
       pressedTime: null,
@@ -544,6 +560,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
         reminderId: widget.reminderId,
         day: widget.day,
         time: widget.time,
+        intakeQuantity: widget.intakeQuantity,
         isTaken: widget.isTaken,
         isJumped: widget.isJumped,
         pressedTime: newPickedTime,
