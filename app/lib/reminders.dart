@@ -253,13 +253,21 @@ class ReminderDatabase {
     }
   }
 
-  Future<List<ReminderCard>> getReminderCards(int reminderId) async {
+  Future<List<ReminderCard>> getReminderCards(int reminderId, DateTime selectedDay) async {
     List<Map<String, dynamic>> maps = [];
     try {
+      final year = selectedDay.year;
+      final month = selectedDay.month;
+      final day = selectedDay.day;
+
+      // Convert DateTime to include only the date part without the time
+      final startOfDay = DateTime(year, month, day).millisecondsSinceEpoch;
+      final endOfDay = DateTime(year, month, day, 23, 59, 59).millisecondsSinceEpoch;
+
       maps = await _database.query(
         'reminder_cards',
-        where: 'reminderId = ?',
-        whereArgs: [reminderId],
+        where: 'reminderId = ? AND day BETWEEN ? AND ?',
+        whereArgs: [reminderId, startOfDay, endOfDay],
       );
       return List.generate(maps.length, (i) {
         return ReminderCard.fromMap(maps[i]);
