@@ -57,6 +57,7 @@ class ReminderCard {
   final TimeOfDay time;
   final bool isTaken;
   final bool isJumped;
+  final TimeOfDay? pressedTime;
 
   ReminderCard({
     required this.cardId,
@@ -65,6 +66,7 @@ class ReminderCard {
     required this.time,
     required this.isTaken,
     required this.isJumped,
+    this.pressedTime,
   });
 
   Map<String, dynamic> toMap() {
@@ -75,6 +77,7 @@ class ReminderCard {
       'time': time.hour * 60 + time.minute,
       'isTaken': isTaken ? 1 : 0,
       'isJumped': isJumped ? 1 : 0,
+      'pressedTime': pressedTime != null ? pressedTime!.hour * 60 + pressedTime!.minute : null,
     };
   }
 
@@ -86,6 +89,7 @@ class ReminderCard {
       time: TimeOfDay(hour: map['time'] ~/ 60, minute: map['time'] % 60),
       isTaken: map['isTaken'] == 1,
       isJumped: map['isJumped'] == 1,
+      pressedTime: map['pressedTime'] != null ? TimeOfDay(hour: map['pressedTime'] ~/ 60, minute: map['pressedTime'] % 60) : null,
     );
   }
 }
@@ -128,6 +132,7 @@ class ReminderDatabase {
             time INTEGER,
             isTaken INTEGER,
             isJumped INTEGER,
+            pressedTime INTEGER,
           FOREIGN KEY (reminderId) REFERENCES reminders(id)
           )
           ''',

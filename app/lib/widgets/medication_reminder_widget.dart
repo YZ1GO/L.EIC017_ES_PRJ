@@ -9,37 +9,45 @@ class MedicationReminderWidget extends StatelessWidget {
   final String reminderName;
   final DateTime selectedDay;
   final Medicament? medicament;
-  final List<TimeOfDay> times;
 
   const MedicationReminderWidget({super.key,
     required this.reminderId,
     required this.reminderName,
     required this.selectedDay,
     required this.medicament,
-    required this.times,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: Future.delayed(const Duration(milliseconds: 200)),
+    return FutureBuilder<List<ReminderCard>>(
+      future: ReminderDatabase().getReminderCards(reminderId, selectedDay),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(); // Return an empty SizedBox while waiting
-        } else {
+          return const SizedBox(); // Return an empty SizedBox while waiting
+        } else if (snapshot.hasData){
+          final List<ReminderCard> reminderCards = snapshot.data!;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: times.map((time) {
+            children: reminderCards.map((reminderCard) {
               return MedicationReminderCard(
+                cardId: reminderCard.cardId,
+                reminderId: reminderCard.reminderId,
                 medicament: medicament,
-                day: selectedDay,
-                time: time,
+                day: reminderCard.day,
+                time: reminderCard.time,
+                isTaken: reminderCard.isTaken,
+                isJumped: reminderCard.isJumped,
+                pressedTime: reminderCard.pressedTime,
                 onPressed: () {
                   // Handle onPressed event if needed
                 },
               );
             }).toList(),
           );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return const SizedBox();
         }
       },
     );
@@ -47,15 +55,25 @@ class MedicationReminderWidget extends StatelessWidget {
 }
 
 class MedicationReminderCard extends StatefulWidget {
+  final String cardId;
+  final int reminderId;
   final Medicament? medicament;
   final DateTime day;
   final TimeOfDay time;
+  final bool isTaken;
+  final bool isJumped;
+  final TimeOfDay? pressedTime;
   final VoidCallback onPressed;
 
   const MedicationReminderCard({
+    required this.cardId,
+    required this.reminderId,
     required this.medicament,
     required this.day,
     required this.time,
+    required this.isTaken,
+    required this.isJumped,
+    this.pressedTime,
     required this.onPressed,
   });
 
@@ -65,7 +83,14 @@ class MedicationReminderCard extends StatefulWidget {
 
 class MedicationReminderCardState extends State<MedicationReminderCard> {
   late TimeOfDay? pressedTime;
-  bool isTaken = false;
+  late bool isTaken;
+
+  @override
+  void initState() {
+    super.initState();
+    pressedTime = widget.pressedTime;
+    isTaken = widget.isTaken;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +193,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                   child: SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           if (isTaken) {
                             isTaken = false;
@@ -178,6 +203,19 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                             pressedTime = TimeOfDay.now();
                           }
                         });
+
+                        final updatedCard = ReminderCard(
+                          cardId: widget.cardId,
+                          reminderId: widget.reminderId,
+                          day: widget.day,
+                          time: widget.time,
+                          isTaken: isTaken,
+                          isJumped: widget.isJumped,
+                          pressedTime: pressedTime,
+                        );
+
+                        await ReminderDatabase().updateReminderCard(updatedCard);
+
                         widget.onPressed();
                       },
                       style: ElevatedButton.styleFrom(

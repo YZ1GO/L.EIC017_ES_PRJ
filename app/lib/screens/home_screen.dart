@@ -154,7 +154,6 @@ class HomeScreenState extends State<HomeScreen> {
                           reminderName: reminder.reminderName,
                           selectedDay: _selectedDay,
                           medicament: snapshot.data!,
-                          times: reminder.times,
                         );
                       }
                     },
