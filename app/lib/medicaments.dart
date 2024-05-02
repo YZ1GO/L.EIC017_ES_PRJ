@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:app/preferences.dart';
-import 'package:app/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
