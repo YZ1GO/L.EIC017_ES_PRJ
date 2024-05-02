@@ -11,7 +11,7 @@ class NavigationMenu extends StatefulWidget {
   NavigationMenuState createState() => NavigationMenuState();
 }
 
-late Future<List<Medicament>> _medicaments;
+late Future<List<Medicament>> _medicamentList;
 
 class NavigationMenuState extends State<NavigationMenu> {
 
@@ -21,8 +21,7 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   void refreshStockList() {
     setState(() {
-      print("here");
-      _medicaments = getMedicaments();
+      _medicamentList = getMedicaments();
     });
   }
 
@@ -34,7 +33,7 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> get screens => [
     HomeScreen(onReminderSaved: _refreshHomeScreenOnReminderSaved),
-    StockScreen(selectionMode: false, medicamentList: _medicaments),
+    StockScreen(selectionMode: false, medicamentList: _medicamentList),
   ];
 
   void onItemTapped(int index) {
