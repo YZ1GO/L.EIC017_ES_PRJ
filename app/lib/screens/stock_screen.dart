@@ -201,78 +201,72 @@ class _StockScreenState extends State<StockScreen> {
     return FutureBuilder<List<Medicament>>(
       future: widget.medicamentList,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else {
-          List<Medicament>? medicaments = snapshot.data;
-          print('Stock items ${medicaments?.length ?? 0}');
-          if (medicaments != null && medicaments.isNotEmpty) {
-            medicaments.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
-            List<Widget> rows = [];
-            for (int i = 0; i < medicaments.length; i += 2) {
-              bool isLastItem = i + 1 == medicaments.length;
-              bool isSingleItem = !isLastItem && i + 2 == medicaments.length;
-              Widget row = Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+        List<Medicament>? medicaments = snapshot.data;
+        print('Stock items ${medicaments?.length ?? 0}');
+        if (medicaments != null && medicaments.isNotEmpty) {
+          medicaments.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
+          List<Widget> rows = [];
+          for (int i = 0; i < medicaments.length; i += 2) {
+            bool isLastItem = i + 1 == medicaments.length;
+            bool isSingleItem = !isLastItem && i + 2 == medicaments.length;
+            Widget row = Container(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    flex: isSingleItem ? 1 : 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: widget.selectionMode ? _buildMedicamentCard(medicaments[i], isLastItem, isSingleItem, true) : _buildMedicamentCard(medicaments[i], isLastItem, isSingleItem, false),
+                    ),
+                  ),
+                  if (!isLastItem)
                     Expanded(
-                      flex: isSingleItem ? 1 : 0,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: widget.selectionMode ? _buildMedicamentCard(medicaments[i], isLastItem, isSingleItem, true) : _buildMedicamentCard(medicaments[i], isLastItem, isSingleItem, false),
+                        child: widget.selectionMode ? _buildMedicamentCard(medicaments[i + 1], false, false, true) : _buildMedicamentCard(medicaments[i + 1], false, false, false),
                       ),
                     ),
-                    if (!isLastItem)
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: widget.selectionMode ? _buildMedicamentCard(medicaments[i + 1], false, false, true) : _buildMedicamentCard(medicaments[i + 1], false, false, false),
-                        ),
-                      ),
-                  ],
-                ),
-              );
-              rows.add(row);
-            }
-            rows.add(SizedBox(height: 20));
-            rows.add(Center(
-              child: Text(
-                '\"honk honk!\"',
-                style: TextStyle(
-                  color: Color.fromRGBO(199,54,00,1),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
-            ));
-            rows.add(Center(
-              child: Text(
-                '\"It\'s the end of the list\"',
-                style: TextStyle(
-                  color: Color.fromRGBO(199,54,00,1),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
-            ));
-            rows.add(SizedBox(height: 160));
-            return Column(
-              children: rows,
-            );
-          } else {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 125),
-                child: Text('No medicaments in stock'),
+                ],
               ),
             );
+            rows.add(row);
           }
+          rows.add(SizedBox(height: 20));
+          rows.add(Center(
+            child: Text(
+              '\"honk honk!\"',
+              style: TextStyle(
+                color: Color.fromRGBO(199,54,00,1),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+          ));
+          rows.add(Center(
+            child: Text(
+              '\"It\'s the end of the list\"',
+              style: TextStyle(
+                color: Color.fromRGBO(199,54,00,1),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+          ));
+          rows.add(SizedBox(height: 160));
+          return Column(
+            children: rows,
+          );
+        } else {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 125),
+              child: Text('No medicaments in stock'),
+            ),
+          );
         }
       },
     );
