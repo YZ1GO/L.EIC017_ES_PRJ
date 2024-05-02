@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/add_reminder_screen.dart';
 import 'package:app/screens/settings_screen.dart';
+import 'medicaments.dart';
 
-void showControlCenter(BuildContext context, VoidCallback onReminderSaved) {
+void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Future<List<Medicament>> medicamentList) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -35,6 +36,7 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved) {
                           MaterialPageRoute(
                             builder: (context) => AddReminderPage(
                               onReminderSaved: onReminderSaved,
+                              medicamentList: medicamentList,
                             ),
                           ),
                         );

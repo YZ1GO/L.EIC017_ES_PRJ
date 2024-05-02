@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddReminderPage extends StatefulWidget {
+  Future<List<Medicament>> medicamentList;
   final VoidCallback onReminderSaved;
 
-  const AddReminderPage({Key? key, required this.onReminderSaved}) : super(key: key);
+  AddReminderPage({Key? key, required this.onReminderSaved, required this.medicamentList}) : super(key: key);
 
   @override
   _AddReminderPageState createState() => _AddReminderPageState();
@@ -394,7 +395,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       ),
                       GestureDetector(
                         onTap: () => {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StockScreen(selectionMode: true, medicamentList: null,))).then((selectedMedicament) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StockScreen(selectionMode: true, medicamentList: widget.medicamentList,))).then((selectedMedicament) {
                             setState(() {
                               _medicament = selectedMedicament;
                             });

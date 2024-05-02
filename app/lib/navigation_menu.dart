@@ -71,7 +71,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
               onPressed: () {
-                showControlCenter(context, _refreshHomeScreenOnReminderSaved);
+                showControlCenter(context, _refreshHomeScreenOnReminderSaved, _medicaments);
               },
               elevation: 0,
               highlightElevation: 0,
