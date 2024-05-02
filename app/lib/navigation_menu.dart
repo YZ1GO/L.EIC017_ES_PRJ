@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'medicaments.dart';
 import 'screens/home_screen.dart';
 import 'screens/stock_screen.dart';
 import 'controlCenter.dart';
@@ -10,7 +11,21 @@ class NavigationMenu extends StatefulWidget {
   NavigationMenuState createState() => NavigationMenuState();
 }
 
+late Future<List<Medicament>> _medicaments;
+
 class NavigationMenuState extends State<NavigationMenu> {
+
+  Future<List<Medicament>> getMedicaments() async {
+    return await MedicamentStock().getMedicaments();
+  }
+
+  void refreshStockList() {
+    setState(() {
+      print("here");
+      _medicaments = getMedicaments();
+    });
+  }
+
   void _refreshHomeScreenOnReminderSaved() {
     setState(() {});
   }
@@ -19,13 +34,20 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> get screens => [
     HomeScreen(onReminderSaved: _refreshHomeScreenOnReminderSaved),
-    const StockScreen(selectionMode: false,),
+    StockScreen(selectionMode: false, medicamentList: _medicaments),
   ];
 
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
+      if (selectedIndex == 1) refreshStockList();
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshStockList();
   }
 
   @override

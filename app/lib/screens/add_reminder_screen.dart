@@ -394,7 +394,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       ),
                       GestureDetector(
                         onTap: () => {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StockScreen(selectionMode: true,))).then((selectedMedicament) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StockScreen(selectionMode: true, medicamentList: null,))).then((selectedMedicament) {
                             setState(() {
                               _medicament = selectedMedicament;
                             });

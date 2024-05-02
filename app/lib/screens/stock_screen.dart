@@ -1,19 +1,15 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/medicaments.dart';
 import 'package:intl/intl.dart';
 
-late Future<List<Medicament>> _medicamentsFuture;
-
-Future<List<Medicament>> getMedicamentsList() {
-  return _medicamentsFuture;
-}
-
 class StockScreen extends StatefulWidget {
   final bool selectionMode;
+  Future<List<Medicament>>? medicamentList;
 
-  const StockScreen({Key? key, required this.selectionMode});
+  StockScreen({Key? key, required this.selectionMode, required this.medicamentList});
 
   @override
   _StockScreenState createState() => _StockScreenState();
@@ -42,7 +38,7 @@ class _StockScreenState extends State<StockScreen> {
   @override
   void initState() {
     super.initState();
-    _medicamentsFuture = getMedicaments();
+
   }
 
   Widget build(BuildContext context) {
@@ -202,7 +198,7 @@ class _StockScreenState extends State<StockScreen> {
 
   Widget medicamentList() {
     return FutureBuilder<List<Medicament>>(
-      future: _medicamentsFuture,
+      future: widget.medicamentList,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -681,9 +677,9 @@ class _StockScreenState extends State<StockScreen> {
     return await MedicamentStock().getMedicaments();
   }
 
-  void refreshStockList() async {
+  void refreshStockList() {
     setState(() {
-      _medicamentsFuture = getMedicaments();
+      widget.medicamentList = getMedicaments();
     });
   }
 
