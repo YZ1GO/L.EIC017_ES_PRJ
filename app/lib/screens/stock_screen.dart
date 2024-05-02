@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 
 class StockScreen extends StatefulWidget {
   final bool selectionMode;
-  Future<List<Medicament>>? medicamentList;
+  Future<List<Medicament>> medicamentList;
+  final VoidCallback? onMedicamentListUpdated;
 
-  StockScreen({Key? key, required this.selectionMode, required this.medicamentList});
+  StockScreen({Key? key, required this.selectionMode, required this.medicamentList, required this.onMedicamentListUpdated});
 
   @override
   _StockScreenState createState() => _StockScreenState();
@@ -680,6 +681,7 @@ class _StockScreenState extends State<StockScreen> {
   void refreshStockList() {
     setState(() {
       widget.medicamentList = getMedicaments();
+      widget.onMedicamentListUpdated!();
     });
   }
 

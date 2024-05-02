@@ -115,7 +115,7 @@ class ReminderDatabase {
     final String path = join(await getDatabasesPath(), 'reminders_database.db');
     _database = await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (Database db, int version) async {
         await db.execute(
           '''

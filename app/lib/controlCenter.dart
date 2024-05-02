@@ -3,7 +3,7 @@ import 'package:app/screens/add_reminder_screen.dart';
 import 'package:app/screens/settings_screen.dart';
 import 'medicaments.dart';
 
-void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Future<List<Medicament>> medicamentList) {
+void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Future<List<Medicament>> medicamentList, VoidCallback onMedicamentListUpdated) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -37,6 +37,7 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                             builder: (context) => AddReminderPage(
                               onReminderSaved: onReminderSaved,
                               medicamentList: medicamentList,
+                              onMedicamentListUpdated: onMedicamentListUpdated,
                             ),
                           ),
                         );

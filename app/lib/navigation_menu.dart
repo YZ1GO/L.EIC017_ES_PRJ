@@ -11,9 +11,8 @@ class NavigationMenu extends StatefulWidget {
   NavigationMenuState createState() => NavigationMenuState();
 }
 
-late Future<List<Medicament>> _medicamentList;
-
 class NavigationMenuState extends State<NavigationMenu> {
+  late Future<List<Medicament>> _medicamentList;
 
   Future<List<Medicament>> getMedicaments() async {
     return await MedicamentStock().getMedicaments();
@@ -33,7 +32,7 @@ class NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> get screens => [
     HomeScreen(onReminderSaved: _refreshHomeScreenOnReminderSaved),
-    StockScreen(selectionMode: false, medicamentList: _medicamentList),
+    StockScreen(selectionMode: false, medicamentList: _medicamentList, onMedicamentListUpdated: refreshStockList,),
   ];
 
   void onItemTapped(int index) {
@@ -70,7 +69,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
               onPressed: () {
-                showControlCenter(context, _refreshHomeScreenOnReminderSaved, _medicamentList);
+                showControlCenter(context, _refreshHomeScreenOnReminderSaved, _medicamentList, refreshStockList);
               },
               elevation: 0,
               highlightElevation: 0,
