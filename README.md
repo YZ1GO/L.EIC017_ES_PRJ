@@ -260,3 +260,19 @@ It became apparent that managing the medication intake history, particularly wit
 Initially, our implementation stored reminders as a collective entity, accompanied by a list of times. However, the complexities associated with the reminder cards prompted us to reconsider our approach. Consequently, a significant portion of the existing code required refactoring to accommodate this new requirement.
 
 The difficulties with managing medication intake history, especially with reminder cards, led to incomplete progress on the related user story.
+
+
+### Sprint 3
+Enhance existing features and finalize incomplete functionalities.
+
+#### Backlog screenshots
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/backlog/backlog_sprint3_initial.png">
+      <p align="center">Sprint 3 - Initial</p>
+    </td>
+  </tr>
+  <tr>
+  </tr>
+</table>
