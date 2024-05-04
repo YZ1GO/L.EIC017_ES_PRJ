@@ -740,11 +740,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
               height: 70,
               child: ListTile(
                 title: const Padding(
-                  padding: EdgeInsets.only(top: 15.0),
+                  padding: EdgeInsets.only(top: 15.0, left: 12),
                   child: Text(
                     'Daily',
                     style: TextStyle(
-                       fontSize: 20,
+                       fontSize: 17,
                     ),
                   ),
                 ),
@@ -758,14 +758,14 @@ class _AddReminderPageState extends State<AddReminderPage> {
               ),
             ),
             SizedBox(
-              height: 70,
+              height: 80,
               child: ListTile(
                 title: const Padding(
-                  padding: EdgeInsets.only(top: 15.0),
+                  padding: EdgeInsets.only(top: 15.0, left: 12, bottom: 10),
                   child: Text(
                     'Specific Days',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 17,
                     ),
                   ),
                 ),
