@@ -175,9 +175,12 @@ class BrandSearchDelegate extends SearchDelegate<String> {
               itemCount: filteredBrands.length,
               itemBuilder: (BuildContext context, int index) {
                 var brand = filteredBrands[index];
-                var imageUrl = 'assets/database/${brand['brand_id']}.jpg';
+                //var imageUrl = 'assets/database/${brand['brand_id']}.jpg';
                 return ListTile(
                   title: Text(brand['brand_name'] ?? ''),
+                  subtitle: Text(
+                    '${brand['form'] ?? ''}${brand['strength'] != ' ' ? ', ${brand['strength']}' : ''}',
+                  ),
                   leading: loadBrandImage(int.tryParse(brand['brand_id'])),
                   onTap: () {
                     Navigator.push(
