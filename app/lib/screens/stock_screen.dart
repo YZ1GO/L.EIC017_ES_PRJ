@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/medicaments.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class StockScreen extends StatefulWidget {
@@ -482,6 +483,10 @@ class _StockScreenState extends State<StockScreen> {
                   controller: quantityController,
                   decoration: InputDecoration(labelText: 'Quantity'),
                   keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                    FilteringTextInputFormatter.allow(RegExp(r'^[1-9]\d*')),
+                  ],
                 ),
                 TextField(
                   controller: expiryDateController,
