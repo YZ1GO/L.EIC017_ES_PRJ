@@ -18,7 +18,6 @@ class StockScreen extends StatefulWidget {
 
 class _StockScreenState extends State<StockScreen> {
   Medicament? selectedMedicament;
-  late Medicament _lastDeletedMedicament;
 
   static int quantityLimit = 0;
 
@@ -65,7 +64,7 @@ class _StockScreenState extends State<StockScreen> {
                           visible: widget.selectionMode,
                           child: IconButton(
                             onPressed: () {
-                              Navigator.pop(context); // Close current modal sheet
+                              Navigator.pop(context);
                             },
                             icon: const Icon(
                               Icons.arrow_back,
@@ -102,7 +101,7 @@ class _StockScreenState extends State<StockScreen> {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,
                                   blurRadius: 4,
-                                  offset: Offset(0, 3), // changes position of shadow
+                                  offset: Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -120,7 +119,7 @@ class _StockScreenState extends State<StockScreen> {
                                   Navigator.pop(context, selectedMedicament);
                                 } else {
                                   print('Error selecting medicament (stock_screen)');
-                                  Navigator.pop(context); // Close current modal sheet
+                                  Navigator.pop(context);
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -605,48 +604,13 @@ class _StockScreenState extends State<StockScreen> {
       int result = await MedicamentStock().deleteMedicament(medicament.id);
       if (result > 0) {
         print('Medicament deleted successfully');
-        setState(() {
-          // Add the deleted medicament to the list of deleted items
-          _lastDeletedMedicament = medicament;
-        });
         refreshStockList();
-        _showUndoSnackbar(medicament);
       } else {
         print('Failed to delete medicament');
       }
     } catch (e) {
       print('Error deleting medicament: $e');
     }
-  }
-
-  void _undoDeleteMedicament(Medicament medicament) async {
-    try {
-      int result = await MedicamentStock().insertMedicament(medicament);
-      if (result != -1) {
-        print('Medicament restored successfully');
-        refreshStockList();
-      } else {
-        print('Failed to restore medicament');
-      }
-    } catch (e) {
-      print('Error restoring medicament: $e');
-    }
-  }
-
-  void _showUndoSnackbar(Medicament medicament) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Medicament ${medicament.name} deleted'),
-        backgroundColor: Colors.orange,
-        action: SnackBarAction(
-          label: 'Undo',
-          textColor: Color.fromRGBO(199, 84, 0, 1),
-          onPressed: () {
-            _undoDeleteMedicament(medicament);
-          },
-        ),
-      ),
-    );
   }
 
   void _updateMedicament(
