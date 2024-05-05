@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
-  int lowQuantity = 0;
+  int lowQuantity = 1;
   int daysBeforeExpiry = 1;
 
   void setLowQuantity(int newQuantity) async {
