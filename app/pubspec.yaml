@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_local_notifications: ^17.0.0
-  permission_handler: ^11.3.0
+  permission_handler: ^11.3.1
   cupertino_icons: ^1.0.6
   firebase_core: ^2.27.2
   firebase_database: ^10.4.11
