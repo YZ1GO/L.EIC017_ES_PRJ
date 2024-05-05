@@ -1,5 +1,5 @@
-import 'package:app/medicaments.dart';
-import 'package:app/reminders.dart';
+import 'package:app/model/medicaments.dart';
+import 'package:app/model/reminders.dart';
 import 'package:app/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

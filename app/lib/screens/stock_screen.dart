@@ -2,10 +2,10 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
-import 'package:app/medicaments.dart';
+import 'package:app/model/medicaments.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:app/widgets/edit_medicament.dart';
+import 'package:app/widgets/edit_medicament_widgets.dart';
 
 class StockScreen extends StatefulWidget {
   final bool selectionMode;

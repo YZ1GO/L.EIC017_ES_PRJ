@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../medicaments.dart';
-import '../reminders.dart';
+import '../model/medicaments.dart';
+import '../model/reminders.dart';
 import '../widgets/calendar_widget.dart';
 import '../widgets/medication_reminder_widget.dart';
 import '../widgets/eclipse_background.dart';

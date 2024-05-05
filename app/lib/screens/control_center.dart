@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/add_reminder_screen.dart';
 import 'package:app/screens/settings_screen.dart';
-import 'medicaments.dart';
+import '../model/medicaments.dart';
 
 void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Future<List<Medicament>> medicamentList, VoidCallback onMedicamentListUpdated) {
   showModalBottomSheet(
