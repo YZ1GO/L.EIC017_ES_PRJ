@@ -110,11 +110,6 @@ class MedicamentStock {
         whereArgs: [updatedMedicament.id],
       );
       print('Updated medicament ${updatedMedicament.name}');
-
-      verifyMedicamentRunningLow(updatedMedicament);
-      verifyMedicamentCloseToExpire(updatedMedicament);
-      verifyMedicamentExpired(updatedMedicament);
-
     } catch (e) {
       print('Error updating medicament: $e');
     }
@@ -132,7 +127,6 @@ class MedicamentStock {
         currentMedicament.quantity = newQuantity;
         await updateMedicament(currentMedicament);
         print('Updated quantity for medicament ${medicament.name} to $newQuantity');
-        verifyMedicamentRunningLow(currentMedicament);
       } else {
         print('Medicament not found in the database');
       }

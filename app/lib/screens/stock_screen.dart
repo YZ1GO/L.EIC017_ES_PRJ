@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:app/notifications/notification_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
@@ -625,6 +626,9 @@ class _StockScreenState extends State<StockScreen> {
     try {
       await MedicamentStock().updateMedicament(updatedMedicament);
       print('Medicament updated successfully');
+      verifyMedicamentExpired(updatedMedicament);
+      verifyMedicamentCloseToExpire(updatedMedicament);
+      verifyMedicamentRunningLow(updatedMedicament);
       refreshStockList();
     } catch (e) {
       print('Error updating medicament: $e');
