@@ -28,7 +28,26 @@ void checkDayChange() {
     _lastCalledDay = now;
   }
 }
+/** SINGLE MEDICAMENT **/
+void notifyMedicamentCloseToExpire(Medicament medicament) async {
+  String medicamentName = medicament.name;
+  String title = '$medicamentName is close to its expiration date!';
+  String body = 'Check if you need to use it before it expires';
 
+  print('{$medicamentName} is close to expiry date');
+  await showNotification(title, body);
+}
+
+void notifyMedicamentExpired(Medicament medicament) async {
+  String medicamentName = medicament.name;
+  String title = '$medicamentName has expired!';
+  String body = 'Dispose of it properly';
+
+  print('{$medicamentName} is expired');
+  await showNotification(title, body);
+}
+
+/** ALL MEDICAMENTS **/
 void verifyMedicamentsCloseToExpire() async {
   List<Medicament>? medicamentsToNotify = await MedicamentStock().getMedicamentsCloseToExpire();
 
@@ -37,12 +56,7 @@ void verifyMedicamentsCloseToExpire() async {
   }
 
   for (Medicament medicament in medicamentsToNotify) {
-    String medicamentName = medicament.name;
-    String title = '$medicamentName is close to its expiration date!';
-    String body = 'Check if you need to use it before it expires';
-
-    print('{$medicamentName} is close to expiry date');
-    await showNotification(title, body);
+    notifyMedicamentCloseToExpire(medicament);
   }
 }
 
@@ -54,12 +68,7 @@ void verifyMedicamentsExpired() async {
   }
 
   for (Medicament medicament in medicamentsToNotify) {
-    String medicamentName = medicament.name;
-    String title = '$medicamentName has expired!';
-    String body = 'Dispose of it properly';
-
-    print('{$medicamentName} is expired');
-    await showNotification(title, body);
+    notifyMedicamentExpired(medicament);
   }
 }
 

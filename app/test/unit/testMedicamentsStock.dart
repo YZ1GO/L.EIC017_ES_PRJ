@@ -3,6 +3,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/model/medicaments.dart';
+import 'package:app/database/local_stock.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 

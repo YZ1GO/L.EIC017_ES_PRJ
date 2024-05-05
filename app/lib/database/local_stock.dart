@@ -111,7 +111,11 @@ class MedicamentStock {
         whereArgs: [updatedMedicament.id],
       );
       print('Updated medicament ${updatedMedicament.name}');
+
       verifyStockRunningLow(updatedMedicament);
+      verifyMedicamentsCloseToExpire();
+      verifyMedicamentsExpired();
+
     } catch (e) {
       print('Error updating medicament: $e');
     }
@@ -139,13 +143,12 @@ class MedicamentStock {
   }
 
   Future<List<Medicament>> getMedicamentsCloseToExpire() async {
-    int daysBeforeExpiredValue = await Preferences().getDaysBeforeExpiry();
     List<Medicament> closeToExpiryMedicaments = [];
     List<Medicament> currentMedicamentsStock = await getMedicaments();
 
-    DateTime now = DateTime.now();
+
     for (Medicament medicament in currentMedicamentsStock) {
-      if (now.difference(medicament.expiryDate).inDays == daysBeforeExpiredValue) {
+      if (medicament.checkCloseToExpire() == true) {
         closeToExpiryMedicaments.add(medicament);
       }
     }
@@ -155,9 +158,8 @@ class MedicamentStock {
   Future<List<Medicament>> getExpiredMedicaments() async {
     List<Medicament> expiredMedicaments = [];
     List<Medicament> currentMedicamentsStock = await getMedicaments();
-    DateTime now = DateTime.now();
     for (Medicament medicament in currentMedicamentsStock) {
-      if (medicament.expiryDate.isAtSameMomentAs(now)) {
+      if (medicament.checkExpired()) {
         expiredMedicaments.add(medicament);
       }
     }
