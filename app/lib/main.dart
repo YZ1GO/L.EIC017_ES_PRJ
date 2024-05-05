@@ -2,6 +2,8 @@ import 'package:app/reminders.dart';
 import 'package:app/widgets/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'navigation_menu.dart';
 import 'package:app/medicaments.dart';
 import 'package:app/env/env.dart';
@@ -18,6 +20,12 @@ void main() async {
   );
   await ReminderDatabase().initDatabase();
   await MedicamentStock().initDatabase();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   checkDayChangeInit();
   runApp(const MyApp());
 }

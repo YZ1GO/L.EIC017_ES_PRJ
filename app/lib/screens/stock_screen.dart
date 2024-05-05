@@ -485,7 +485,7 @@ class _StockScreenState extends State<StockScreen> {
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly,
-                    FilteringTextInputFormatter.allow(RegExp(r'^[1-9]\d*')),
+                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]\d*')),
                   ],
                 ),
                 TextField(
