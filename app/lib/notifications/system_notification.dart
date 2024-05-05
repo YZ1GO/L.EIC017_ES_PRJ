@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:app/preferences.dart';
 import 'dart:async';
+import 'package:app/database/local_stock.dart';
 
 DateTime _lastCalledDay = DateTime.now();
 

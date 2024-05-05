@@ -6,6 +6,7 @@ import 'package:app/model/medicaments.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:app/widgets/edit_medicament_widgets.dart';
+import 'package:app/database/local_stock.dart';
 
 class StockScreen extends StatefulWidget {
   final bool selectionMode;

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/medicaments.dart';
-import '../model/reminders.dart';
-import '../widgets/calendar_widget.dart';
-import '../widgets/medication_reminder_widget.dart';
-import '../widgets/eclipse_background.dart';
+import 'package:app/model/medicaments.dart';
+import 'package:app/model/reminders.dart';
+import 'package:app/widgets/calendar_widget.dart';
+import 'package:app/widgets/medication_reminder_widget.dart';
+import 'package:app/widgets/eclipse_background.dart';
+import 'package:app/database/local_stock.dart';
 
 late Future<List<Reminder>> _remindersFuture;
 
