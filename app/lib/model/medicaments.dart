@@ -1,3 +1,5 @@
+import 'package:app/preferences.dart';
+
 class Medicament {
   final int id;
   String name;
@@ -37,9 +39,27 @@ class Medicament {
     );
   }
 
+  Future<bool> checkCloseToExpire() async {
+    int daysBeforeExpiredValue = await Preferences().getDaysBeforeExpiry();
+    DateTime now = DateTime.now();
+    if (expiryDate.difference(now).inDays == daysBeforeExpiredValue - 1) {
+      return true;
+    }
+    return false;
+  }
+
   bool checkExpired() {
     DateTime currentDate = DateTime.now();
     int differenceInDays = expiryDate.difference(currentDate).inDays;
     return differenceInDays < 0;
+  }
+
+  Future<bool> verifyStockRunningLow() async {
+    int lowQuantity = await Preferences().getLowQuantity();
+
+    if (quantity <= lowQuantity) {
+      return true;
+    }
+    return false;
   }
 }

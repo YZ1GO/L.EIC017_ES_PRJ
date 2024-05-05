@@ -1,90 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
-import 'package:app/preferences.dart';
 import 'dart:async';
-import 'package:app/database/local_stock.dart';
 
-DateTime _lastCalledDay = DateTime.now();
+/** NOTIFICATION SINGLE MEDICAMENT **/
+void notifyMedicamentCloseToExpire(Medicament medicament) async {
+  String medicamentName = medicament.name;
+  String title = '$medicamentName is close to its expiration date!';
+  String body = 'Check if you need to use it before it expires';
 
-void checkDayChangeInit() {
-  checkDayChange();
-  final now = DateTime.now();
-  final midnight = DateTime(now.year, now.month, now.day + 1);
-  final durationUntilMidnight = midnight.difference(now);
-
-  Timer(durationUntilMidnight, () {
-    checkDayChangeInit();
-  });
-}
-
-void checkDayChange() {
-  print('Check days called');
-  final now = DateTime.now();
-  if (_lastCalledDay == null || _lastCalledDay.day != now.day) {
-    checkMedicamentsCloseToExpire();
-    checkMedicamentsExpired();
-
-    _lastCalledDay = now;
-  }
-}
-
-void checkMedicamentsCloseToExpire() async {
-  List<Medicament>? medicamentsToNotify = await MedicamentStock().getMedicamentsCloseToExpire();
-
-  if (medicamentsToNotify.isEmpty) {
-    return;
-  }
-
-  for (Medicament medicament in medicamentsToNotify) {
-    String medicamentName = medicament.name;
-    print('{$medicamentName} is close to expiry date');
-    String title = '$medicamentName is close to its expiration date!';
-    String body = 'Don\'t forget to replenish the stock';
-
-    await showNotification(title, body);
-  }
-}
-
-void checkMedicamentsExpired() async {
-  List<Medicament>? medicamentsToNotify = await MedicamentStock().getExpiredMedicaments();
-
-  if (medicamentsToNotify.isEmpty) {
-    return;
-  }
-
-  for (Medicament medicament in medicamentsToNotify) {
-    String medicamentName = medicament.name;
-    print('{$medicamentName} is expired');
-    String title = '$medicamentName has expired!';
-    String body = 'Don\'t forget to replenish the stock';
-
-    await showNotification(title, body);
-  }
-}
-
-void verifyStockRunningLow(Medicament medicament) async {
-  int lowQuantity = await Preferences().getLowQuantity();
-
-  if (medicament.quantity <= lowQuantity) {
-    String title = 'Stock is Running Low!';
-    String body;
-    if (medicament.quantity == 1) {
-      body = '${medicament.name} only has 1 piece remaining';
-    } else if (medicament.quantity == 0) {
-      body = '${medicament.name} is out of stock';
-    } else {
-      body = '${medicament.name} only has ${medicament.quantity} pieces remaining';
-    }
-    quantityLowNotificationHandler(title, body);
-  }
-}
-
-void quantityLowNotificationHandler(String title, String body) async {
+  print('{$medicamentName} is close to expiry date');
   await showNotification(title, body);
 }
 
-void medicametionReminderNotification(Medicament medicament, TimeOfDay timeToTakeMeds) async {
+void notifyMedicamentExpired(Medicament medicament) async {
+  String medicamentName = medicament.name;
+  String title = '$medicamentName has expired!';
+  String body = 'Dispose of it properly';
+
+  print('{$medicamentName} is expired');
+  await showNotification(title, body);
+}
+
+void notifyMedicamentRunningLow(Medicament medicament) async {
+  String title = 'Stock is Running Low!';
+  String body;
+  if (medicament.quantity == 1) {
+    body = '${medicament.name} only has 1 piece remaining';
+  } else if (medicament.quantity == 0) {
+    body = '${medicament.name} is out of stock';
+  } else {
+    body = '${medicament.name} only has ${medicament.quantity} pieces remaining';
+  }
+  showNotification(title, body);
+}
+
+void notificationMedicationReminder(Medicament medicament, TimeOfDay timeToTakeMeds) async {
   int hour = timeToTakeMeds.hour;
   int minute = timeToTakeMeds.minute;
   String title = 'It\'s time to take your {$hour:$minute} meds!';
@@ -93,6 +44,7 @@ void medicametionReminderNotification(Medicament medicament, TimeOfDay timeToTak
   await showNotification(title, body);
 }
 
+/** NOTIFICATION HANDLER **/
 Future<void> showNotification(String notification_title, String notification_text) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
