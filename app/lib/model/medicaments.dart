@@ -53,4 +53,13 @@ class Medicament {
     int differenceInDays = expiryDate.difference(currentDate).inDays;
     return differenceInDays < 0;
   }
+
+  Future<bool> verifyStockRunningLow() async {
+    int lowQuantity = await Preferences().getLowQuantity();
+
+    if (quantity <= lowQuantity) {
+      return true;
+    }
+    return false;
+  }
 }

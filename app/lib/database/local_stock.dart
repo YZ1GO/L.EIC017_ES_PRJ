@@ -2,9 +2,8 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
-import 'package:app/preferences.dart';
 import 'package:app/model/medicaments.dart';
-import 'package:app/notifications/system_notification.dart';
+import 'package:app/notifications/notification_checker.dart';
 
 class MedicamentStock {
   static final MedicamentStock _instance = MedicamentStock._internal();
@@ -112,9 +111,9 @@ class MedicamentStock {
       );
       print('Updated medicament ${updatedMedicament.name}');
 
-      verifyStockRunningLow(updatedMedicament);
-      verifyMedicamentsCloseToExpire();
-      verifyMedicamentsExpired();
+      verifyMedicamentRunningLow(updatedMedicament);
+      verifyMedicamentCloseToExpire(updatedMedicament);
+      verifyMedicamentExpired(updatedMedicament);
 
     } catch (e) {
       print('Error updating medicament: $e');
@@ -133,7 +132,7 @@ class MedicamentStock {
         currentMedicament.quantity = newQuantity;
         await updateMedicament(currentMedicament);
         print('Updated quantity for medicament ${medicament.name} to $newQuantity');
-        verifyStockRunningLow(currentMedicament);
+        verifyMedicamentRunningLow(currentMedicament);
       } else {
         print('Medicament not found in the database');
       }
