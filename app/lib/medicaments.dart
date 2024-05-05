@@ -3,7 +3,7 @@ import 'package:app/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:app/widgets/system_notification.dart';
+import 'package:app/notifications/system_notification.dart';
 
 class Medicament {
   final int id;

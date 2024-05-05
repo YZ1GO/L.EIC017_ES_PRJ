@@ -1,5 +1,5 @@
 import 'package:app/reminders.dart';
-import 'package:app/widgets/system_notification.dart';
+import 'package:app/notifications/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
