@@ -22,14 +22,14 @@ void checkDayChange() {
   print('Check days called');
   final now = DateTime.now();
   if (_lastCalledDay == null || _lastCalledDay.day != now.day) {
-    checkMedicamentsCloseToExpire();
-    checkMedicamentsExpired();
+    verifyMedicamentsCloseToExpire();
+    verifyMedicamentsExpired();
 
     _lastCalledDay = now;
   }
 }
 
-void checkMedicamentsCloseToExpire() async {
+void verifyMedicamentsCloseToExpire() async {
   List<Medicament>? medicamentsToNotify = await MedicamentStock().getMedicamentsCloseToExpire();
 
   if (medicamentsToNotify.isEmpty) {
@@ -38,15 +38,15 @@ void checkMedicamentsCloseToExpire() async {
 
   for (Medicament medicament in medicamentsToNotify) {
     String medicamentName = medicament.name;
-    print('{$medicamentName} is close to expiry date');
     String title = '$medicamentName is close to its expiration date!';
-    String body = 'Don\'t forget to replenish the stock';
+    String body = 'Check if you need to use it before it expires';
 
+    print('{$medicamentName} is close to expiry date');
     await showNotification(title, body);
   }
 }
 
-void checkMedicamentsExpired() async {
+void verifyMedicamentsExpired() async {
   List<Medicament>? medicamentsToNotify = await MedicamentStock().getExpiredMedicaments();
 
   if (medicamentsToNotify.isEmpty) {
@@ -55,10 +55,10 @@ void checkMedicamentsExpired() async {
 
   for (Medicament medicament in medicamentsToNotify) {
     String medicamentName = medicament.name;
-    print('{$medicamentName} is expired');
     String title = '$medicamentName has expired!';
-    String body = 'Don\'t forget to replenish the stock';
+    String body = 'Dispose of it properly';
 
+    print('{$medicamentName} is expired');
     await showNotification(title, body);
   }
 }
