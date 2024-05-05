@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:app/reminders.dart';
+import 'package:app/model/reminders.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 

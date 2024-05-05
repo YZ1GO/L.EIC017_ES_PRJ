@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'medicaments.dart';
+import 'model/medicaments.dart';
 import 'screens/home_screen.dart';
 import 'screens/stock_screen.dart';
-import 'controlCenter.dart';
+import 'package:app/screens/control_center.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});

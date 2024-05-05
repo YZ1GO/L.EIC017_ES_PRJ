@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../medicaments.dart';
-import '../reminders.dart';
+import '../model/medicaments.dart';
+import '../model/reminders.dart';
 
 class MedicationReminderWidget extends StatelessWidget {
   final int reminderId;

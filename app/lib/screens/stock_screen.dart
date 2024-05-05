@@ -2,9 +2,10 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
-import 'package:app/medicaments.dart';
+import 'package:app/model/medicaments.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:app/widgets/edit_medicament_widgets.dart';
 
 class StockScreen extends StatefulWidget {
   final bool selectionMode;
@@ -475,29 +476,15 @@ class _StockScreenState extends State<StockScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
-                ),
-                TextField(
-                  controller: quantityController,
-                  decoration: InputDecoration(labelText: 'Quantity'),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]\d*')),
-                  ],
-                ),
-                TextField(
-                  controller: expiryDateController,
-                  decoration: InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
-                ),
-                TextField(
-                  controller: notesController,
-                  decoration: InputDecoration(labelText: 'Notes'),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
+                buildNameTextField(nameController),
+                buildQuantityTextField(quantityController),
+                buildExpiryDateRow(context, expiryDateController, medicament.expiryDate, (DateTime pickedDate) {
+                  setState(() {
+                    expiryDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+                  });
+                }),
+
+                buildNotesTextField(notesController),
               ],
             ),
           ),

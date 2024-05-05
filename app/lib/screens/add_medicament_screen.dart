@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/medicaments.dart';
+import 'package:app/model/medicaments.dart';
 
 class AddMedicamentPage extends StatefulWidget {
   final Map<dynamic, dynamic>? brand;
