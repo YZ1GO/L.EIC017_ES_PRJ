@@ -3,7 +3,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/medicaments.dart';
-import 'package:app/notifications/notification_checker.dart';
 
 class MedicamentStock {
   static final MedicamentStock _instance = MedicamentStock._internal();

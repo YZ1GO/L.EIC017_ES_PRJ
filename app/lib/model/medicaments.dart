@@ -42,11 +42,14 @@ class Medicament {
   Future<bool> checkCloseToExpire() async {
     int daysBeforeExpiredValue = await Preferences().getDaysBeforeExpiry();
     DateTime now = DateTime.now();
-    if (expiryDate.difference(now).inDays == daysBeforeExpiredValue - 1) {
-      return true;
-    }
-    return false;
+    print('Expiry Date: $expiryDate');
+    print('Current Date: $now');
+    int differenceInDays = expiryDate.difference(now).inDays;
+    print('Difference in Days: $differenceInDays');
+    print('$daysBeforeExpiredValue');
+    return differenceInDays <= daysBeforeExpiredValue - 1;
   }
+
 
   bool checkExpired() {
     DateTime currentDate = DateTime.now();

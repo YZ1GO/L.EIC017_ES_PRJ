@@ -18,11 +18,6 @@ void main() {
     setUp(() async {
       databaseFactory = databaseFactoryFfi;
       medicamentStock = MedicamentStock();
-      SharedPreferences.setMockInitialValues({});
-      final mockSharedPreferences = MockSharedPreferences();
-      when(mockSharedPreferences.getInt('lowQuantity')).thenReturn(0);
-      when(mockSharedPreferences.getInt('daysBeforeExpiry')).thenReturn(1);
-      SharedPreferences.setMockInitialValues({});
       await medicamentStock.initDatabase();
       await medicamentStock.deleteMedicament(myMedicamentId); //delete at the beginning to avoid conflict
     });
@@ -66,8 +61,8 @@ void main() {
     test('Insert and update medicament quantity', () async {
       await medicamentStock.deleteMedicament(myMedicamentId);
 
-      final initialQuantity = 10;
-      final updatedQuantity = 9;
+      const initialQuantity = 10;
+      const updatedQuantity = 9;
 
       final medicament = Medicament(
         id: myMedicamentId,
@@ -121,6 +116,16 @@ void main() {
   });
 
   group('Medicaments related to Notification', () {
+    setUp(() async {
+      final mockSharedPreferences = MockSharedPreferences();
+      when(mockSharedPreferences.getInt('lowQuantity')).thenReturn(3);
+      when(mockSharedPreferences.getInt('daysBeforeExpiry')).thenReturn(5);
+      SharedPreferences.setMockInitialValues({
+        'lowQuantity': 3,
+        'daysBeforeExpiry': 5,
+      });
+    });
+
     test('check medicament is expired', () {
       final now = DateTime.now();
       final medicamentNotExpired = Medicament(id: 1, name: 'Med1', expiryDate: now.subtract(Duration(days: 1)), quantity: 0, notes: '');
@@ -134,6 +139,74 @@ void main() {
       expect(medicamentNotExpired1.checkExpired(), false);
       expect(medicamentNotExpired2.checkExpired(), false);
     });
-  });
 
+    test('check medicament is close to expire', () async {
+      final now = DateTime.now();
+
+      final medicamentCloseToExpire4 = Medicament(
+        id: 4,
+        name: 'Med4',
+        expiryDate: now.add(Duration(days: 4)),
+        quantity: 0,
+        notes: '',
+      );
+      expect(await medicamentCloseToExpire4.checkCloseToExpire(), true);
+
+      final medicamentCloseToExpire5 = Medicament(
+        id: 5,
+        name: 'Med5',
+        expiryDate: now.add(Duration(days: 5)),
+        quantity: 0,
+        notes: '',
+      );
+      expect(await medicamentCloseToExpire5.checkCloseToExpire(), true);
+
+      final medicamentCloseToExpire6 = Medicament(
+        id: 6,
+        name: 'Med6',
+        expiryDate: now.add(Duration(days: 6)),
+        quantity: 0,
+        notes: '',
+      );
+      expect(await medicamentCloseToExpire6.checkCloseToExpire(), false);
+    });
+
+    test('check medicament is running low', () async {
+      final medicamentRunningLow1 = Medicament(
+        id: 1,
+        name: 'Med1',
+        expiryDate: DateTime.now(),
+        quantity: 4,
+        notes: '',
+      );
+      expect(await medicamentRunningLow1.verifyStockRunningLow(), false);
+
+      final medicamentRunningLow2 = Medicament(
+        id: 2,
+        name: 'Med2',
+        expiryDate: DateTime.now(),
+        quantity: 3,
+        notes: '',
+      );
+      expect(await medicamentRunningLow2.verifyStockRunningLow(), true);
+
+      final medicamentRunningLow3 = Medicament(
+        id: 3,
+        name: 'Med3',
+        expiryDate: DateTime.now(),
+        quantity: 2,
+        notes: '',
+      );
+      expect(await medicamentRunningLow3.verifyStockRunningLow(), true);
+
+      final medicamentRunningLow4 = Medicament(
+        id: 4,
+        name: 'Med4',
+        expiryDate: DateTime.now(),
+        quantity: 0,
+        notes: '',
+      );
+      expect(await medicamentRunningLow4.verifyStockRunningLow(), true);
+    });
+  });
 }
