@@ -114,6 +114,23 @@ class MedicamentStock {
     }
   }
 
+  Future<int> getMedicamentQuantity(Medicament medicament) async {
+    try {
+      Medicament? currentMedicament = await getMedicamentById(medicament.id);
+
+      if (currentMedicament != null) {
+        print('Quantity for medicament ${medicament.name} is ${currentMedicament.quantity}');
+        return currentMedicament.quantity;
+      } else {
+        print('Medicament not found in the database');
+        return -1;
+      }
+    } catch (e) {
+      print('Error fetching medicament quantity: $e');
+      return -1;
+    }
+  }
+
   Future<void> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
     if (newQuantity < 0) {
       print('Quantity cannot be negative integer');

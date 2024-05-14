@@ -10,14 +10,12 @@ class MedicationReminderWidget extends StatelessWidget {
   final String reminderName;
   final DateTime selectedDay;
   final Medicament? medicament;
-  final VoidCallback onMedicamentAction;
 
   const MedicationReminderWidget({super.key,
     required this.reminderId,
     required this.reminderName,
     required this.selectedDay,
     required this.medicament,
-    required this.onMedicamentAction,
   });
 
   @override
@@ -49,7 +47,7 @@ class MedicationReminderWidget extends StatelessWidget {
                       isTaken: reminderCard.isTaken,
                       isJumped: reminderCard.isJumped,
                       pressedTime: reminderCard.pressedTime,
-                      onMedicamentAction: onMedicamentAction,
+                      //onMedicamentAction: onMedicamentAction,
                     );
                   }).toList(),
                 );
@@ -76,7 +74,6 @@ class MedicationReminderCard extends StatefulWidget {
   final bool isTaken;
   final bool isJumped;
   final TimeOfDay? pressedTime;
-  final VoidCallback onMedicamentAction;
 
   const MedicationReminderCard({
     required this.cardId,
@@ -88,7 +85,6 @@ class MedicationReminderCard extends StatefulWidget {
     required this.isTaken,
     required this.isJumped,
     this.pressedTime,
-    required this.onMedicamentAction,
   });
 
   @override
@@ -415,7 +411,9 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
   Future<void> _takeMedicament(BuildContext context) async {
     TimeOfDay now = TimeOfDay.now();
 
-    int newQuantity = widget.medicament!.quantity - widget.intakeQuantity;
+    int currentQuantity = await MedicamentStock().getMedicamentQuantity(widget.medicament!);
+
+    int newQuantity = currentQuantity - widget.intakeQuantity;
 
     await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
@@ -438,13 +436,13 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       pressedTime = now;
     });
 
-    widget.onMedicamentAction.call();
-
     if (!isTakeButton) Navigator.pop(context);
   }
 
   Future<void> _unTakeMedicament(BuildContext context) async {
-    int newQuantity = widget.medicament!.quantity + widget.intakeQuantity;
+    int currentQuantity = await MedicamentStock().getMedicamentQuantity(widget.medicament!);
+
+    int newQuantity = currentQuantity + widget.intakeQuantity;
 
     await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
@@ -466,8 +464,6 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       isJumped = false;
       pressedTime = null;
     });
-
-    widget.onMedicamentAction.call();
 
     Navigator.pop(context);
   }
