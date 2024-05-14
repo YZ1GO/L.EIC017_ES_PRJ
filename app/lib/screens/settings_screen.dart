@@ -54,8 +54,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
       appBar: AppBar(
         title: const Text('Settings'),
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Padding(
