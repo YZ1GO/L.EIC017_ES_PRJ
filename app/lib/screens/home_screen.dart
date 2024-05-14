@@ -32,6 +32,10 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void refreshMedicationReminders() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     refreshReminderList();
@@ -155,6 +159,7 @@ class HomeScreenState extends State<HomeScreen> {
                           reminderName: reminder.reminderName,
                           selectedDay: _selectedDay,
                           medicament: snapshot.data!,
+                          onMedicamentAction: refreshMedicationReminders,
                         );
                       }
                     },
