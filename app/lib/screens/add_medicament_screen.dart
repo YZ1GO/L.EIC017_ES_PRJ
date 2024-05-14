@@ -26,20 +26,21 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _expiryDate)
+    if (picked != null && picked != _expiryDate) {
       setState(() {
         _expiryDate = picked;
       });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 244, 236, 1),
+      backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ADD MEDICAMENT',
           style: TextStyle(
             color: Color.fromRGBO(158, 66, 0, 1),
@@ -55,7 +56,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 'Medicament',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -63,23 +64,23 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   color: Color.fromRGBO(158, 66, 0, 1),
                 ),
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               if (widget.brand != null)
                 Container(
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 198, 157, 1),
+                    color: const Color.fromRGBO(255, 198, 157, 1),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       if (widget.brand!['brand_id'] != null)
                         _loadMedicamentImage(int.parse(widget.brand!['brand_id'])),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
                           widget.brand!['brand_name'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -90,18 +91,18 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
               if (widget.customMedicamentName != null)
                 Container(
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 198, 157, 1),
+                    color: const Color.fromRGBO(255, 198, 157, 1),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       _loadMedicamentImage(null),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
                           widget.customMedicamentName!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -109,8 +110,8 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                     ],
                   ),
                 ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Quantity',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -118,18 +119,18 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   color: Color.fromRGBO(158, 66, 0, 1),
                 ),
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(2.0),
+                padding: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(225, 95, 0, 1),
+                  color: const Color.fromRGBO(225, 95, 0, 1),
                   borderRadius: BorderRadius.circular(20.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.25),
                       blurRadius: 4,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
@@ -137,7 +138,7 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.remove,
                         color: Colors.white,
                       ),
@@ -149,12 +150,12 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                     ),
                     Text(
                       '$_quantity',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
@@ -167,8 +168,8 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Expiry Date',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -176,17 +177,17 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   color: Color.fromRGBO(158, 66, 0, 1),
                 ),
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Container(
-                padding: EdgeInsets.all(2.0),
+                padding: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(225, 95, 0, 1),
+                  color: const Color.fromRGBO(225, 95, 0, 1),
                   borderRadius: BorderRadius.circular(20.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.25),
                       blurRadius: 4,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
@@ -194,14 +195,14 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.calendar_today,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${_expiryDate.year}-${_expiryDate.month}-${_expiryDate.day}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
@@ -211,9 +212,8 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   onTap: () => _selectExpiryDate(context),
                 ),
               ),
-
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Notes',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -221,12 +221,12 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   color: Color.fromRGBO(158, 66, 0, 1),
                 ),
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 198, 157, 1),
+                  color: const Color.fromRGBO(255, 198, 157, 1),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: TextField(
@@ -237,23 +237,23 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
                   },
                   textAlign: TextAlign.center,
                   maxLines: 4,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter notes (if any)',
                     border: InputBorder.none,
                   ),
                 ),
               ),
-              SizedBox(height: 165.0),
+              const SizedBox(height: 165.0),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
                       _saveMedicament();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(225, 95, 0, 1),
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    backgroundColor: const Color.fromRGBO(225, 95, 0, 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -279,16 +279,12 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
 
       int result = await _medicamentStock.insertMedicament(newMedicament);
       if (result != -1) {
-        print('Medicament added successfully');
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
       } else {
-        print('Failed to add medicament');
       }
-    } catch (e) {
-      print('Error saving medicament: $e');
-    }
+    } catch (e) {}
   }
 
   Widget _loadMedicamentImage(int? brandId) {
