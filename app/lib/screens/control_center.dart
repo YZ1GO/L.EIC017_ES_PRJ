@@ -13,9 +13,9 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
           Container(
             width: MediaQuery.of(context).size.width,
             height: 259,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),
@@ -24,8 +24,8 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: 50),
-                  Container(
+                  const SizedBox(height: 50),
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 44,
                     child: ElevatedButton.icon(
@@ -44,7 +44,7 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color.fromRGBO(225, 95, 0, 1),
+                        backgroundColor: const Color.fromRGBO(225, 95, 0, 1),
                         elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.5),
                       ),
@@ -52,11 +52,11 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         'assets/icons/alarm_icon.png',
                         width: 17,
                       ),
-                      label: Text("Add reminder"),
+                      label: const Text("Add reminder"),
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Container(
+                  const SizedBox(height: 15),
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 44,
                     child: ElevatedButton.icon(
@@ -64,8 +64,8 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Color.fromRGBO(199, 84, 0, 1),
-                        backgroundColor: Color.fromRGBO(255, 198, 157, 1),
+                        foregroundColor: const Color.fromRGBO(199, 84, 0, 1),
+                        backgroundColor: const Color.fromRGBO(255, 198, 157, 1),
                         elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.5),
                       ),
@@ -73,11 +73,11 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         'assets/icons/calendar_icon.png',
                         width: 17,
                       ),
-                      label: Text("Manage reminders"),
+                      label: const Text("Manage reminders"),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  Container(
+                  const SizedBox(height: 30),
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.3,
                     height: 44,
                     child: ElevatedButton.icon(
@@ -89,16 +89,16 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Color.fromRGBO(199, 84, 0, 1),
-                        backgroundColor: Color.fromRGBO(255, 198, 157, 1),
+                        foregroundColor: const Color.fromRGBO(199, 84, 0, 1),
+                        backgroundColor: const Color.fromRGBO(255, 198, 157, 1),
                         elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.5),
                       ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.settings,
                         size: 17,
                       ),
-                      label: Text("Settings"),
+                      label: const Text("Settings"),
                     ),
                   ),
                 ],
