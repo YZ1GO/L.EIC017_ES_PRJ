@@ -3,13 +3,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'dart:async';
 
-/** NOTIFICATION SINGLE MEDICAMENT **/
+/// NOTIFICATION SINGLE MEDICAMENT *
 void notifyMedicamentCloseToExpire(Medicament medicament) async {
   String medicamentName = medicament.name;
   String title = '$medicamentName is close to its expiration date!';
   String body = 'Check if you need to use it before it expires';
 
-  print('{$medicamentName} is close to expiry date');
   await showNotification(title, body);
 }
 
@@ -18,7 +17,6 @@ void notifyMedicamentExpired(Medicament medicament) async {
   String title = '$medicamentName has expired!';
   String body = 'Dispose of it properly';
 
-  print('{$medicamentName} is expired');
   await showNotification(title, body);
 }
 
@@ -44,8 +42,8 @@ void notificationMedicationReminder(Medicament medicament, TimeOfDay timeToTakeM
   await showNotification(title, body);
 }
 
-/** NOTIFICATION HANDLER **/
-Future<void> showNotification(String notification_title, String notification_text) async {
+/// NOTIFICATION HANDLER *
+Future<void> showNotification(String notificationTitle, String notificationText) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
     'default_channel_id',
@@ -59,8 +57,8 @@ Future<void> showNotification(String notification_title, String notification_tex
   NotificationDetails(android: androidPlatformChannelSpecifics);
   await FlutterLocalNotificationsPlugin().show(
     0,
-    notification_title,
-    notification_text,
+    notificationTitle,
+    notificationText,
     platformChannelSpecifics,
     payload: 'item x',
   );
