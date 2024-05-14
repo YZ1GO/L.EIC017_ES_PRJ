@@ -25,6 +25,15 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
       initialDate: _expiryDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color.fromRGBO(243, 83, 0, 1),
+            colorScheme: const ColorScheme.light(primary: Color.fromRGBO(243, 83, 0, 1),),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _expiryDate) {
       setState(() {
