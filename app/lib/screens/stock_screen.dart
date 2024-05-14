@@ -452,67 +452,74 @@ class _StockScreenState extends State<StockScreen> {
 
     showDialog<void>(
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Edit Medicament'),
-          backgroundColor: Colors.white,
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                buildNameTextField(nameController),
-                buildQuantityTextField(quantityController),
-                buildExpiryDateRow(context, expiryDateController, medicament.expiryDate, (DateTime pickedDate) {
-                  setState(() {
-                    expiryDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-                  });
-                }),
 
-                buildNotesTextField(notesController),
-              ],
+      builder: (BuildContext context) {
+        return Theme(
+          data: ThemeData(
+            dialogBackgroundColor: const Color.fromRGBO(255, 244, 235, 1),
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: Color.fromRGBO(225, 95, 0, 1),
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+          child: AlertDialog(
+            title: const Text('Edit Medicament'),
+            backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  buildNameTextField(nameController),
+                  buildQuantityTextField(quantityController),
+                  buildExpiryDateRow(context, expiryDateController, medicament.expiryDate, (DateTime pickedDate) {
+                    setState(() {
+                      expiryDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+                    });
+                  }),
+                  buildNotesTextField(notesController),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Color.fromRGBO(100, 50, 13 ,1),
+                  ),
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showDeleteConfirmationPopUp(medicament);
-              },
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                _updateMedicament(
-                  medicament,
-                  nameController.text,
-                  int.parse(quantityController.text),
-                  DateFormat('dd/MM/yyyy').parse(expiryDateController.text),
-                  notesController.text,
-                );
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Save',
-                style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _showDeleteConfirmationPopUp(medicament);
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  _updateMedicament(
+                    medicament,
+                    nameController.text,
+                    int.parse(quantityController.text),
+                    DateFormat('dd/MM/yyyy').parse(expiryDateController.text),
+                    notesController.text,
+                  );
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Save',
+                  style: TextStyle(
+                    color: Color.fromRGBO(100, 50, 13 ,1),
+                  ),
+                ),
+              ),
+            ],
+          )
         );
       },
     );
