@@ -22,8 +22,6 @@ class StockScreen extends StatefulWidget {
 class _StockScreenState extends State<StockScreen> {
   Medicament? selectedMedicament;
 
-  static int quantityLimit = 0;
-
   void toggleSelection(Medicament medicament) {
     setState(() {
       if (selectedMedicament == medicament) {
@@ -100,14 +98,6 @@ class _StockScreenState extends State<StockScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
                             ),
                             child: ElevatedButton(
                               onPressed: () {
