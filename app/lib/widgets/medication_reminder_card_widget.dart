@@ -374,6 +374,31 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
     );
   }
 
+  void showAlertDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Color.fromRGBO(215, 74, 0, 1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _takeMedicament(BuildContext context) async {
     TimeOfDay now = TimeOfDay.now();
 
@@ -381,28 +406,36 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
 
     int newQuantity = currentQuantity - widget.intakeQuantity;
 
-    await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+    if (newQuantity < 0) {
+      showAlertDialog(context, 'Out of Stock', '${widget.medicament!.name} is out of stock.');
+      if (!isTakeButton) Navigator.pop(context);
+    } else if (widget.medicament!.checkExpired()) {
+      showAlertDialog(context, 'Medicament Expired', '${widget.medicament!.name} has expired.');
+      if (!isTakeButton) Navigator.pop(context);
+    } else {
+      await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
-    verifyMedicamentRunningLow(widget.medicament!);
+      verifyMedicamentRunningLow(widget.medicament!);
 
-    final updatedCard = ReminderCard(
-      cardId: widget.cardId,
-      reminderId: widget.reminderId,
-      day: widget.day,
-      time: widget.time,
-      intakeQuantity: widget.intakeQuantity,
-      isTaken: true,
-      isJumped: false,
-      pressedTime: now,
-    );
+      final updatedCard = ReminderCard(
+        cardId: widget.cardId,
+        reminderId: widget.reminderId,
+        day: widget.day,
+        time: widget.time,
+        intakeQuantity: widget.intakeQuantity,
+        isTaken: true,
+        isJumped: false,
+        pressedTime: now,
+      );
 
-    await ReminderDatabase().updateReminderCard(updatedCard);
+      await ReminderDatabase().updateReminderCard(updatedCard);
 
-    setState(() {
-      isTaken = true;
-      isJumped = false;
-      pressedTime = now;
-    });
+      setState(() {
+        isTaken = true;
+        isJumped = false;
+        pressedTime = now;
+      });
+    }
 
     if (!isTakeButton) Navigator.pop(context);
   }
