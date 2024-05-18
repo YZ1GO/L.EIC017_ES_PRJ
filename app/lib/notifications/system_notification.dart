@@ -102,6 +102,14 @@ Future<void> scheduleNotification(int id, String title, String body, DateTime sc
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
 
+      // SOLVED
+      var timeDifference = scheduledDate.difference(DateTime.now());
+      var milliseconds = timeDifference.inMilliseconds;
+
+      Timer(Duration(milliseconds: milliseconds), () async {
+        await showNotification(title, body);
+      });
+
       //printScheduledNotifications();
     } catch (e) {
       print('Error scheduling notification: $e');
