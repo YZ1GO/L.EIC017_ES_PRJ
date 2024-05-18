@@ -86,7 +86,6 @@ class HomeScreenState extends State<HomeScreen> {
       future: _remindersFuture,
       builder: (context, snapshot) {
         List<Reminder>? reminders = snapshot.data;
-        print('Reminders ${reminders?.length ?? 0}');
         if (reminders != null && reminders.isNotEmpty) {
           List<Reminder> applicableReminders = reminders.where((reminder) {
             int selectedDayIndex = _selectedDay.weekday % 7;
