@@ -207,18 +207,51 @@ class ReminderDatabase {
     }
   }
 
-  Future<int> deleteReminder(int id) async {
+  Future<int> deleteReminderByReminderId(int reminderId) async {
     try {
+      await deleteReminderCardsByReminderId(reminderId);
+
       int rowsDeleted = await _database.delete(
         'reminders',
         where: 'id = ?',
-        whereArgs: [id],
+        whereArgs: [reminderId],
       );
 
       if (rowsDeleted > 0) {
-        print('Deleted reminder with ID: $id');
+        print('Deleted reminder with ID: $reminderId');
       } else {
-        print('No reminder found with ID: $id');
+        print('No reminder found with ID: $reminderId');
+      }
+
+      return rowsDeleted;
+    } catch (e) {
+      print('Error deleting reminder: $e');
+      return -1;
+    }
+  }
+
+  Future<int> deleteReminderByMedicamentId(int medicamentId) async {
+    try {
+      List<Map<String, dynamic>> reminders = await _database.query(
+        'reminders',
+        where: 'medicament = ?',
+        whereArgs: [medicamentId],
+      );
+
+      for (var reminder in reminders) {
+        await deleteReminderCardsByReminderId(reminder['id']);
+      }
+
+      int rowsDeleted = await _database.delete(
+        'reminders',
+        where: 'medicament = ?',
+        whereArgs: [medicamentId],
+      );
+
+      if (rowsDeleted > 0) {
+        print('Deleted reminder with medicament ID: $medicamentId');
+      } else {
+        print('No reminder found with medicament ID: $medicamentId');
       }
 
       return rowsDeleted;
@@ -290,6 +323,27 @@ class ReminderDatabase {
     } catch (e) {
       print('Error fetching reminder cards: $e');
       return [];
+    }
+  }
+
+  Future<int> deleteReminderCardsByReminderId(int reminderId) async {
+    try {
+      int rowsDeleted = await _database.delete(
+        'reminder_cards',
+        where: 'reminderId = ?',
+        whereArgs: [reminderId],
+      );
+
+      if (rowsDeleted > 0) {
+        print('Deleted reminder cards with reminder ID: $reminderId');
+      } else {
+        print('No reminder cards found with reminder ID: $reminderId');
+      }
+
+      return rowsDeleted;
+    } catch (e) {
+      print('Error deleting reminder cards: $e');
+      return -1;
     }
   }
 }

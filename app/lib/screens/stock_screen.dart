@@ -107,27 +107,15 @@ class _StockScreenState extends State<StockScreen> {
                                 if (selectedMedicament != null) {
                                   List<Reminder> reminders = await ReminderDatabase().getReminders();
                                   bool hasReminder = reminders.any((reminder) => reminder.medicament == selectedMedicament.id);
+                                  bool isExpired = selectedMedicament.checkExpired();
+                                  bool isOutOfStock = selectedMedicament.quantity == 0;
+
                                   if (hasReminder) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text('ERROR'),
-                                        content: const Text('You cannot select this medicament because it already has a reminder attributed.'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                color: Color.fromRGBO(215, 74, 0, 1),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
+                                    showErrorDialog(context, 'You cannot select this medicament because it already has a reminder attributed.');
+                                  } else if (isExpired) {
+                                    showErrorDialog(context, 'You cannot select this medicament because it is expired.');
+                                  } else if (isOutOfStock) {
+                                    showErrorDialog(context, 'You cannot select this medicament because it is out of stock.');
                                   } else {
                                     Navigator.pop(context, selectedMedicament);
                                   }
@@ -203,6 +191,29 @@ class _StockScreenState extends State<StockScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String content) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('ERROR'),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                color: Color.fromRGBO(215, 74, 0, 1),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
     );
   }
@@ -600,6 +611,8 @@ class _StockScreenState extends State<StockScreen> {
 
   void _deleteMedicament(Medicament medicament) async {
     try {
+      await ReminderDatabase().deleteReminderByMedicamentId(medicament.id);
+
       int result = await MedicamentStock().deleteMedicament(medicament.id);
       if (result > 0) {
         refreshStockList();
