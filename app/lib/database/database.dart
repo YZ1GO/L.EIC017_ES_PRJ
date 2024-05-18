@@ -75,7 +75,11 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
 
   Widget _buildBody() {
     if (_brandList == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color.fromRGBO(215, 74, 0, 1)),
+          )
+      );
     } else {
       return const SizedBox.shrink();
     }
@@ -88,7 +92,7 @@ class _DatabaseContentScreenState extends State<DatabaseContentScreen> {
   }
 
   void _fetchData() {
-    FirebaseDatabase.instance.reference().child('brands').onValue.listen((event) {
+    FirebaseDatabase.instance.ref().child('brands').onValue.listen((event) {
       var brandsData = event.snapshot.value;
 
       if (brandsData != null && brandsData is List) {
