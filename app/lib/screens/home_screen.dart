@@ -33,8 +33,14 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void refreshMedicationReminders() {
-    setState(() {});
+  Future<List<Reminder>> getReminders() async {
+    return await ReminderDatabase().getReminders();
+  }
+
+  void refreshReminderList() async {
+    setState(() {
+      _remindersFuture = getReminders();
+    });
   }
 
   @override
@@ -156,16 +162,6 @@ class HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 150),
         ],
     );
-  }
-
-  Future<List<Reminder>> getReminders() async {
-    return await ReminderDatabase().getReminders();
-  }
-
-  void refreshReminderList() async {
-    setState(() {
-      _remindersFuture = getReminders();
-    });
   }
 
   Future<List<_ReminderCardInfo>> _getReminderCardInfos(List<Reminder> reminders) async {
