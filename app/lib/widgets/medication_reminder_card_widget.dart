@@ -4,67 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:app/database/local_stock.dart';
 import 'package:app/model/reminders.dart';
-
 import '../notifications/notification_checker.dart';
-
-class MedicationReminderWidget extends StatelessWidget {
-  final int reminderId;
-  final String reminderName;
-  final DateTime selectedDay;
-  final Medicament? medicament;
-
-  const MedicationReminderWidget({super.key,
-    required this.reminderId,
-    required this.reminderName,
-    required this.selectedDay,
-    required this.medicament,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      // Delay used to fix small visual bug
-      future: Future.delayed(const Duration(milliseconds: 200)),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(); // Return an empty SizedBox while waiting
-        } else {
-          return FutureBuilder<List<ReminderCard>>(
-            future: ReminderDatabase().getReminderCards(reminderId, selectedDay),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const SizedBox(); // Return an empty SizedBox while waiting
-              } else if (snapshot.hasData) {
-                final List<ReminderCard> reminderCards = snapshot.data!;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: reminderCards.map((reminderCard) {
-                    return MedicationReminderCard(
-                      cardId: reminderCard.cardId,
-                      reminderId: reminderCard.reminderId,
-                      medicament: medicament,
-                      day: reminderCard.day,
-                      time: reminderCard.time,
-                      intakeQuantity: reminderCard.intakeQuantity,
-                      isTaken: reminderCard.isTaken,
-                      isJumped: reminderCard.isJumped,
-                      pressedTime: reminderCard.pressedTime,
-                      //onMedicamentAction: onMedicamentAction,
-                    );
-                  }).toList(),
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return const SizedBox();
-              }
-            },
-          );
-        }
-      },
-    );
-  }
-}
 
 class MedicationReminderCard extends StatefulWidget {
   final String cardId;
@@ -434,6 +374,31 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
     );
   }
 
+  void showAlertDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Color.fromRGBO(215, 74, 0, 1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _takeMedicament(BuildContext context) async {
     TimeOfDay now = TimeOfDay.now();
 
@@ -441,28 +406,36 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
 
     int newQuantity = currentQuantity - widget.intakeQuantity;
 
-    await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+    if (newQuantity < 0) {
+      showAlertDialog(context, 'Out of Stock', '${widget.medicament!.name} is out of stock.');
+      if (!isTakeButton) Navigator.pop(context);
+    } else if (widget.medicament!.checkExpired()) {
+      showAlertDialog(context, 'Medicament Expired', '${widget.medicament!.name} has expired.');
+      if (!isTakeButton) Navigator.pop(context);
+    } else {
+      await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
-    verifyMedicamentRunningLow(widget.medicament!);
+      verifyMedicamentRunningLow(widget.medicament!);
 
-    final updatedCard = ReminderCard(
-      cardId: widget.cardId,
-      reminderId: widget.reminderId,
-      day: widget.day,
-      time: widget.time,
-      intakeQuantity: widget.intakeQuantity,
-      isTaken: true,
-      isJumped: false,
-      pressedTime: now,
-    );
+      final updatedCard = ReminderCard(
+        cardId: widget.cardId,
+        reminderId: widget.reminderId,
+        day: widget.day,
+        time: widget.time,
+        intakeQuantity: widget.intakeQuantity,
+        isTaken: true,
+        isJumped: false,
+        pressedTime: now,
+      );
 
-    await ReminderDatabase().updateReminderCard(updatedCard);
+      await ReminderDatabase().updateReminderCard(updatedCard);
 
-    setState(() {
-      isTaken = true;
-      isJumped = false;
-      pressedTime = now;
-    });
+      setState(() {
+        isTaken = true;
+        isJumped = false;
+        pressedTime = now;
+      });
+    }
 
     if (!isTakeButton) Navigator.pop(context);
   }
@@ -473,6 +446,8 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
     int newQuantity = currentQuantity + widget.intakeQuantity;
 
     await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+
+    verifyMedicamentRunningLow(widget.medicament!);
 
     final updatedCard = ReminderCard(
       cardId: widget.cardId,

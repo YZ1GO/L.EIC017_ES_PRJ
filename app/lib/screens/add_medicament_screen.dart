@@ -6,7 +6,7 @@ class AddMedicamentPage extends StatefulWidget {
   final Map<dynamic, dynamic>? brand;
   final String? customMedicamentName;
 
-  const AddMedicamentPage({Key? key, this.brand, this.customMedicamentName}) : super(key: key);
+  const AddMedicamentPage({super.key, this.brand, this.customMedicamentName});
 
   @override
   _AddMedicamentPageState createState() => _AddMedicamentPageState();
