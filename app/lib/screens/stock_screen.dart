@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:app/widgets/edit_medicament_widgets.dart';
 import 'package:app/database/local_stock.dart';
 
+import '../model/reminders.dart';
+
 class StockScreen extends StatefulWidget {
   final bool selectionMode;
   Future<List<Medicament>> medicamentList;
@@ -100,10 +102,35 @@ class _StockScreenState extends State<StockScreen> {
                               color: Colors.white,
                             ),
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 Medicament? selectedMedicament = getSelectedMedicament();
                                 if (selectedMedicament != null) {
-                                  Navigator.pop(context, selectedMedicament);
+                                  List<Reminder> reminders = await ReminderDatabase().getReminders();
+                                  bool hasReminder = reminders.any((reminder) => reminder.medicament == selectedMedicament.id);
+                                  if (hasReminder) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('ERROR'),
+                                        content: const Text('You cannot select this medicament because it already has a reminder attributed.'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(215, 74, 0, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pop(context, selectedMedicament);
+                                  }
                                 } else {
                                   Navigator.pop(context);
                                 }
