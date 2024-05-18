@@ -71,10 +71,17 @@ Future<void> showNotification(String notification_title, String notification_tex
 }
 
 Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate) async {
-  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-      'default_channel_id', 'Default Channel',
-      importance: Importance.max, priority: Priority.high, showWhen: false);
-  var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  AndroidNotificationDetails(
+      'default_channel_id',
+      'Default Channel',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      icon: '@mipmap/launcher_icon',
+  );
+  const NotificationDetails platformChannelSpecifics =
+  NotificationDetails(android: androidPlatformChannelSpecifics);
 
   var tzScheduledDate = tz.TZDateTime.from(scheduledDate, tz.local);
 
@@ -96,9 +103,22 @@ Future<void> scheduleNotification(int id, String title, String body, DateTime sc
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
+
+      //printScheduledNotifications();
     } catch (e) {
       print('Error scheduling notification: $e');
     }
+  }
+}
+
+Future<void> printScheduledNotifications() async {
+  final List<PendingNotificationRequest> pendingNotifications =
+  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+  for (var notification in pendingNotifications) {
+    print('Notification ID: ${notification.id}');
+    print('Notification Title: ${notification.title}');
+    print('Notification Body: ${notification.body}');
   }
 }
 
