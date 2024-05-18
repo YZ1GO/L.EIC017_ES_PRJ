@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:app/screens/add_medicament_screen.dart';
+import 'package:app/widgets/image_loader.dart';
 
 class DatabaseContentScreen extends StatefulWidget {
   const DatabaseContentScreen({super.key});
@@ -207,26 +208,4 @@ class BrandSearchDelegate extends SearchDelegate<String> {
         .where((brand) => brand['brand_name'].toString().toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
-
-  Widget loadBrandImage(int? brandId) {
-    String imagePath = 'assets/database/$brandId.jpg';
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Image.asset(
-        imagePath,
-        width: 48,
-        height: 48,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            'assets/database/default.jpg',
-            width: 48,
-            height:48,
-            fit: BoxFit.cover,
-          );
-        },
-      ),
-    );
-  }
-
 }
