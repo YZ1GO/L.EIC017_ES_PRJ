@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'dart:async';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 /** NOTIFICATION SINGLE MEDICAMENT **/
 void notifyMedicamentCloseToExpire(Medicament medicament) async {
@@ -64,4 +68,38 @@ Future<void> showNotification(String notification_title, String notification_tex
     platformChannelSpecifics,
     payload: 'item x',
   );
+}
+
+Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate) async {
+  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      'default_channel_id', 'Default Channel',
+      importance: Importance.max, priority: Priority.high, showWhen: false);
+  var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+  var tzScheduledDate = tz.TZDateTime.from(scheduledDate, tz.local);
+
+  if (tzScheduledDate.isAfter(tz.TZDateTime.now(tz.local))) {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        tzScheduledDate,
+        platformChannelSpecifics,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+  }
+}
+
+void checkScheduledNotifications() async {
+  final List<PendingNotificationRequest> pendingNotificationRequests =
+  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+  print('TOTAL NOTIFICATIONS: ${pendingNotificationRequests.length}');
+}
+
+void cancelAllNotifications() async {
+  await flutterLocalNotificationsPlugin.cancelAll();
+}
+
+void cancelNotification(String cardId) async {
+  int notificationId = cardId.hashCode.toUnsigned(31);
+  await flutterLocalNotificationsPlugin.cancel(notificationId);
 }
