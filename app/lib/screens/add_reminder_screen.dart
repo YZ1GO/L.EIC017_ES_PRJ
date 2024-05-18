@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../notifications/system_notification.dart';
+
 class AddReminderPage extends StatefulWidget {
   Future<List<Medicament>> medicamentList;
   final VoidCallback onReminderSaved;
@@ -698,7 +700,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
   void saveReminderCards(int reminderId) async {
     try {
-      for (DateTime date = _startDate; date.isBefore(_endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
+      for (DateTime date = _startDate; date.isBefore(_endDate); date = date.add(const Duration(days: 1))) {
         for (TimeOfDay time in _times) {
           final cardId = '${reminderId}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
           ReminderCard reminderCard = ReminderCard(
@@ -713,12 +715,17 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
           String result = await _reminderDatabase.insertReminderCard(reminderCard);
           if (result != '-1') {
-            print('ReminderCard added successfully');
+            /*print('ReminderCard added successfully');
             print('ReminderCard Details:');
             print('CardID (Type: ${cardId.runtimeType}): $cardId');
             print('ReminderID (Type: ${reminderId.runtimeType}): $reminderId');
             print('Day (Type: ${date.runtimeType}): $date');
-            print('Time (Type: ${time.runtimeType}): $time');
+            print('Time (Type: ${time.runtimeType}): $time');*/
+
+            DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+            int cardIdInt = cardId.hashCode.toUnsigned(31);
+            scheduleNotification(cardIdInt, _medicament!.name, _medicament!.name, scheduledDate);
+            checkScheduledNotifications();
           } else {
             print('Failed to add reminderCard');
           }

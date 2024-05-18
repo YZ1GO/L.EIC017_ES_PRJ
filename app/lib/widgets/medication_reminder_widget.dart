@@ -5,6 +5,8 @@ import 'package:app/model/medicaments.dart';
 import 'package:app/database/local_stock.dart';
 import 'package:app/model/reminders.dart';
 
+import '../notifications/notification_checker.dart';
+
 class MedicationReminderWidget extends StatelessWidget {
   final int reminderId;
   final String reminderName;
@@ -440,6 +442,8 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
     int newQuantity = currentQuantity - widget.intakeQuantity;
 
     await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
+
+    verifyMedicamentRunningLow(widget.medicament!);
 
     final updatedCard = ReminderCard(
       cardId: widget.cardId,

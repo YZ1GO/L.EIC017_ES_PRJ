@@ -1,3 +1,4 @@
+import 'package:app/notifications/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:app/model/reminders.dart';
@@ -137,6 +138,8 @@ class HomeScreenState extends State<HomeScreen> {
     setState(() {
       _remindersFuture = getReminders();
     });
+    cancelAllNotifications();
+    checkScheduledNotifications();
   }
 
   Widget noRemindersCard() {

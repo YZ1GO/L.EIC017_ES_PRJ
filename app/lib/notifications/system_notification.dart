@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'dart:async';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 /// NOTIFICATION SINGLE MEDICAMENT *
 void notifyMedicamentCloseToExpire(Medicament medicament) async {
@@ -62,4 +66,72 @@ Future<void> showNotification(String notificationTitle, String notificationText)
     platformChannelSpecifics,
     payload: 'item x',
   );
+}
+
+Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate) async {
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  AndroidNotificationDetails(
+      'default_channel_id',
+      'Default Channel',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      icon: '@mipmap/launcher_icon',
+  );
+  const NotificationDetails platformChannelSpecifics =
+  NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  var tzScheduledDate = tz.TZDateTime.from(scheduledDate, tz.local);
+
+  if (tzScheduledDate.isAfter(tz.TZDateTime.now(tz.local))) {
+    try {
+      print('Scheduling notification with the following details:');
+      print('ID: $id');
+      print('Title: $title');
+      print('Body: $body');
+      print('Scheduled Date: $tzScheduledDate');
+      print('Current Date: ${DateTime.now()}');
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        tzScheduledDate,
+        platformChannelSpecifics,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+
+      //printScheduledNotifications();
+    } catch (e) {
+      print('Error scheduling notification: $e');
+    }
+  }
+}
+
+Future<void> printScheduledNotifications() async {
+  final List<PendingNotificationRequest> pendingNotifications =
+  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+  for (var notification in pendingNotifications) {
+    print('Notification ID: ${notification.id}');
+    print('Notification Title: ${notification.title}');
+    print('Notification Body: ${notification.body}');
+  }
+}
+
+void checkScheduledNotifications() async {
+  final List<PendingNotificationRequest> pendingNotificationRequests =
+  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+  print('TOTAL NOTIFICATIONS: ${pendingNotificationRequests.length}');
+}
+
+void cancelAllNotifications() async {
+  await flutterLocalNotificationsPlugin.cancelAll();
+}
+
+void cancelNotification(String cardId) async {
+  int notificationId = cardId.hashCode.toUnsigned(31);
+  await flutterLocalNotificationsPlugin.cancel(notificationId);
 }
