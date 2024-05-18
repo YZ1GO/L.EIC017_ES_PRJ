@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 Widget buildNameTextField(TextEditingController nameController) {
   return TextField(
     controller: nameController,
-    decoration: InputDecoration(labelText: 'Name'),
+    decoration: const InputDecoration(labelText: 'Name'),
   );
 }
 
 Widget buildQuantityTextField(TextEditingController quantityController) {
   return TextField(
     controller: quantityController,
-    decoration: InputDecoration(labelText: 'Quantity'),
+    decoration: const InputDecoration(labelText: 'Quantity'),
     keyboardType: TextInputType.number,
     inputFormatters: <TextInputFormatter>[
       FilteringTextInputFormatter.digitsOnly,
@@ -49,7 +48,7 @@ Widget buildExpiryDateRow(BuildContext context, TextEditingController expiryDate
           child: AbsorbPointer(
             child: TextField(
               controller: expiryDateController,
-              decoration: InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
+              decoration: const InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
               readOnly: true,
             ),
           ),
@@ -63,7 +62,7 @@ Widget buildExpiryDateRow(BuildContext context, TextEditingController expiryDate
 Widget buildNotesTextField(TextEditingController notesController) {
   return TextField(
     controller: notesController,
-    decoration: InputDecoration(labelText: 'Notes'),
+    decoration: const InputDecoration(labelText: 'Notes'),
   );
 }
 

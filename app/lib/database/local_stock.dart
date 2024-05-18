@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:path/path.dart';
+import 'package:path/path.dart' show join;
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/medicaments.dart';
@@ -38,10 +38,8 @@ class MedicamentStock {
   Future<int> insertMedicament(Medicament medicament) async {
     try {
       final int id = await _database.insert('medicaments', medicament.toMap());
-      print('Inserted medicament ${medicament.name}');
       return id;
     } catch (e) {
-      print('Error inserting medicament: $e');
       return -1;
     }
   }
@@ -57,11 +55,9 @@ class MedicamentStock {
       if (maps.isNotEmpty) {
         return Medicament.fromMap(maps.first);
       } else {
-        print('Medicament not found with ID: $id');
         return null;
       }
     } catch (e) {
-      print('Error fetching medicament: $e');
       return null;
     }
   }
@@ -69,12 +65,10 @@ class MedicamentStock {
   Future<List<Medicament>> getMedicaments() async {
     try {
       final List<Map<String, dynamic>> maps = await _database.query('medicaments');
-      print('Getting medicaments list');
       return List.generate(maps.length, (i) {
         return Medicament.fromMap(maps[i]);
       });
     } catch (e) {
-      print('Error fetching medicaments: $e');
       return [];
     }
   }
@@ -88,14 +82,10 @@ class MedicamentStock {
       );
 
       if (rowsDeleted > 0) {
-        print('Deleted medicament with ID: $id');
-      } else {
-        print('No medicament found with ID: $id');
       }
 
       return rowsDeleted;
     } catch (e) {
-      print('Error deleting medicament: $e');
       return -1;
     }
   }
@@ -108,9 +98,7 @@ class MedicamentStock {
         where: 'id = ?',
         whereArgs: [updatedMedicament.id],
       );
-      print('Updated medicament ${updatedMedicament.name}');
     } catch (e) {
-      print('Error updating medicament: $e');
     }
   }
 
@@ -133,7 +121,6 @@ class MedicamentStock {
 
   Future<void> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
     if (newQuantity < 0) {
-      print('Quantity cannot be negative integer');
       return;
     }
     try {
@@ -142,13 +129,8 @@ class MedicamentStock {
       if (currentMedicament != null) {
         currentMedicament.quantity = newQuantity;
         await updateMedicament(currentMedicament);
-        print('Updated quantity for medicament ${medicament.name} to $newQuantity');
-      } else {
-        print('Medicament not found in the database');
       }
-    } catch (e) {
-      print('Error changing medicament quantity: $e');
-    }
+    } catch (e) {}
   }
 
   Future<List<Medicament>> getMedicamentsCloseToExpire() async {

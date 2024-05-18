@@ -28,7 +28,7 @@ void checkDayChange() {
   }
 }
 
-/** VERIFY ALL MEDICAMENTS **/
+/// VERIFY ALL MEDICAMENTS *
 void verifyAllMedicamentCloseToExpire() async {
   List<Medicament>? medicamentsToNotify = await MedicamentStock().getMedicamentsCloseToExpire();
 
@@ -53,7 +53,7 @@ void verifyAllMedicamentExpired() async {
   }
 }
 
-/** VERIFY SINGLE MEDICAMENT **/
+/// VERIFY SINGLE MEDICAMENT *
 void verifyMedicamentRunningLow(Medicament medicament) async {
   bool isRunningLow = await medicament.verifyStockRunningLow();
   if (isRunningLow) {

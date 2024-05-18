@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:app/widgets/eclipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/model/medicaments.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:app/widgets/edit_medicament_widgets.dart';
 import 'package:app/database/local_stock.dart';
@@ -43,9 +42,10 @@ class _StockScreenState extends State<StockScreen> {
 
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 244, 236, 1),
+      backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -71,7 +71,7 @@ class _StockScreenState extends State<StockScreen> {
                             icon: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
-                            ), // Back button
+                            ),
                           ),
                         ),
                       ),
@@ -103,16 +103,8 @@ class _StockScreenState extends State<StockScreen> {
                               onPressed: () {
                                 Medicament? selectedMedicament = getSelectedMedicament();
                                 if (selectedMedicament != null) {
-                                  print('Selected Medicament Details:');
-                                  print('ID: ${selectedMedicament.id}');
-                                  print('Name: ${selectedMedicament.name}');
-                                  print('Quantity: ${selectedMedicament.quantity}');
-                                  print('Expiry Date: ${selectedMedicament.expiryDate}');
-                                  print('Notes: ${selectedMedicament.notes}');
-                                  print('Brand ID: ${selectedMedicament.brandId}');
                                   Navigator.pop(context, selectedMedicament);
                                 } else {
-                                  print('Error selecting medicament (stock_screen)');
                                   Navigator.pop(context);
                                 }
                               },
@@ -148,19 +140,17 @@ class _StockScreenState extends State<StockScreen> {
                       onPressed: () async {
                         await Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DatabaseContentScreen()),
+                          MaterialPageRoute(builder: (context) => const DatabaseContentScreen()),
                         );
-                        print(Text('Add new medicament button pressed'));
                         refreshStockList();
-                        print(Text('Refreshed medicaments list'));
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Color.fromRGBO(199, 84, 0, 1),
-                        backgroundColor: Color.fromRGBO(255, 200, 150, 1),
+                        foregroundColor: const Color.fromRGBO(199, 84, 0, 1),
+                        backgroundColor: const Color.fromRGBO(255, 200, 150, 1),
                         elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.5),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
@@ -180,7 +170,7 @@ class _StockScreenState extends State<StockScreen> {
                       ),
                     ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 medicamentList(),
               ],
             ),
@@ -254,9 +244,9 @@ class _StockScreenState extends State<StockScreen> {
             children: rows,
           );
         } else {
-          return Center(
+          return const Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 125),
+              padding: EdgeInsets.only(top: 125),
               child: Text('No medicaments in stock'),
             ),
           );
@@ -272,10 +262,10 @@ class _StockScreenState extends State<StockScreen> {
       children: [
         GestureDetector(
           onTap: selectionMode ? () => toggleSelection(medicament) : null,
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width / 2 - 20,
             child: Card(
-              color: widget.selectionMode ? (selectedMedicament == medicament ? Color.fromRGBO(255, 200, 150, 1) : Color.fromRGBO(255, 220, 194, 0.5)) : Color.fromRGBO(255, 220, 194, 1),
+              color: widget.selectionMode ? (selectedMedicament == medicament ? const Color.fromRGBO(255, 200, 150, 1) : Color.fromRGBO(255, 220, 194, 0.5)) : Color.fromRGBO(255, 220, 194, 1),
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -303,27 +293,25 @@ class _StockScreenState extends State<StockScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: widget.selectionMode
-                            ? ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            selectedMedicament == medicament ? Colors.white.withOpacity(0) : Colors.white.withOpacity(0.5),
-                            BlendMode.srcATop,
-                          ),
-                          child: _loadMedicamentImage(medicament.brandId),
-                        ) : _loadMedicamentImage(medicament.brandId),
-                      ),
+                    const SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.center,
+                      child: widget.selectionMode
+                          ? ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          selectedMedicament == medicament ? Colors.white.withOpacity(0) : Colors.white.withOpacity(0.5),
+                          BlendMode.srcATop,
+                        ),
+                        child: _loadMedicamentImage(medicament.brandId),
+                      ) : _loadMedicamentImage(medicament.brandId),
                     ),
-                    SizedBox(height: 6),
-                    Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 6),
+                    const Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+                    const SizedBox(height: 2),
                     Center(
                       child: Text(
                         medicament.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(199, 84, 0, 1),
                           fontSize: 16,
@@ -333,13 +321,13 @@ class _StockScreenState extends State<StockScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(height: 2),
-                    Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 2),
+                    const Divider(color: Color.fromRGBO(199, 84, 0, 0.5)),
+                    const SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           ' Expiry',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -347,8 +335,8 @@ class _StockScreenState extends State<StockScreen> {
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(width: 4),
-                        expired ? Text(
+                        const SizedBox(width: 4),
+                        expired ? const Text(
                           'Expired',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -358,7 +346,7 @@ class _StockScreenState extends State<StockScreen> {
                         ) :
                         Text(
                           DateFormat('dd/MM/yyyy').format(medicament.expiryDate),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(199, 84, 0, 1),
                             fontSize: 12,
@@ -366,11 +354,11 @@ class _StockScreenState extends State<StockScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           ' Quantity',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -378,16 +366,16 @@ class _StockScreenState extends State<StockScreen> {
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         medicament.quantity > 0
                             ? Text(
                           '${medicament.quantity} piece(s)',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Color.fromRGBO(199, 84, 0, 1),
                             fontSize: 12,
                           ),
-                        ) : Text(
+                        ) : const Text(
                           'Out of stock',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -454,67 +442,74 @@ class _StockScreenState extends State<StockScreen> {
 
     showDialog<void>(
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit Medicament'),
-          backgroundColor: Colors.white,
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                buildNameTextField(nameController),
-                buildQuantityTextField(quantityController),
-                buildExpiryDateRow(context, expiryDateController, medicament.expiryDate, (DateTime pickedDate) {
-                  setState(() {
-                    expiryDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-                  });
-                }),
 
-                buildNotesTextField(notesController),
-              ],
+      builder: (BuildContext context) {
+        return Theme(
+          data: ThemeData(
+            dialogBackgroundColor: const Color.fromRGBO(255, 244, 235, 1),
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: Color.fromRGBO(225, 95, 0, 1),
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+          child: AlertDialog(
+            title: const Text('Edit Medicament'),
+            backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  buildNameTextField(nameController),
+                  buildQuantityTextField(quantityController),
+                  buildExpiryDateRow(context, expiryDateController, medicament.expiryDate, (DateTime pickedDate) {
+                    setState(() {
+                      expiryDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+                    });
+                  }),
+                  buildNotesTextField(notesController),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Color.fromRGBO(100, 50, 13 ,1),
+                  ),
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showDeleteConfirmationPopUp(medicament);
-              },
-              child: Text(
-                'Delete',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                _updateMedicament(
-                  medicament,
-                  nameController.text,
-                  int.parse(quantityController.text),
-                  DateFormat('dd/MM/yyyy').parse(expiryDateController.text),
-                  notesController.text,
-                );
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Save',
-                style: TextStyle(
-                  color: Color.fromRGBO(100, 50, 13 ,1),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _showDeleteConfirmationPopUp(medicament);
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  _updateMedicament(
+                    medicament,
+                    nameController.text,
+                    int.parse(quantityController.text),
+                    DateFormat('dd/MM/yyyy').parse(expiryDateController.text),
+                    notesController.text,
+                  );
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Save',
+                  style: TextStyle(
+                    color: Color.fromRGBO(100, 50, 13 ,1),
+                  ),
+                ),
+              ),
+            ],
+          )
         );
       },
     );
@@ -526,7 +521,7 @@ class _StockScreenState extends State<StockScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Delete'),
+          title: const Text('Confirm Delete'),
           backgroundColor: Colors.white,
           content: SingleChildScrollView(
             child: ListBody(
@@ -534,12 +529,12 @@ class _StockScreenState extends State<StockScreen> {
                 Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text: 'Are you sure you want to delete '),
+                      const TextSpan(text: 'Are you sure you want to delete '),
                       TextSpan(
                         text: medicament.name,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      TextSpan(text: '?'),
+                      const TextSpan(text: '?'),
                     ],
                   ),
                 ),
@@ -552,7 +547,7 @@ class _StockScreenState extends State<StockScreen> {
                 _deleteMedicament(medicament);
                 Navigator.pop(context);
               },
-              child: Text(
+              child: const Text(
                 'Yes',
                 style: TextStyle(
                   color: Colors.red,
@@ -564,7 +559,7 @@ class _StockScreenState extends State<StockScreen> {
                 Navigator.of(context).pop();
                 _showEditPopUp(medicament);
               },
-              child: Text(
+              child: const Text(
                 'No',
                 style: TextStyle(
                   color: Color.fromRGBO(100, 50, 13 ,1),
@@ -581,14 +576,9 @@ class _StockScreenState extends State<StockScreen> {
     try {
       int result = await MedicamentStock().deleteMedicament(medicament.id);
       if (result > 0) {
-        print('Medicament deleted successfully');
         refreshStockList();
-      } else {
-        print('Failed to delete medicament');
       }
-    } catch (e) {
-      print('Error deleting medicament: $e');
-    }
+    } catch (e) {}
   }
 
   void _updateMedicament(
@@ -609,14 +599,11 @@ class _StockScreenState extends State<StockScreen> {
 
     try {
       await MedicamentStock().updateMedicament(updatedMedicament);
-      print('Medicament updated successfully');
       verifyMedicamentExpired(updatedMedicament);
       verifyMedicamentCloseToExpire(updatedMedicament);
       verifyMedicamentRunningLow(updatedMedicament);
       refreshStockList();
-    } catch (e) {
-      print('Error updating medicament: $e');
-    }
+    } catch (e) {}
   }
 
   Future<List<Medicament>> getMedicaments() async {

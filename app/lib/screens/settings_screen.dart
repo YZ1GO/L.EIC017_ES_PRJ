@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -52,8 +54,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -61,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   'Notifications',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -69,9 +73,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Color.fromRGBO(158, 66, 0, 1),
                   ),
                 ),
-                Divider(color: Color.fromRGBO(158, 66, 0, 0.5)),
-                SizedBox(height: 16),
-                Text(
+                const Divider(color: Color.fromRGBO(158, 66, 0, 0.5)),
+                const SizedBox(height: 16),
+                const Text(
                   'Quantity to notify low stock',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -79,18 +83,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Color.fromRGBO(158, 66, 0, 1),
                   ),
                 ),
-                SizedBox(height: 6.0),
+                const SizedBox(height: 6.0),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(225, 95, 0, 1),
+                    color: const Color.fromRGBO(225, 95, 0, 1),
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.25),
                         blurRadius: 4,
-                        offset: Offset(0, 1),
+                        offset: const Offset(0, 1),
                       ),
                     ],
                   ),
@@ -98,7 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.remove,
                           color: Colors.white,
                         ),
@@ -111,12 +115,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Text(
                         '$lowQuantity',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                           color: Colors.white,
                         ),
@@ -130,8 +134,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Days before medicament expiry',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -139,18 +143,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Color.fromRGBO(158, 66, 0, 1),
                   ),
                 ),
-                SizedBox(height: 6.0),
+                const SizedBox(height: 6.0),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(225, 95, 0, 1),
+                    color: const Color.fromRGBO(225, 95, 0, 1),
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.25),
                         blurRadius: 4,
-                        offset: Offset(0, 1),
+                        offset: const Offset(0, 1),
                       ),
                     ],
                   ),
@@ -158,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.remove,
                           color: Colors.white,
                         ),
@@ -171,12 +175,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Text(
                         '$daysBeforeExpiry',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                           color: Colors.white,
                         ),
