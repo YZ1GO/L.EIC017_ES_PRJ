@@ -54,14 +54,14 @@ class _StockScreenState extends State<StockScreen> {
             ),
             Column(
               children: [
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
                 Container(
                   height: kToolbarHeight,
                   color: Colors.transparent,
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 2),
+                        padding: const EdgeInsets.only(top: 2),
                         child: Visibility(
                           visible: widget.selectionMode,
                           child: IconButton(
@@ -98,6 +98,14 @@ class _StockScreenState extends State<StockScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
                             child: ElevatedButton(
                               onPressed: () {
@@ -136,7 +144,7 @@ class _StockScreenState extends State<StockScreen> {
                 Visibility(
                   visible: !widget.selectionMode,
                     child: ElevatedButton(
-                      key: Key('add new medicament button'),
+                      key: const Key('add new medicament button'),
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -185,7 +193,6 @@ class _StockScreenState extends State<StockScreen> {
       future: widget.medicamentList,
       builder: (context, snapshot) {
         List<Medicament>? medicaments = snapshot.data;
-        print('Stock items ${medicaments?.length ?? 0}');
         if (medicaments != null && medicaments.isNotEmpty) {
           medicaments.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
           List<Widget> rows = [];
@@ -216,10 +223,10 @@ class _StockScreenState extends State<StockScreen> {
             );
             rows.add(row);
           }
-          rows.add(SizedBox(height: 20));
-          rows.add(Center(
+          rows.add(const SizedBox(height: 20));
+          rows.add(const Center(
             child: Text(
-              '\"honk honk!\"',
+              '"honk honk!"',
               style: TextStyle(
                 color: Color.fromRGBO(199,54,00,1),
                 fontSize: 15,
@@ -228,9 +235,9 @@ class _StockScreenState extends State<StockScreen> {
               ),
             ),
           ));
-          rows.add(Center(
+          rows.add(const Center(
             child: Text(
-              '\"It\'s the end of the list\"',
+              '"It\'s the end of the list"',
               style: TextStyle(
                 color: Color.fromRGBO(199,54,00,1),
                 fontSize: 15,
@@ -239,7 +246,7 @@ class _StockScreenState extends State<StockScreen> {
               ),
             ),
           ));
-          rows.add(SizedBox(height: 160));
+          rows.add(const SizedBox(height: 160));
           return Column(
             children: rows,
           );
@@ -265,7 +272,7 @@ class _StockScreenState extends State<StockScreen> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 2 - 20,
             child: Card(
-              color: widget.selectionMode ? (selectedMedicament == medicament ? const Color.fromRGBO(255, 200, 150, 1) : Color.fromRGBO(255, 220, 194, 0.5)) : Color.fromRGBO(255, 220, 194, 1),
+              color: widget.selectionMode ? (selectedMedicament == medicament ? const Color.fromRGBO(255, 200, 150, 1) : const Color.fromRGBO(255, 220, 194, 0.5)) : const Color.fromRGBO(255, 220, 194, 1),
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -283,7 +290,7 @@ class _StockScreenState extends State<StockScreen> {
                           height: 24,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: selectedMedicament == medicament ? Color.fromRGBO(243, 83, 0, 1) : Colors.grey[300],
+                            color: selectedMedicament == medicament ? const Color.fromRGBO(243, 83, 0, 1) : Colors.grey[300],
                           ),
                           child: Icon(
                             Icons.check,
@@ -387,7 +394,7 @@ class _StockScreenState extends State<StockScreen> {
                     ),
                     Visibility(
                       visible: !widget.selectionMode,
-                      child: SizedBox(height: 12),
+                      child: const SizedBox(height: 12),
                     ),
                     Visibility(
                       visible: !widget.selectionMode,
@@ -398,10 +405,10 @@ class _StockScreenState extends State<StockScreen> {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: expired ? Colors.grey : Color.fromRGBO(225, 95, 0, 1),
+                            color: expired ? Colors.grey : const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -532,7 +539,7 @@ class _StockScreenState extends State<StockScreen> {
                       const TextSpan(text: 'Are you sure you want to delete '),
                       TextSpan(
                         text: medicament.name,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const TextSpan(text: '?'),
                     ],
