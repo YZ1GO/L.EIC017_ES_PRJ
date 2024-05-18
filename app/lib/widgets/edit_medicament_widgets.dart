@@ -4,14 +4,24 @@ import 'package:flutter/services.dart';
 Widget buildNameTextField(TextEditingController nameController) {
   return TextField(
     controller: nameController,
-    decoration: const InputDecoration(labelText: 'Name'),
+    decoration: const InputDecoration(
+      labelText: 'Name',
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Color.fromRGBO(243, 83, 0, 1)),
+      ),
+    ),
   );
 }
 
 Widget buildQuantityTextField(TextEditingController quantityController) {
   return TextField(
     controller: quantityController,
-    decoration: const InputDecoration(labelText: 'Quantity'),
+    decoration: const InputDecoration(
+      labelText: 'Quantity',
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Color.fromRGBO(243, 83, 0, 1)),
+      ),
+    ),
     keyboardType: TextInputType.number,
     inputFormatters: <TextInputFormatter>[
       FilteringTextInputFormatter.digitsOnly,
@@ -48,7 +58,12 @@ Widget buildExpiryDateRow(BuildContext context, TextEditingController expiryDate
           child: AbsorbPointer(
             child: TextField(
               controller: expiryDateController,
-              decoration: const InputDecoration(labelText: 'Expiry Date (dd/MM/yyyy)'),
+              decoration: const InputDecoration(
+                labelText: 'Expiry Date (dd/mm/yyyy)',
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(243, 83, 0, 1)),
+                ),
+              ),
               readOnly: true,
             ),
           ),
@@ -62,7 +77,12 @@ Widget buildExpiryDateRow(BuildContext context, TextEditingController expiryDate
 Widget buildNotesTextField(TextEditingController notesController) {
   return TextField(
     controller: notesController,
-    decoration: const InputDecoration(labelText: 'Notes'),
+    decoration: const InputDecoration(
+      labelText: 'Notes',
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Color.fromRGBO(243, 83, 0, 1)),
+      ),
+    ),
   );
 }
 

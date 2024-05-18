@@ -447,6 +447,8 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
 
     await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
+    verifyMedicamentRunningLow(widget.medicament!);
+
     final updatedCard = ReminderCard(
       cardId: widget.cardId,
       reminderId: widget.reminderId,
