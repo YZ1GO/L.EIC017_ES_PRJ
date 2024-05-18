@@ -4,67 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:app/database/local_stock.dart';
 import 'package:app/model/reminders.dart';
-
 import '../notifications/notification_checker.dart';
-
-class MedicationReminderWidget extends StatelessWidget {
-  final int reminderId;
-  final String reminderName;
-  final DateTime selectedDay;
-  final Medicament? medicament;
-
-  const MedicationReminderWidget({super.key,
-    required this.reminderId,
-    required this.reminderName,
-    required this.selectedDay,
-    required this.medicament,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      // Delay used to fix small visual bug
-      future: Future.delayed(const Duration(milliseconds: 200)),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(); // Return an empty SizedBox while waiting
-        } else {
-          return FutureBuilder<List<ReminderCard>>(
-            future: ReminderDatabase().getReminderCards(reminderId, selectedDay),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const SizedBox(); // Return an empty SizedBox while waiting
-              } else if (snapshot.hasData) {
-                final List<ReminderCard> reminderCards = snapshot.data!;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: reminderCards.map((reminderCard) {
-                    return MedicationReminderCard(
-                      cardId: reminderCard.cardId,
-                      reminderId: reminderCard.reminderId,
-                      medicament: medicament,
-                      day: reminderCard.day,
-                      time: reminderCard.time,
-                      intakeQuantity: reminderCard.intakeQuantity,
-                      isTaken: reminderCard.isTaken,
-                      isJumped: reminderCard.isJumped,
-                      pressedTime: reminderCard.pressedTime,
-                      //onMedicamentAction: onMedicamentAction,
-                    );
-                  }).toList(),
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return const SizedBox();
-              }
-            },
-          );
-        }
-      },
-    );
-  }
-}
 
 class MedicationReminderCard extends StatefulWidget {
   final String cardId;
