@@ -23,8 +23,6 @@ class StockScreen extends StatefulWidget {
 class _StockScreenState extends State<StockScreen> {
   Medicament? selectedMedicament;
 
-  static int quantityLimit = 0;
-
   void toggleSelection(Medicament medicament) {
     setState(() {
       if (selectedMedicament == medicament) {

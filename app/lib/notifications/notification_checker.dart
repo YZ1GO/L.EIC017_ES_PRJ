@@ -20,7 +20,7 @@ void checkDayChangeInit() {
 void checkDayChange() {
   print('Check days called');
   final now = DateTime.now();
-  if (_lastCalledDay == null || _lastCalledDay.day != now.day) {
+  if (_lastCalledDay.day != now.day) {
     verifyAllMedicamentCloseToExpire();
     verifyAllMedicamentExpired();
 
