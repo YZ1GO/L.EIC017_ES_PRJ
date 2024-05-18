@@ -75,16 +75,30 @@ Future<void> scheduleNotification(int id, String title, String body, DateTime sc
       'default_channel_id', 'Default Channel',
       importance: Importance.max, priority: Priority.high, showWhen: false);
   var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
   var tzScheduledDate = tz.TZDateTime.from(scheduledDate, tz.local);
 
   if (tzScheduledDate.isAfter(tz.TZDateTime.now(tz.local))) {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+    try {
+      print('Scheduling notification with the following details:');
+      print('ID: $id');
+      print('Title: $title');
+      print('Body: $body');
+      print('Scheduled Date: $tzScheduledDate');
+      print('Current Date: ${DateTime.now()}');
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
         title,
         body,
         tzScheduledDate,
         platformChannelSpecifics,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    } catch (e) {
+      print('Error scheduling notification: $e');
+    }
   }
 }
 

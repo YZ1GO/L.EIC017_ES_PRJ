@@ -724,7 +724,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
             DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
             int cardIdInt = cardId.hashCode.toUnsigned(31);
-            scheduleNotification(cardIdInt, _reminderName, _medicament!.name, scheduledDate);
+            scheduleNotification(cardIdInt, _medicament!.name, _medicament!.name, scheduledDate);
             checkScheduledNotifications();
           } else {
             print('Failed to add reminderCard');

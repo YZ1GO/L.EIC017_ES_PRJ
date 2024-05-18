@@ -8,15 +8,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'navigation_menu.dart';
 import 'package:app/database/local_stock.dart';
 import 'package:app/env/env.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'notifications/system_notification.dart';
-
-Future<void> _initializeNotification() async {
-  var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
-  var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-}
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,8 +31,10 @@ void main() async {
   });
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   checkDayChangeInit();
-  await _initializeNotification();
   tz.initializeTimeZones();
+  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  tz.Location location = tz.getLocation(currentTimeZone);
+  tz.setLocalLocation(location);
 
   runApp(const MyApp());
 }
