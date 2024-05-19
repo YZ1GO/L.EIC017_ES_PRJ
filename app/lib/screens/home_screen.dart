@@ -40,6 +40,7 @@ class HomeScreenState extends State<HomeScreen> {
   void refreshReminderList() async {
     setState(() {
       _remindersFuture = getReminders();
+      _buildMedicationReminderWidget();
     });
   }
 
@@ -100,8 +101,7 @@ class HomeScreenState extends State<HomeScreen> {
         } else {
           List<Reminder>? reminders = snapshot.data;
           if (reminders != null && reminders.isNotEmpty) {
-            List<Reminder> applicableReminders = _getApplicableReminders(
-                reminders);
+            List<Reminder> applicableReminders = _getApplicableReminders(reminders);
             if (applicableReminders.isNotEmpty) {
               return _buildReminderCardInfoList(applicableReminders);
             }
