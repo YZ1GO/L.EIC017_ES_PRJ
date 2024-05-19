@@ -304,7 +304,6 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                             ),
                                           ),
                                           onPressed: () async {
-                                            cancelReminderCardsTimers(reminder.id);
                                             await ReminderDatabase().deleteReminderByReminderId(reminder.id);
                                             setState(() {
                                               reminders.removeAt(index);

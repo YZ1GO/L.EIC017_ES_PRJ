@@ -209,6 +209,8 @@ class ReminderDatabase {
 
   Future<int> deleteReminderByReminderId(int reminderId) async {
     try {
+      cancelReminderCardsTimers(reminderId);
+
       await deleteReminderCardsByReminderId(reminderId);
 
       int rowsDeleted = await _database.delete(
