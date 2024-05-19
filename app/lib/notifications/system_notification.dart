@@ -5,6 +5,9 @@ import 'dart:async';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../database/local_stock.dart';
+import '../model/reminders.dart';
+
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 /// NOTIFICATION SINGLE MEDICAMENT *
@@ -68,77 +71,58 @@ Future<void> showNotification(String notificationTitle, String notificationText)
   );
 }
 
-Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledDate) async {
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  AndroidNotificationDetails(
-      'default_channel_id',
-      'Default Channel',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
-      icon: '@mipmap/launcher_icon',
-  );
-  const NotificationDetails platformChannelSpecifics =
-  NotificationDetails(android: androidPlatformChannelSpecifics);
+// Create a global map to store the timers
+Map<String, Timer> timers = {};
 
-  var tzScheduledDate = tz.TZDateTime.from(scheduledDate, tz.local);
+Future<void> scheduleNotification(String cardId, String title, String body, DateTime scheduledDate) async {
+  var timeDifference = scheduledDate.difference(DateTime.now());
+  var milliseconds = timeDifference.inMilliseconds;
 
-  if (tzScheduledDate.isAfter(tz.TZDateTime.now(tz.local))) {
-    try {
-      print('Scheduling notification with the following details:');
-      print('ID: $id');
-      print('Title: $title');
-      print('Body: $body');
-      print('Scheduled Date: $tzScheduledDate');
-      print('Current Date: ${DateTime.now()}');
+  if (milliseconds > 0) {
+    Timer timer = Timer(Duration(milliseconds: milliseconds), () async {
+      await showNotification(title, body);
+      timers.remove(cardId); // Remove the timer from the map after it fires
+    });
 
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tzScheduledDate,
-        platformChannelSpecifics,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      );
+    // Store the timer in the map using the cardId as the key
+    timers[cardId] = timer;
+  }
+}
 
-      var timeDifference = scheduledDate.difference(DateTime.now());
-      var milliseconds = timeDifference.inMilliseconds;
+void cancelTimer(String cardId) {
+  Timer? timer = timers[cardId];
+  if (timer != null) {
+    timer.cancel();
+    timers.remove(cardId);
+  }
+}
 
-      Timer(Duration(milliseconds: milliseconds), () async {
-        await showNotification(title, body);
-      });
+void cancelAllTimers() {
+  timers.forEach((cardId, timer) {
+    timer.cancel();
+  });
+  timers.clear();
+}
 
-      //printScheduledNotifications();
-    } catch (e) {
-      print('Error scheduling notification: $e');
+void getNumTimers() {
+  print('Number of scheduled timers: ${timers.length}');
+}
+
+Future<void> setTimersOnAppStart() async {
+  // Fetch all reminders and set timers
+  List<Reminder> reminders = await ReminderDatabase().getReminders();
+  for (Reminder reminder in reminders) {
+    List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCardsByReminderId(reminder.id);
+    for (ReminderCard reminderCard in reminderCards) {
+
+      DateTime reminderDateTime = DateTime(reminderCard.day.year, reminderCard.day.month, reminderCard.day.day, reminderCard.time.hour, reminderCard.time.minute);
+
+      // If the reminder DateTime is in the future, schedule a notification
+      if (reminderDateTime.isAfter(DateTime.now())) {
+        Medicament? medicament = await MedicamentStock().getMedicamentById(reminder.medicament);
+        String message = reminder.reminderName == '' ? 'It\'s time to take your medicament!' : reminder.reminderName;
+        scheduleNotification(reminderCard.cardId, medicament!.name, message, reminderDateTime);
+      }
     }
   }
-}
-
-Future<void> printScheduledNotifications() async {
-  final List<PendingNotificationRequest> pendingNotifications =
-  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-
-  for (var notification in pendingNotifications) {
-    print('Notification ID: ${notification.id}');
-    print('Notification Title: ${notification.title}');
-    print('Notification Body: ${notification.body}');
-  }
-}
-
-void checkScheduledNotifications() async {
-  final List<PendingNotificationRequest> pendingNotificationRequests =
-  await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-
-  print('TOTAL NOTIFICATIONS: ${pendingNotificationRequests.length}');
-}
-
-void cancelAllNotifications() async {
-  await flutterLocalNotificationsPlugin.cancelAll();
-}
-
-void cancelNotification(String cardId) async {
-  int notificationId = cardId.hashCode.toUnsigned(31);
-  await flutterLocalNotificationsPlugin.cancel(notificationId);
 }
