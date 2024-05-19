@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:app/database/local_stock.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../notifications/system_notification.dart';
+import 'medicaments.dart';
 
 class Reminder {
   final int id;
@@ -327,7 +329,24 @@ class ReminderDatabase {
     }
   }
 
-  Future<List<ReminderCard>> getReminderCards(int reminderId, DateTime selectedDay) async {
+  Future<List<ReminderCard>> getReminderCardsByReminderId(int reminderId) async {
+    List<Map<String, dynamic>> maps = [];
+    try {
+      maps = await _database.query(
+        'reminder_cards',
+        where: 'reminderId = ?',
+        whereArgs: [reminderId],
+      );
+      return List.generate(maps.length, (i) {
+        return ReminderCard.fromMap(maps[i]);
+      });
+    } catch (e) {
+      print('Error fetching reminder cards: $e');
+      return [];
+    }
+  }
+
+  Future<List<ReminderCard>> getReminderCardsForSelectedDay(int reminderId, DateTime selectedDay) async {
     List<Map<String, dynamic>> maps = [];
     try {
       final year = selectedDay.year;
@@ -395,7 +414,7 @@ class ReminderDatabase {
 
       // Delete these future reminder cards from the database
       for (ReminderCard card in futureReminderCards) {
-        cancelNotification(card.cardId);
+        cancelTimer(card.cardId);
         await _database.delete(
           'reminder_cards',
           where: 'cardId = ?',
@@ -424,9 +443,11 @@ class ReminderDatabase {
           await _database.insert('reminder_cards', newCard.toMap());
 
           DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
-          int cardIdInt = cardId.hashCode.toUnsigned(31);
-          scheduleNotification(cardIdInt, reminder.reminderName, reminder.reminderName, scheduledDate);
-          checkScheduledNotifications();
+
+          Medicament? medicament = await MedicamentStock().getMedicamentById(reminder.medicament);
+
+          scheduleNotification(cardId, medicament!.name, reminder.reminderName, scheduledDate);
+          getNumTimers();
         }
       }
     } catch (e) {

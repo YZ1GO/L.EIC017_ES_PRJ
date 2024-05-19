@@ -101,13 +101,13 @@ class HomeScreenState extends State<HomeScreen> {
         } else {
           List<Reminder>? reminders = snapshot.data;
           if (reminders != null && reminders.isNotEmpty) {
-            return FutureBuilder<List<Reminder>>(
+            return FutureBuilder<List<ReminderWithCards>>(
               future: _getApplicableReminders(reminders),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedBox.shrink();
                 } else {
-                  List<Reminder>? applicableReminders = snapshot.data;
+                  List<ReminderWithCards>? applicableReminders = snapshot.data;
                   if (applicableReminders != null && applicableReminders.isNotEmpty) {
                     return _buildReminderCardInfoList(applicableReminders);
                   }
@@ -123,20 +123,20 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<List<Reminder>> _getApplicableReminders(List<Reminder> reminders) async {
-    List<Reminder> applicableReminders = [];
+  Future<List<ReminderWithCards>> _getApplicableReminders(List<Reminder> reminders) async {
+    List<ReminderWithCards> applicableReminders = [];
 
     for (Reminder reminder in reminders) {
-      List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCards(reminder.id, _selectedDay);
+      List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCardsForSelectedDay(reminder.id, _selectedDay);
       if (reminderCards.isNotEmpty) {
-        applicableReminders.add(reminder);
+        applicableReminders.add(ReminderWithCards(reminder, reminderCards));
       }
     }
 
     return applicableReminders;
   }
 
-  Widget _buildReminderCardInfoList(List<Reminder> applicableReminders) {
+  Widget _buildReminderCardInfoList(List<ReminderWithCards> applicableReminders) {
     return FutureBuilder<List<_ReminderCardInfo>>(
       future: _getReminderCardInfos(applicableReminders),
       builder: (context, snapshot) {
@@ -174,13 +174,12 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<List<_ReminderCardInfo>> _getReminderCardInfos(List<Reminder> reminders) async {
+  Future<List<_ReminderCardInfo>> _getReminderCardInfos(List<ReminderWithCards> reminderWithCardsList) async {
     List<_ReminderCardInfo> reminderCardInfos = [];
-    for (var reminder in reminders) {
-      Medicament? medicament = await MedicamentStock().getMedicamentById(reminder.medicament);
-      List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCards(reminder.id, _selectedDay);
-      for (var reminderCard in reminderCards) {
-        reminderCardInfos.add(_ReminderCardInfo(reminderCard, reminder, medicament!));
+    for (var reminderWithCards in reminderWithCardsList) {
+      Medicament? medicament = await MedicamentStock().getMedicamentById(reminderWithCards.reminder.medicament);
+      for (var reminderCard in reminderWithCards.reminderCards) {
+        reminderCardInfos.add(_ReminderCardInfo(reminderCard, reminderWithCards.reminder, medicament!));
       }
     }
     return reminderCardInfos;
@@ -194,21 +193,6 @@ class HomeScreenState extends State<HomeScreen> {
       return a.minute.compareTo(b.minute);
     }
   }
-
-  void _clearRemindersDatabase() async {
-    await ReminderDatabase().clearReminders();
-    setState(() {
-      _remindersFuture = getReminders();
-    });
-    cancelAllNotifications();
-    checkScheduledNotifications();
-  }
-
-  void scheduleTestNotification() {
-    DateTime scheduledDate = DateTime.now().add(Duration(seconds: 10));
-    scheduleNotification(1, 'Test Title', 'Test Body', scheduledDate);
-  }
-
 
   Widget noRemindersCard() {
     return Center(
@@ -238,6 +222,22 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void _clearRemindersDatabase() async {
+    await ReminderDatabase().clearReminders();
+    setState(() {
+      _remindersFuture = getReminders();
+    });
+    cancelAllTimers();
+    getNumTimers();
+  }
+}
+
+class ReminderWithCards {
+  final Reminder reminder;
+  final List<ReminderCard> reminderCards;
+
+  ReminderWithCards(this.reminder, this.reminderCards);
 }
 
 class _ReminderCardInfo {

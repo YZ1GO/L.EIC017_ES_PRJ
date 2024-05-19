@@ -809,9 +809,8 @@ class _AddReminderPageState extends State<AddReminderPage> {
             print('Time (Type: ${time.runtimeType}): $time');*/
 
             DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
-            int cardIdInt = cardId.hashCode.toUnsigned(31);
-            scheduleNotification(cardIdInt, _medicament!.name, _medicament!.name, scheduledDate);
-            checkScheduledNotifications();
+            scheduleNotification(cardId, _medicament!.name, _reminderName, scheduledDate);
+            getNumTimers();
           } else {
             print('Failed to add reminderCard');
           }
