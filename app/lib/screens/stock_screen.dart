@@ -281,10 +281,25 @@ class _StockScreenState extends State<StockScreen> {
             children: rows,
           );
         } else {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 125),
-              child: Text('No medicaments in stock'),
+          return SizedBox(
+            height: 150,
+            child: Card(
+              color: const Color.fromRGBO(255, 218, 190, 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 5,
+              margin: const EdgeInsets.all(10),
+              child: const Center(
+                child: Text(
+                  'No medicaments in stock',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(225, 95, 0, 1),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
             ),
           );
         }

@@ -225,7 +225,7 @@ class HomeScreenState extends State<HomeScreen> {
             height: 150,
             child: Center(
               child: Text(
-                "There are no reminders for today",
+                "No reminders for today",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
