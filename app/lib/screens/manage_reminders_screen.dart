@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../database/local_stock.dart';
 import '../model/medicaments.dart';
 import '../model/reminders.dart';
+import 'add_reminder_screen.dart';
 
 class ManageRemindersScreen extends StatefulWidget {
+  Future<List<Medicament>> medicamentList;
   final VoidCallback onReminderSaved;
+  final VoidCallback onMedicamentListUpdated;
 
-  const ManageRemindersScreen({super.key, required this.onReminderSaved});
+  ManageRemindersScreen({
+    Key? key,
+    required this.onReminderSaved,
+    required this.medicamentList,
+    required this.onMedicamentListUpdated,
+  }) : super(key: key);
 
   @override
   _ManageRemindersScreenState createState() => _ManageRemindersScreenState();
@@ -182,8 +189,19 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                         IconButton(
                           icon: const Icon(Icons.edit),
                           onPressed: () {
-                            // Navigate to the edit reminder page
-                            // Pass the reminder to the edit page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddReminderPage(
+                                  onReminderSaved: widget.onReminderSaved,
+                                  medicamentList: widget.medicamentList,
+                                  onMedicamentListUpdated: widget.onMedicamentListUpdated,
+                                  isEditing: true,
+                                  editingReminder: reminder,
+                                  reminderMedicament: medicament,
+                                ),
+                              ),
+                            );
                           },
                         ),
                         IconButton(

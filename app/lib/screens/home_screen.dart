@@ -69,7 +69,7 @@ class HomeScreenState extends State<HomeScreen> {
             right: 0,
             top: 50,
             child: ElevatedButton(
-              onPressed: scheduleTestNotification,
+              onPressed: _clearRemindersDatabase,
               child: Text('Clear'),
             ),
           ),

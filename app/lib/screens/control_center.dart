@@ -39,6 +39,7 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                               onReminderSaved: onReminderSaved,
                               medicamentList: medicamentList,
                               onMedicamentListUpdated: onMedicamentListUpdated,
+                              isEditing: false,
                             ),
                           ),
                         );
@@ -68,6 +69,8 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                           MaterialPageRoute(
                               builder: (context) => ManageRemindersScreen(
                                 onReminderSaved: onReminderSaved,
+                                medicamentList: medicamentList,
+                                onMedicamentListUpdated: onMedicamentListUpdated,
                               ),
                           ),
                         );

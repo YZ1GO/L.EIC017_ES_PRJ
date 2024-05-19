@@ -12,8 +12,19 @@ class AddReminderPage extends StatefulWidget {
   Future<List<Medicament>> medicamentList;
   final VoidCallback onReminderSaved;
   final VoidCallback onMedicamentListUpdated;
+  final bool isEditing;
+  final Reminder? editingReminder;
+  final Medicament? reminderMedicament;
 
-  AddReminderPage({Key? key, required this.onReminderSaved, required this.medicamentList, required this.onMedicamentListUpdated}) : super(key: key);
+  AddReminderPage({
+    Key? key,
+    required this.onReminderSaved,
+    required this.medicamentList,
+    required this.onMedicamentListUpdated,
+    required this.isEditing,
+    this.editingReminder,
+    this.reminderMedicament,
+  }) : super(key: key);
 
   @override
   _AddReminderPageState createState() => _AddReminderPageState();
@@ -104,18 +115,44 @@ class _DaySelectionCircleState extends State<DaySelectionCircle> {
 class _AddReminderPageState extends State<AddReminderPage> {
   final ReminderDatabase _reminderDatabase = ReminderDatabase();
 
-  String _reminderName = '';
-  DateTime _startDate = DateTime.now();
-  DateTime _endDate = DateTime.now().add(const Duration(days: 1));
-  List<TimeOfDay> _times = [
-    TimeOfDay(hour: 8, minute: 0),
-    TimeOfDay(hour: 13, minute: 0),
-    TimeOfDay(hour: 19, minute: 0),
-  ]; // Default time
+  late String _reminderName;
+  late DateTime _startDate;
+  late DateTime _endDate;
+  late List<TimeOfDay> _times;
   Medicament? _medicament;
-  bool _everyDay = true;
-  List<bool> _selectedDays = [false, false, false, false, false, false, false];
-  int _intakeQuantity = 1;
+  late bool _everyDay;
+  late List<bool> _selectedDays;
+  late int _intakeQuantity;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isEditing) {
+      // Initialize variables based on widget.editingReminder
+      _reminderName = widget.editingReminder!.reminderName;
+      _startDate = widget.editingReminder!.startDate;
+      _endDate = widget.editingReminder!.endDate;
+      _times = widget.editingReminder!.times;
+      _medicament = widget.reminderMedicament;
+      _everyDay = widget.editingReminder!.selectedDays.every((day) => day);
+      _selectedDays = widget.editingReminder!.selectedDays;
+      _intakeQuantity = widget.editingReminder!.intakeQuantity;
+    } else {
+      // Initialize variables to default values
+      _reminderName = '';
+      _startDate = DateTime.now();
+      _endDate = DateTime.now().add(const Duration(days: 1));
+      _times = [
+        TimeOfDay(hour: 8, minute: 0),
+        TimeOfDay(hour: 13, minute: 0),
+        TimeOfDay(hour: 19, minute: 0),
+      ];
+      _everyDay = true;
+      _selectedDays = [false, false, false, false, false, false, false];
+      _intakeQuantity = 1;
+    }
+  }
 
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -260,7 +297,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           },
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
-                            hintText: 'Enter reminder name',
+                            hintText: 'Enter reminder message',
                             border: InputBorder.none,
                           ),
                         ),
@@ -319,11 +356,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => _selectStartDate(context),
+                        onTap: widget.isEditing ? null : () => _selectStartDate(context),
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(225, 95, 0, 1),
+                            color: widget.isEditing ? const Color.fromRGBO(225, 95, 0, 0.6) : const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Row(
@@ -397,17 +434,28 @@ class _AddReminderPageState extends State<AddReminderPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StockScreen(selectionMode: true, medicamentList: widget.medicamentList, onMedicamentListUpdated: widget.onMedicamentListUpdated,))).then((selectedMedicament) {
-                            setState(() {
-                              _medicament = selectedMedicament;
-                            });
-                          })
+                        onTap: widget.isEditing ? null : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StockScreen(
+                                selectionMode: true,
+                                medicamentList: widget.medicamentList,
+                                onMedicamentListUpdated: widget.onMedicamentListUpdated,
+                              ),
+                            ),
+                          ).then((selectedMedicament) {
+                            if (selectedMedicament != null) {
+                              setState(() {
+                                _medicament = selectedMedicament;
+                              });
+                            }
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(225, 95, 0, 1),
+                            color: widget.isEditing ? const Color.fromRGBO(225, 95, 0, 0.6) : const Color.fromRGBO(225, 95, 0, 1),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Row(
@@ -608,9 +656,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
                       onTap: () {
                         _saveReminder();
                       },
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(
+                      child: Text(
+                        widget.isEditing ? 'Save' : 'Done',
+                        style: const TextStyle(
                           color: Color.fromRGBO(215, 74, 0, 1),
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
@@ -663,9 +711,10 @@ class _AddReminderPageState extends State<AddReminderPage> {
       );
       return;
     }
-    try {
-      int reminderId = DateTime.now().millisecondsSinceEpoch;
-      Reminder newReminder = Reminder(
+    if (!widget.isEditing) {
+      try {
+        int reminderId = DateTime.now().millisecondsSinceEpoch;
+        Reminder newReminder = Reminder(
           id: reminderId,
           reminderName: _reminderName,
           selectedDays: _selectedDays,
@@ -674,33 +723,80 @@ class _AddReminderPageState extends State<AddReminderPage> {
           medicament: _medicament!.id,
           intakeQuantity: _intakeQuantity,
           times: _times,
-      );
+        );
 
-      int result = await _reminderDatabase.insertReminder(newReminder);
-      if (result != -1) {
-        print('Reminder added successfully');
-        print('Reminder Details:');
-        print('ID: ${newReminder.id}');
-        print('Name: ${newReminder.reminderName}');
-        print('Selected Days: ${newReminder.selectedDays}');
-        print('Start Date: ${newReminder.startDate}');
-        print('End Date: ${newReminder.endDate}');
-        print('Medicament: ${newReminder.medicament}');
-        print('Times: ${newReminder.times}');
-        saveReminderCards(reminderId);
-        widget.onReminderSaved();
-        Navigator.pop(context);
-      } else {
-        print('Failed to add reminder');
+        int result = await _reminderDatabase.insertReminder(newReminder);
+        if (result != -1) {
+          print('Reminder added successfully');
+          print('Reminder Details:');
+          print('ID: ${newReminder.id}');
+          print('Name: ${newReminder.reminderName}');
+          print('Selected Days: ${newReminder.selectedDays}');
+          print('Start Date: ${newReminder.startDate}');
+          print('End Date: ${newReminder.endDate}');
+          print('Medicament: ${newReminder.medicament}');
+          print('Times: ${newReminder.times}');
+          saveReminderCards(reminderId);
+          widget.onReminderSaved();
+          Navigator.pop(context);
+        } else {
+          print('Failed to add reminder');
+        }
+      } catch (e) {
+        print('Error saving reminder: $e');
       }
-    } catch (e) {
-      print('Error saving reminder: $e');
+    } else {
+      try {
+        Reminder updatedReminder = Reminder(
+          id: widget.editingReminder!.id,
+          reminderName: _reminderName,
+          selectedDays: _selectedDays,
+          startDate: widget.editingReminder!.startDate,
+          endDate: _endDate,
+          medicament: widget.editingReminder!.medicament,
+          intakeQuantity: _intakeQuantity,
+          times: _times,
+        );
+
+        Reminder? existingReminder = await _reminderDatabase.getReminderById(widget.editingReminder!.id);
+        if (existingReminder != null) {
+          // Print the existing reminder details
+          print('Reminder before update:');
+          print('ID: ${existingReminder.id}');
+          print('Name: ${existingReminder.reminderName}');
+          print('Selected Days: ${existingReminder.selectedDays}');
+          print('Start Date: ${existingReminder.startDate}');
+          print('End Date: ${existingReminder.endDate}');
+          print('Medicament: ${existingReminder.medicament}');
+          print('Times: ${existingReminder.times}');
+        }
+
+        int result = await _reminderDatabase.updateReminder(updatedReminder);
+
+        if (result != -1) {
+          print('Reminder updated successfully');
+          print('Reminder Details:');
+          print('ID: ${updatedReminder.id}');
+          print('Name: ${updatedReminder.reminderName}');
+          print('Selected Days: ${updatedReminder.selectedDays}');
+          print('Start Date: ${updatedReminder.startDate}');
+          print('End Date: ${updatedReminder.endDate}');
+          print('Medicament: ${updatedReminder.medicament}');
+          print('Times: ${updatedReminder.times}');
+          widget.onReminderSaved();
+          Navigator.pop(context);
+        } else {
+          print('Failed to update reminder');
+        }
+      } catch (e) {
+        print('Error updating reminder: $e');
+      }
     }
   }
 
   void saveReminderCards(int reminderId) async {
     try {
-      for (DateTime date = _startDate; date.isBefore(_endDate); date = date.add(const Duration(days: 1))) {
+      for (DateTime date = _startDate; date.isBefore(_endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
         for (TimeOfDay time in _times) {
           final cardId = '${reminderId}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
           ReminderCard reminderCard = ReminderCard(
