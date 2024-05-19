@@ -201,7 +201,10 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                   reminderMedicament: medicament,
                                 ),
                               ),
-                            );
+                            ).then((_) {
+                              fetchReminders();
+                              fetchMedicaments();
+                            });
                           },
                         ),
                         IconButton(

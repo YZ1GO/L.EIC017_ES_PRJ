@@ -758,23 +758,10 @@ class _AddReminderPageState extends State<AddReminderPage> {
           times: _times,
         );
 
-        Reminder? existingReminder = await _reminderDatabase.getReminderById(widget.editingReminder!.id);
-        if (existingReminder != null) {
-          // Print the existing reminder details
-          print('Reminder before update:');
-          print('ID: ${existingReminder.id}');
-          print('Name: ${existingReminder.reminderName}');
-          print('Selected Days: ${existingReminder.selectedDays}');
-          print('Start Date: ${existingReminder.startDate}');
-          print('End Date: ${existingReminder.endDate}');
-          print('Medicament: ${existingReminder.medicament}');
-          print('Times: ${existingReminder.times}');
-        }
-
         int result = await _reminderDatabase.updateReminder(updatedReminder);
 
         if (result != -1) {
-          print('Reminder updated successfully');
+          /*print('Reminder updated successfully');
           print('Reminder Details:');
           print('ID: ${updatedReminder.id}');
           print('Name: ${updatedReminder.reminderName}');
@@ -782,7 +769,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
           print('Start Date: ${updatedReminder.startDate}');
           print('End Date: ${updatedReminder.endDate}');
           print('Medicament: ${updatedReminder.medicament}');
-          print('Times: ${updatedReminder.times}');
+          print('Times: ${updatedReminder.times}');*/
           widget.onReminderSaved();
           Navigator.pop(context);
         } else {
