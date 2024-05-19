@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class eclipse_background extends StatelessWidget {
+class ElipseBackground extends StatelessWidget {
+  const ElipseBackground({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Stack(

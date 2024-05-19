@@ -293,7 +293,9 @@ class _AddMedicamentPageState extends State<AddMedicamentPage> {
         Navigator.pop(context);
       } else {
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error saving medicament: $e');
+    }
   }
 
   Widget _loadMedicamentImage(int? brandId) {

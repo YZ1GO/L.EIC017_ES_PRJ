@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'dart:async';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
-
 import '../database/local_stock.dart';
 import '../model/reminders.dart';
 
@@ -102,10 +99,6 @@ void cancelAllTimers() {
     timer.cancel();
   });
   timers.clear();
-}
-
-void getNumTimers() {
-  print('Number of scheduled timers: ${timers.length}');
 }
 
 Future<void> setTimersOnAppStart() async {

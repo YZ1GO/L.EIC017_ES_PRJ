@@ -18,7 +18,6 @@ void checkDayChangeInit() {
 }
 
 void checkDayChange() {
-  print('Check days called');
   final now = DateTime.now();
   if (_lastCalledDay.day != now.day) {
     verifyAllMedicamentCloseToExpire();

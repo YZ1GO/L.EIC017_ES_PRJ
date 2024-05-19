@@ -17,14 +17,14 @@ class AddReminderPage extends StatefulWidget {
   final Medicament? reminderMedicament;
 
   AddReminderPage({
-    Key? key,
+    super.key,
     required this.onReminderSaved,
     required this.medicamentList,
     required this.onMedicamentListUpdated,
     required this.isEditing,
     this.editingReminder,
     this.reminderMedicament,
-  }) : super(key: key);
+  });
 
   @override
   _AddReminderPageState createState() => _AddReminderPageState();
@@ -144,9 +144,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
       _startDate = DateTime.now();
       _endDate = DateTime.now().add(const Duration(days: 1));
       _times = [
-        TimeOfDay(hour: 8, minute: 0),
-        TimeOfDay(hour: 13, minute: 0),
-        TimeOfDay(hour: 19, minute: 0),
+        const TimeOfDay(hour: 8, minute: 0),
+        const TimeOfDay(hour: 13, minute: 0),
+        const TimeOfDay(hour: 19, minute: 0),
       ];
       _everyDay = true;
       _selectedDays = [false, false, false, false, false, false, false];
@@ -573,7 +573,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                               GestureDetector(
                                 onTap: () => _removeTime(index),
                                 child: Container(
-                                  margin: EdgeInsets.only(bottom: 10.0),
+                                  margin: const EdgeInsets.only(bottom: 10.0),
                                   width: MediaQuery.of(context).size.width * 0.1,
                                   padding: const EdgeInsets.symmetric(vertical: 13.0),
                                   decoration: BoxDecoration(
@@ -628,7 +628,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                     left: -15,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop(); // Close the page
+                        Navigator.of(context).pop();
                       },
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
@@ -727,15 +727,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
         int result = await _reminderDatabase.insertReminder(newReminder);
         if (result != -1) {
-          print('Reminder added successfully');
-          print('Reminder Details:');
-          print('ID: ${newReminder.id}');
-          print('Name: ${newReminder.reminderName}');
-          print('Selected Days: ${newReminder.selectedDays}');
-          print('Start Date: ${newReminder.startDate}');
-          print('End Date: ${newReminder.endDate}');
-          print('Medicament: ${newReminder.medicament}');
-          print('Times: ${newReminder.times}');
           saveReminderCards(reminderId);
           widget.onReminderSaved();
           Navigator.pop(context);
@@ -761,15 +752,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
         int result = await _reminderDatabase.updateReminder(updatedReminder);
 
         if (result != -1) {
-          /*print('Reminder updated successfully');
-          print('Reminder Details:');
-          print('ID: ${updatedReminder.id}');
-          print('Name: ${updatedReminder.reminderName}');
-          print('Selected Days: ${updatedReminder.selectedDays}');
-          print('Start Date: ${updatedReminder.startDate}');
-          print('End Date: ${updatedReminder.endDate}');
-          print('Medicament: ${updatedReminder.medicament}');
-          print('Times: ${updatedReminder.times}');*/
           widget.onReminderSaved();
           Navigator.pop(context);
         } else {
@@ -801,17 +783,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
           String result = await _reminderDatabase.insertReminderCard(reminderCard);
           if (result != '-1') {
-            /*print('ReminderCard added successfully');
-            print('ReminderCard Details:');
-            print('CardID (Type: ${cardId.runtimeType}): $cardId');
-            print('ReminderID (Type: ${reminderId.runtimeType}): $reminderId');
-            print('Day (Type: ${date.runtimeType}): $date');
-            print('Time (Type: ${time.runtimeType}): $time');*/
-
             DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
             String message = _reminderName == '' ? 'It\'s time to take your medicament!' : _reminderName;
             scheduleNotification(cardId, _medicament!.name, message, scheduledDate);
-            getNumTimers();
           } else {
             print('Failed to add reminderCard');
           }
@@ -888,7 +862,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                   onPressed: () {
                     Navigator.pop(context); // Close current modal sheet
                   },
-                  icon: Icon(Icons.arrow_back), // Back button
+                  icon: const Icon(Icons.arrow_back),
                 ),
                 TextButton(
                   onPressed: () {
@@ -911,13 +885,13 @@ class _AddReminderPageState extends State<AddReminderPage> {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               color: Colors.grey,
               thickness: 1,
               height: 0,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 40),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(

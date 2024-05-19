@@ -1,10 +1,9 @@
-import 'package:app/notifications/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:app/model/reminders.dart';
 import 'package:app/widgets/calendar_widget.dart';
 import 'package:app/widgets/medication_reminder_card_widget.dart';
-import 'package:app/widgets/eclipse_background.dart';
+import 'package:app/widgets/elipse_background.dart';
 import 'package:app/database/local_stock.dart';
 
 late Future<List<Reminder>> _remindersFuture;
@@ -51,7 +50,7 @@ class HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       body: Stack(
         children: [
-          eclipse_background(),
+          const ElipseBackground(),
           CalendarWidget(
             onDaySelected: _handleDaySelected,
           ),
@@ -62,15 +61,6 @@ class HomeScreenState extends State<HomeScreen> {
             bottom: MediaQuery.of(context).size.height * 0.05,
             child: SingleChildScrollView(
               child: _buildMedicationReminderWidget(),
-            ),
-          ),
-          Positioned(
-            left: 300,
-            right: 0,
-            top: 50,
-            child: ElevatedButton(
-              onPressed: _clearRemindersDatabase,
-              child: Text('Clear'),
             ),
           ),
         ],
@@ -221,15 +211,6 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  void _clearRemindersDatabase() async {
-    await ReminderDatabase().clearReminders();
-    setState(() {
-      _remindersFuture = getReminders();
-    });
-    cancelAllTimers();
-    getNumTimers();
   }
 }
 

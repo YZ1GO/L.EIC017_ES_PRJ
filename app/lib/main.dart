@@ -35,7 +35,6 @@ void main() async {
   checkDayChangeInit();
 
   await setTimersOnAppStart();
-  getNumTimers();
 
   runApp(const MyApp());
 }

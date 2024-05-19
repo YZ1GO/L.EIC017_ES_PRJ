@@ -158,7 +158,6 @@ class ReminderDatabase {
   Future<int> insertReminder(Reminder reminder) async {
     try {
       final int id = await _database.insert('reminders', reminder.toMap());
-      print('Inserted reminder ${reminder.reminderName}');
       return id;
     } catch (e) {
       print('Error inserting reminder: $e');
@@ -199,12 +198,10 @@ class ReminderDatabase {
     }
   }
 
-  Future<void> clearReminders() async {
+  Future<void> clearAllReminders() async {
     try {
       await _database.delete('reminders');
-      print('Cleared all reminders from the database');
       await _database.delete('reminder_cards');
-      print('Cleared all reminder cards from the database');
     } catch (e) {
       print('Error clearing reminders: $e');
     }
@@ -220,9 +217,7 @@ class ReminderDatabase {
         whereArgs: [reminderId],
       );
 
-      if (rowsDeleted > 0) {
-        print('Deleted reminder with ID: $reminderId');
-      } else {
+      if (rowsDeleted <= 0) {
         print('No reminder found with ID: $reminderId');
       }
 
@@ -251,9 +246,7 @@ class ReminderDatabase {
         whereArgs: [medicamentId],
       );
 
-      if (rowsDeleted > 0) {
-        print('Deleted reminder with medicament ID: $medicamentId');
-      } else {
+      if (rowsDeleted <= 0) {
         print('No reminder found with medicament ID: $medicamentId');
       }
 
@@ -277,7 +270,6 @@ class ReminderDatabase {
         where: 'id = ?',
         whereArgs: [reminder.id],
       );
-      print('Updated reminder $rowsAffected');
 
       await updateReminderCards(reminder);
 
@@ -300,7 +292,6 @@ class ReminderDatabase {
 
       if (existingCard.isEmpty) {
         await _database.insert('reminder_cards', card.toMap());
-        print('Inserted reminder card ${card.cardId}');
         return card.cardId;
       } else {
         print('Reminder card with the same ID already exists');
@@ -320,7 +311,6 @@ class ReminderDatabase {
         where: 'cardId = ?',
         whereArgs: [card.cardId],
       );
-      print('Updated reminder card $rowsAffected');
       return rowsAffected;
     } catch (e) {
       print('Error updating reminder card: $e');
@@ -378,9 +368,7 @@ class ReminderDatabase {
         whereArgs: [reminderId],
       );
 
-      if (rowsDeleted > 0) {
-        print('Deleted reminder cards with reminder ID: $reminderId');
-      } else {
+      if (rowsDeleted <= 0) {
         print('No reminder cards found with reminder ID: $reminderId');
       }
 
@@ -400,16 +388,8 @@ class ReminderDatabase {
         whereArgs: [reminder.id],
       );
 
-      for (Map<String, dynamic> map in maps) {
-        print('Fetched reminder card id: ${map['cardId']}');
-      }
-
       // Filter out the reminder cards that are scheduled for tomorrow or future dates
       List<ReminderCard> futureReminderCards = maps.map((map) => ReminderCard.fromMap(map)).where((card) => card.day.isAfter(DateTime.now())).toList();
-
-      for (ReminderCard card in futureReminderCards) {
-        print('Future reminder card id: ${card.cardId}');
-      }
 
       // Delete these future reminder cards from the database
       for (ReminderCard card in futureReminderCards) {
@@ -446,7 +426,6 @@ class ReminderDatabase {
           Medicament? medicament = await MedicamentStock().getMedicamentById(reminder.medicament);
 
           scheduleNotification(cardId, medicament!.name, reminder.reminderName, scheduledDate);
-          getNumTimers();
         }
       }
     } catch (e) {

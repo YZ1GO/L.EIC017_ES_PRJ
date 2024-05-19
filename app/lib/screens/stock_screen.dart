@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:app/notifications/notification_checker.dart';
 import 'package:flutter/material.dart';
-import 'package:app/widgets/eclipse_background.dart';
+import 'package:app/widgets/elipse_background.dart';
 import 'package:app/database/database.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +15,7 @@ class StockScreen extends StatefulWidget {
   Future<List<Medicament>> medicamentList;
   final VoidCallback? onMedicamentListUpdated;
 
-  StockScreen({Key? key, required this.selectionMode, required this.medicamentList, required this.onMedicamentListUpdated});
+  StockScreen({super.key, required this.selectionMode, required this.medicamentList, required this.onMedicamentListUpdated});
 
   @override
   _StockScreenState createState() => _StockScreenState();
@@ -51,8 +51,8 @@ class _StockScreenState extends State<StockScreen> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Positioned.fill(
-              child: eclipse_background(),
+            const Positioned.fill(
+              child: ElipseBackground(),
             ),
             Column(
               children: [
@@ -632,7 +632,9 @@ class _StockScreenState extends State<StockScreen> {
       if (result > 0) {
         refreshStockList();
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error deleting medicament: $e');
+    }
   }
 
   void _updateMedicament(
@@ -657,7 +659,9 @@ class _StockScreenState extends State<StockScreen> {
       verifyMedicamentCloseToExpire(updatedMedicament);
       verifyMedicamentRunningLow(updatedMedicament);
       refreshStockList();
-    } catch (e) {}
+    } catch (e) {
+      print('Error updating medicament: $e');
+    }
   }
 
   Future<List<Medicament>> getMedicaments() async {

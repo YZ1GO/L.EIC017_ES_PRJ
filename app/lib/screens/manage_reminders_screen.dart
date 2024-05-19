@@ -11,11 +11,11 @@ class ManageRemindersScreen extends StatefulWidget {
   final VoidCallback onMedicamentListUpdated;
 
   ManageRemindersScreen({
-    Key? key,
+    super.key,
     required this.onReminderSaved,
     required this.medicamentList,
     required this.onMedicamentListUpdated,
-  }) : super(key: key);
+  });
 
   @override
   _ManageRemindersScreenState createState() => _ManageRemindersScreenState();

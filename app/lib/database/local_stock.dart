@@ -107,7 +107,6 @@ class MedicamentStock {
       Medicament? currentMedicament = await getMedicamentById(medicament.id);
 
       if (currentMedicament != null) {
-        print('Quantity for medicament ${medicament.name} is ${currentMedicament.quantity}');
         return currentMedicament.quantity;
       } else {
         print('Medicament not found in the database');

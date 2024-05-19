@@ -18,6 +18,7 @@ class MedicationReminderCard extends StatefulWidget {
   final TimeOfDay? pressedTime;
 
   const MedicationReminderCard({
+    super.key,
     required this.cardId,
     required this.reminderId,
     required this.medicament,

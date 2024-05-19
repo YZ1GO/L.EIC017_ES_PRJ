@@ -27,5 +27,4 @@ class Preferences {
     daysBeforeExpiry = prefs.getInt('daysBeforeExpiry') ?? 1;
     return daysBeforeExpiry;
   }
-
 }
