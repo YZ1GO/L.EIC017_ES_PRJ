@@ -6,7 +6,9 @@ import '../model/medicaments.dart';
 import '../model/reminders.dart';
 
 class ManageRemindersScreen extends StatefulWidget {
-  const ManageRemindersScreen({Key? key}) : super(key: key);
+  final VoidCallback onReminderSaved;
+
+  const ManageRemindersScreen({super.key, required this.onReminderSaved});
 
   @override
   _ManageRemindersScreenState createState() => _ManageRemindersScreenState();
@@ -241,6 +243,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                           reminders.removeAt(index);
                                         });
                                         Navigator.of(context).pop();
+                                        widget.onReminderSaved();
                                       },
                                     ),
                                   ],

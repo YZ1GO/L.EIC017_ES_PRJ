@@ -66,7 +66,9 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ManageRemindersScreen(),
+                              builder: (context) => ManageRemindersScreen(
+                                onReminderSaved: onReminderSaved,
+                              ),
                           ),
                         );
                       },
