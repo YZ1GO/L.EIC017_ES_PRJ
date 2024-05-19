@@ -138,7 +138,17 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
                                   color: Color.fromRGBO(225, 95, 0, 0.6),
                                 ),
                               ),
-                            ]
+                            ] else if (!isTaken && !isJumped)...[
+                             Text(
+                                '${widget.intakeQuantity} piece(s)',
+                                style: const TextStyle(
+                                  fontFamily: 'Open_Sans',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(225, 95, 0, 1),
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),

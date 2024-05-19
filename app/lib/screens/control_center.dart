@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/screens/add_reminder_screen.dart';
 import 'package:app/screens/settings_screen.dart';
 import '../model/medicaments.dart';
+import 'manage_reminders_screen.dart';
 
 void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Future<List<Medicament>> medicamentList, VoidCallback onMedicamentListUpdated) {
   showModalBottomSheet(
@@ -38,6 +39,7 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                               onReminderSaved: onReminderSaved,
                               medicamentList: medicamentList,
                               onMedicamentListUpdated: onMedicamentListUpdated,
+                              isEditing: false,
                             ),
                           ),
                         );
@@ -62,6 +64,16 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ManageRemindersScreen(
+                                onReminderSaved: onReminderSaved,
+                                medicamentList: medicamentList,
+                                onMedicamentListUpdated: onMedicamentListUpdated,
+                              ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: const Color.fromRGBO(199, 84, 0, 1),
@@ -85,7 +97,8 @@ void showControlCenter(BuildContext context, VoidCallback onReminderSaved, Futur
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SettingsScreen()),
+                              builder: (context) => const SettingsScreen(),
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(

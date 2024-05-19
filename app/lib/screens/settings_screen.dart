@@ -15,7 +15,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    lowQuantity = 0;
+    lowQuantity = 1;
     daysBeforeExpiry = 1;
     loadLowQuantity();
     loadDaysBeforeExpiry();
