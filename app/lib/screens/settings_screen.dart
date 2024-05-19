@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> loadLowQuantity() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      lowQuantity = prefs.getInt('lowQuantity') ?? 0;
+      lowQuantity = prefs.getInt('lowQuantity') ?? 1;
     });
   }
 
