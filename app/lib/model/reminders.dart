@@ -382,13 +382,20 @@ class ReminderDatabase {
         whereArgs: [reminder.id],
       );
 
-      DateTime tomorrow = DateTime.now().add(const Duration(days: 1)).toUtc();
+      for (Map<String, dynamic> map in maps) {
+        print('Fetched reminder card id: ${map['cardId']}');
+      }
 
       // Filter out the reminder cards that are scheduled for tomorrow or future dates
-      List<ReminderCard> futureReminderCards = maps.map((map) => ReminderCard.fromMap(map)).where((card) => card.day.isAfter(tomorrow)).toList();
+      List<ReminderCard> futureReminderCards = maps.map((map) => ReminderCard.fromMap(map)).where((card) => card.day.isAfter(DateTime.now())).toList();
+
+      for (ReminderCard card in futureReminderCards) {
+        print('Future reminder card id: ${card.cardId}');
+      }
 
       // Delete these future reminder cards from the database
       for (ReminderCard card in futureReminderCards) {
+        cancelNotification(card.cardId);
         await _database.delete(
           'reminder_cards',
           where: 'cardId = ?',
@@ -399,7 +406,7 @@ class ReminderDatabase {
       DateTime tomorrowMidnight = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(const Duration(days: 1));
 
       // Insert the new reminder cards into the database
-      for (DateTime date = tomorrowMidnight; date.isBefore(reminder.endDate); date = date.add(const Duration(days: 1))) {
+      for (DateTime date = tomorrowMidnight; date.isBefore(reminder.endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
         for (TimeOfDay time in reminder.times) {
           final cardId = '${reminder.id}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
           ReminderCard newCard = ReminderCard(
