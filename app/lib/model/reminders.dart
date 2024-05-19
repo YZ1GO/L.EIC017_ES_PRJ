@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import '../notifications/system_notification.dart';
+
 class Reminder {
   final int id;
   String reminderName;
@@ -261,6 +263,25 @@ class ReminderDatabase {
     }
   }
 
+  Future<int> updateReminder(Reminder reminder) async {
+    try {
+      final int rowsAffected = await _database.update(
+        'reminders',
+        reminder.toMap(),
+        where: 'id = ?',
+        whereArgs: [reminder.id],
+      );
+      print('Updated reminder $rowsAffected');
+
+      await updateReminderCards(reminder);
+
+      return rowsAffected;
+    } catch (e) {
+      print('Error updating reminder: $e');
+      return -1;
+    }
+  }
+
   /***************************REMINDER CARD***************************/
 
   Future<String> insertReminderCard(ReminderCard card) async {
@@ -344,6 +365,53 @@ class ReminderDatabase {
     } catch (e) {
       print('Error deleting reminder cards: $e');
       return -1;
+    }
+  }
+
+  Future<void> updateReminderCards(Reminder reminder) async {
+    try {
+      // Fetch all the reminder cards associated with this reminder
+      List<Map<String, dynamic>> maps = await _database.query(
+        'reminder_cards',
+        where: 'reminderId = ?',
+        whereArgs: [reminder.id],
+      );
+
+      // Filter out the reminder cards that are scheduled for today or future dates
+      List<ReminderCard> futureReminderCards = maps.map((map) => ReminderCard.fromMap(map)).where((card) => card.day.isAfter(DateTime.now()) || (card.day.isAtSameMomentAs(DateTime.now()) && (card.time.hour * 60 + card.time.minute > TimeOfDay.now().hour * 60 + TimeOfDay.now().minute))).toList();
+
+      // Delete these future reminder cards from the database
+      for (ReminderCard card in futureReminderCards) {
+        await _database.delete(
+          'reminder_cards',
+          where: 'cardId = ?',
+          whereArgs: [card.cardId],
+        );
+      }
+
+      // Insert the new reminder cards into the database
+      for (DateTime date = DateTime.now(); date.isBefore(reminder.endDate); date = date.add(const Duration(days: 1))) {
+        for (TimeOfDay time in reminder.times) {
+          final cardId = '${reminder.id}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
+          ReminderCard newCard = ReminderCard(
+            cardId: cardId,
+            reminderId: reminder.id,
+            day: date,
+            time: time,
+            intakeQuantity: reminder.intakeQuantity,
+            isTaken: false,
+            isJumped: false,
+          );
+          await _database.insert('reminder_cards', newCard.toMap());
+
+          DateTime scheduledDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+          int cardIdInt = cardId.hashCode.toUnsigned(31);
+          scheduleNotification(cardIdInt, reminder.reminderName, reminder.reminderName, scheduledDate);
+          checkScheduledNotifications();
+        }
+      }
+    } catch (e) {
+      print('Error updating reminder cards: $e');
     }
   }
 }

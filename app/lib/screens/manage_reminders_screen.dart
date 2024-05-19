@@ -180,7 +180,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.edit),
+                          icon: const Icon(Icons.edit),
                           onPressed: () {
                             // Navigate to the edit reminder page
                             // Pass the reminder to the edit page
