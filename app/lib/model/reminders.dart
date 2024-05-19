@@ -407,6 +407,9 @@ class ReminderDatabase {
 
       // Insert the new reminder cards into the database
       for (DateTime date = tomorrowMidnight; date.isBefore(reminder.endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
+        if (!reminder.selectedDays[date.weekday % 7]) {
+          continue; // Skip this iteration if the day is not selected
+        }
         for (TimeOfDay time in reminder.times) {
           final cardId = '${reminder.id}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
           ReminderCard newCard = ReminderCard(

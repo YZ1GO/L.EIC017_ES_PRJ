@@ -101,29 +101,39 @@ class HomeScreenState extends State<HomeScreen> {
         } else {
           List<Reminder>? reminders = snapshot.data;
           if (reminders != null && reminders.isNotEmpty) {
-            List<Reminder> applicableReminders = _getApplicableReminders(reminders);
-            if (applicableReminders.isNotEmpty) {
-              return _buildReminderCardInfoList(applicableReminders);
-            }
+            return FutureBuilder<List<Reminder>>(
+              future: _getApplicableReminders(reminders),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox.shrink();
+                } else {
+                  List<Reminder>? applicableReminders = snapshot.data;
+                  if (applicableReminders != null && applicableReminders.isNotEmpty) {
+                    return _buildReminderCardInfoList(applicableReminders);
+                  }
+                }
+                return noRemindersCard();
+              },
+            );
+          } else {
+            return noRemindersCard();
           }
-          return noRemindersCard();
         }
       },
     );
   }
 
-  List<Reminder> _getApplicableReminders(List<Reminder> reminders) {
-    return reminders.where((reminder) {
-      int selectedDayIndex = _selectedDay.weekday % 7;
-      bool isBeforeOrAtEndDate = reminder.endDate.isAfter(
-          _selectedDay.subtract(const Duration(days: 1))) ||
-          reminder.endDate.isAtSameMomentAs(_selectedDay);
-      bool isAfterStartDate = reminder.startDate.isBefore(_selectedDay) ||
-          reminder.startDate.isAtSameMomentAs(_selectedDay);
-      bool isSelectedDay = reminder.selectedDays[selectedDayIndex];
+  Future<List<Reminder>> _getApplicableReminders(List<Reminder> reminders) async {
+    List<Reminder> applicableReminders = [];
 
-      return isBeforeOrAtEndDate && isAfterStartDate && isSelectedDay;
-    }).toList();
+    for (Reminder reminder in reminders) {
+      List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCards(reminder.id, _selectedDay);
+      if (reminderCards.isNotEmpty) {
+        applicableReminders.add(reminder);
+      }
+    }
+
+    return applicableReminders;
   }
 
   Widget _buildReminderCardInfoList(List<Reminder> applicableReminders) {

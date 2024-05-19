@@ -797,6 +797,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
   void saveReminderCards(int reminderId) async {
     try {
       for (DateTime date = _startDate; date.isBefore(_endDate.add(const Duration(days: 1))); date = date.add(const Duration(days: 1))) {
+        if (!_selectedDays[date.weekday % 7]) {
+          continue; // Skip this iteration if the day is not selected
+        }
         for (TimeOfDay time in _times) {
           final cardId = '${reminderId}_${date.day}_${date.month}_${date.year}_${time.hour}_${time.minute}';
           ReminderCard reminderCard = ReminderCard(
