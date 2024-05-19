@@ -226,6 +226,28 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                 ).then((_) {
                                   fetchReminders();
                                   fetchMedicaments();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Reminder Updated'),
+                                        content: const Text('Updates will take effect from the start of the next day'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(215, 74, 0, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                 });
                               },
                             ),
