@@ -59,7 +59,7 @@ Widget buildExpiryDateRow(BuildContext context, TextEditingController expiryDate
             child: TextField(
               controller: expiryDateController,
               decoration: const InputDecoration(
-                labelText: 'Expiry Date (dd/mm/yyyy)',
+                labelText: 'Expiry Date (dd/MM/yyyy)',
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Color.fromRGBO(243, 83, 0, 1)),
                 ),
