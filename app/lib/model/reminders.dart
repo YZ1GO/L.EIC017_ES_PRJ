@@ -190,7 +190,6 @@ class ReminderDatabase {
     List<Map<String, dynamic>> maps = [];
     try {
       maps = await _database.query('reminders');
-      print('Getting reminders list');
       return List.generate(maps.length, (i) {
         return Reminder.fromMap(maps[i]);
       });

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../database/local_stock.dart';
 import '../model/reminders.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -105,4 +106,23 @@ void cancelAllTimers() {
 
 void getNumTimers() {
   print('Number of scheduled timers: ${timers.length}');
+}
+
+Future<void> setTimersOnAppStart() async {
+  // Fetch all reminders and set timers
+  List<Reminder> reminders = await ReminderDatabase().getReminders();
+  for (Reminder reminder in reminders) {
+    List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCardsByReminderId(reminder.id);
+    for (ReminderCard reminderCard in reminderCards) {
+
+      DateTime reminderDateTime = DateTime(reminderCard.day.year, reminderCard.day.month, reminderCard.day.day, reminderCard.time.hour, reminderCard.time.minute);
+
+      // If the reminder DateTime is in the future, schedule a notification
+      if (reminderDateTime.isAfter(DateTime.now())) {
+        Medicament? medicament = await MedicamentStock().getMedicamentById(reminder.medicament);
+        String message = reminder.reminderName == '' ? 'It\'s time to take your medicament!' : reminder.reminderName;
+        scheduleNotification(reminderCard.cardId, medicament!.name, message, reminderDateTime);
+      }
+    }
+  }
 }
