@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'model/medicaments.dart';
 import 'screens/home_screen.dart';
@@ -69,9 +70,7 @@ class NavigationMenuState extends State<NavigationMenu> {
             bottom: kBottomNavigationBarHeight + 10,
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: MaterialButton(
-              onPressed: () {
-                showControlCenter(context, _refreshHomeScreenOnReminderSaved, _medicamentList, refreshStockList);
-              },
+              onPressed: null,
               elevation: 0,
               highlightElevation: 0,
               color: Colors.transparent,
@@ -126,6 +125,25 @@ class NavigationMenuState extends State<NavigationMenu> {
                     ),
                     onPressed: () => onItemTapped(0),
                     highlightColor: Colors.transparent,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(15),
+                    padding: const EdgeInsets.all(6),
+                    color: const Color.fromRGBO(225, 95, 0, 1),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.add,
+                        color: Color.fromRGBO(225, 95, 0, 1),
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        showControlCenter(context, _refreshHomeScreenOnReminderSaved, _medicamentList, refreshStockList);
+                      },
+                    ),
                   ),
                 ),
                 Padding(
