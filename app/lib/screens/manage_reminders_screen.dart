@@ -1,7 +1,6 @@
-import 'package:app/notifications/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../database/local_stock.dart';
+import '../database/local_medicament_stock.dart';
 import '../model/medicaments.dart';
 import '../model/reminders.dart';
 import 'add_reminder_screen.dart';

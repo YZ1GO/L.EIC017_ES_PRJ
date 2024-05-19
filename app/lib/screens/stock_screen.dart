@@ -2,11 +2,11 @@ import 'dart:core';
 import 'package:app/notifications/notification_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/elipse_background.dart';
-import 'package:app/database/database.dart';
+import 'package:app/database/medicaments_database.dart';
 import 'package:app/model/medicaments.dart';
 import 'package:intl/intl.dart';
 import 'package:app/widgets/edit_medicament_widgets.dart';
-import 'package:app/database/local_stock.dart';
+import 'package:app/database/local_medicament_stock.dart';
 
 import '../model/reminders.dart';
 

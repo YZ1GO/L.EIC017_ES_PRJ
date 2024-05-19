@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:app/database/local_stock.dart';
+import 'package:app/database/local_medicament_stock.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';

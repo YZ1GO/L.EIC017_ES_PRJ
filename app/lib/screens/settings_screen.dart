@@ -15,7 +15,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    lowQuantity = 1;
+    lowQuantity = 0;
     daysBeforeExpiry = 1;
     loadLowQuantity();
     loadDaysBeforeExpiry();
@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> loadLowQuantity() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      lowQuantity = prefs.getInt('lowQuantity') ?? 1;
+      lowQuantity = prefs.getInt('lowQuantity') ?? 0;
     });
   }
 

@@ -4,7 +4,7 @@ import 'model/medicaments.dart';
 import 'screens/home_screen.dart';
 import 'screens/stock_screen.dart';
 import 'package:app/screens/control_center.dart';
-import 'package:app/database/local_stock.dart';
+import 'package:app/database/local_medicament_stock.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});

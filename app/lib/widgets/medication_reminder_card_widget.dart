@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/model/medicaments.dart';
-import 'package:app/database/local_stock.dart';
+import 'package:app/database/local_medicament_stock.dart';
 import 'package:app/model/reminders.dart';
 import '../notifications/notification_checker.dart';
 
@@ -424,9 +424,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       showAlertDialog(context, 'Medicament Expired', '${widget.medicament!.name} has expired.');
       if (!isTakeButton) Navigator.pop(context);
     } else {
-      await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
-
-      verifyMedicamentRunningLow(widget.medicament!);
+      Medicament? updatedMedicament = await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
       final updatedCard = ReminderCard(
         cardId: widget.cardId,
@@ -446,6 +444,8 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
         isJumped = false;
         pressedTime = now;
       });
+
+      verifyMedicamentRunningLow(updatedMedicament!);
     }
 
     if (!isTakeButton) Navigator.pop(context);
@@ -456,9 +456,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
 
     int newQuantity = currentQuantity + widget.intakeQuantity;
 
-    await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
-
-    verifyMedicamentRunningLow(widget.medicament!);
+    Medicament? updatedMedicament = await MedicamentStock().changeMedicamentQuantity(widget.medicament!, newQuantity);
 
     final updatedCard = ReminderCard(
       cardId: widget.cardId,
@@ -478,6 +476,8 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       isJumped = false;
       pressedTime = null;
     });
+
+    verifyMedicamentRunningLow(updatedMedicament!);
 
     Navigator.pop(context);
   }

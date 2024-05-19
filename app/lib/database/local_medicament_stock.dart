@@ -118,9 +118,9 @@ class MedicamentStock {
     }
   }
 
-  Future<void> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
+  Future<Medicament?> changeMedicamentQuantity(Medicament medicament, int newQuantity) async {
     if (newQuantity < 0) {
-      return;
+      return null;
     }
     try {
       Medicament? currentMedicament = await getMedicamentById(medicament.id);
@@ -129,7 +129,12 @@ class MedicamentStock {
         currentMedicament.quantity = newQuantity;
         await updateMedicament(currentMedicament);
       }
-    } catch (e) {}
+
+      return currentMedicament;
+    } catch (e) {
+      print('Error changing medicament quantity: $e');
+    }
+    return null;
   }
 
   Future<List<Medicament>> getMedicamentsCloseToExpire() async {

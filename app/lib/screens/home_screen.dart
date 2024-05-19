@@ -4,7 +4,7 @@ import 'package:app/model/reminders.dart';
 import 'package:app/widgets/calendar_widget.dart';
 import 'package:app/widgets/medication_reminder_card_widget.dart';
 import 'package:app/widgets/elipse_background.dart';
-import 'package:app/database/local_stock.dart';
+import 'package:app/database/local_medicament_stock.dart';
 
 late Future<List<Reminder>> _remindersFuture;
 

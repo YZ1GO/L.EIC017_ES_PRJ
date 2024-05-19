@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:app/model/medicaments.dart';
 import 'dart:async';
-import '../database/local_stock.dart';
+import '../database/local_medicament_stock.dart';
 import '../model/reminders.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
