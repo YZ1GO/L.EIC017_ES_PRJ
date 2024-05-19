@@ -68,7 +68,7 @@ class HomeScreenState extends State<HomeScreen> {
             right: 0,
             top: 50,
             child: ElevatedButton(
-              onPressed: _clearRemindersDatabase,
+              onPressed: scheduleTestNotification,
               child: Text('Clear'),
             ),
           ),
@@ -194,6 +194,12 @@ class HomeScreenState extends State<HomeScreen> {
     checkScheduledNotifications();
   }
 
+  void scheduleTestNotification() {
+    DateTime scheduledDate = DateTime.now().add(Duration(seconds: 10));
+    scheduleNotification(1, 'Test Title', 'Test Body', scheduledDate);
+  }
+
+
   Widget noRemindersCard() {
     return Center(
       child: FractionallySizedBox(
@@ -209,7 +215,7 @@ class HomeScreenState extends State<HomeScreen> {
             height: 150,
             child: Center(
               child: Text(
-                "There is no registered pill",
+                "There are no reminders for today",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
