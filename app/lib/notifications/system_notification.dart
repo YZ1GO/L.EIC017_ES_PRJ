@@ -94,11 +94,12 @@ void cancelTimer(String cardId) {
   }
 }
 
-void cancelAllTimers() {
-  timers.forEach((cardId, timer) {
-    timer.cancel();
-  });
-  timers.clear();
+Future<void> cancelReminderCardsTimers(int reminderId) async {
+  List<ReminderCard> reminderCards = await ReminderDatabase().getReminderCardsByReminderId(reminderId);
+
+  for (ReminderCard reminderCard in reminderCards) {
+    cancelTimer(reminderCard.cardId);
+  }
 }
 
 Future<void> setTimersOnAppStart() async {

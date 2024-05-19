@@ -1,3 +1,4 @@
+import 'package:app/notifications/system_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../database/local_stock.dart';
@@ -303,6 +304,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                             ),
                                           ),
                                           onPressed: () async {
+                                            cancelReminderCardsTimers(reminder.id);
                                             await ReminderDatabase().deleteReminderByReminderId(reminder.id);
                                             setState(() {
                                               reminders.removeAt(index);
