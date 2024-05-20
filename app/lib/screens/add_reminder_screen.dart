@@ -729,7 +729,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
         if (result != -1) {
           saveReminderCards(reminderId);
           widget.onReminderSaved();
-          Navigator.pop(context);
+          Navigator.of(context).pop(false);
         } else {
           print('Failed to add reminder');
         }
@@ -753,7 +753,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
         if (result != -1) {
           widget.onReminderSaved();
-          Navigator.pop(context);
+          Navigator.of(context).pop(true);
         } else {
           print('Failed to update reminder');
         }
