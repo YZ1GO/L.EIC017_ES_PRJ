@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import '../database/local_medicament_stock.dart';
 import '../model/medicaments.dart';
@@ -45,7 +46,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 244, 235, 1),
+      backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       appBar: AppBar(
         title: const Text('Manage Reminders'),
         backgroundColor: Colors.transparent,
@@ -100,12 +101,13 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 22,
                                 ),
                               ),
                               TextSpan(
                                 text: '($formattedStartDate - $formattedEndDate)',
                                 style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                   fontSize: 12,
                                 ),
@@ -117,7 +119,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                     ),
                     Container(
                       decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 218, 190, 1),
+                        color: Color.fromRGBO(239, 203, 187, 1),
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(15.0),
                           bottomRight: Radius.circular(15.0),
@@ -133,6 +135,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                   const TextSpan(
                                     text: 'Intake Quantity: ',
                                     style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(225, 95, 0, 1),
                                     ),
@@ -152,6 +155,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                   const TextSpan(
                                     text: 'Times: ',
                                     style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(225, 95, 0, 1),
                                     ),
@@ -171,6 +175,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                   const TextSpan(
                                     text: 'Frequency: ',
                                     style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(225, 95, 0, 1),
                                     ),
@@ -190,6 +195,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                                   const TextSpan(
                                     text: 'Message: ',
                                     style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(225, 95, 0, 1),
                                     ),
@@ -209,7 +215,9 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             IconButton(
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                FontAwesomeIcons.pen,
+                              ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -255,7 +263,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
                             ),
                             IconButton(
                               icon: const Icon(
-                                Icons.delete,
+                                FontAwesomeIcons.trash,
                                 color: Colors.red,
                               ),
                               onPressed: () {
