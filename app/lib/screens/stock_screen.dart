@@ -267,7 +267,7 @@ class _StockScreenState extends State<StockScreen> {
           ));
           rows.add(const Center(
             child: Text(
-              '"It\'s the end of the list"',
+              '"It\'s the end of the list!"',
               style: TextStyle(
                 color: Color.fromRGBO(199,54,00,1),
                 fontSize: 15,
