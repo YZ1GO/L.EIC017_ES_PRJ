@@ -48,7 +48,7 @@ class _ManageRemindersScreenState extends State<ManageRemindersScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 244, 236, 1),
       appBar: AppBar(
-        title: const Text('Manage Reminders'),
+        title: reminders.isEmpty ?  const Text('Manage Reminders') : Text('Manage Reminders (${reminders.length})'),
         backgroundColor: Colors.transparent,
       ),
       body: reminders.isEmpty
