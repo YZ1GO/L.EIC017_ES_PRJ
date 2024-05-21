@@ -293,3 +293,5 @@ Enhance existing features and finalize incomplete functionalities.
 __Tests:__ Expanded and enhanced the test suite by adding more unit, widget, and integration tests, while also improving the quality of existing tests.
 
 __UI/UX:__ Refined the visual design with minor adjustments and consistent color schemes. Made the control center button more intuitive by replacing the "Pingu button" with a more recognizable "plus" button in the middle of the navigation bar.
+
+__Reminders:__ Completed the implementation of the reminder feature, added manage reminders screen and the functionality to notify the user at the scheduled time to take the medication. Also fixed issues related to reminder cards update.
