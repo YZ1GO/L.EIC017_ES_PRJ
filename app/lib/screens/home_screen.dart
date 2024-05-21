@@ -148,6 +148,15 @@ class HomeScreenState extends State<HomeScreen> {
         children: [
           ...reminderCardInfos.map((info) {
             return MedicationReminderCard(
+              onCardUpdated: (updatedCard) {
+                  // Find the index of the reminder card in the list
+                  int index = reminderCardInfos.indexWhere((info) => info.reminderCard.cardId == updatedCard.cardId);
+
+                  // Update the reminder card in the list
+                  if (index != -1) {
+                    reminderCardInfos[index] = _ReminderCardInfo(updatedCard, reminderCardInfos[index].reminder, reminderCardInfos[index].medicament);
+                  }
+              },
               cardId: info.reminderCard.cardId,
               reminderId: info.reminderCard.reminderId,
               medicament: info.medicament,

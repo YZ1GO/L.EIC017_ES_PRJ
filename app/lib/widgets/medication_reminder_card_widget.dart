@@ -7,6 +7,7 @@ import 'package:app/model/reminders.dart';
 import '../notifications/notification_checker.dart';
 
 class MedicationReminderCard extends StatefulWidget {
+  final Function(ReminderCard) onCardUpdated;
   final String cardId;
   final int reminderId;
   final Medicament? medicament;
@@ -19,6 +20,7 @@ class MedicationReminderCard extends StatefulWidget {
 
   const MedicationReminderCard({
     super.key,
+    required this.onCardUpdated,
     required this.cardId,
     required this.reminderId,
     required this.medicament,
@@ -27,7 +29,7 @@ class MedicationReminderCard extends StatefulWidget {
     required this.intakeQuantity,
     required this.isTaken,
     required this.isJumped,
-    this.pressedTime,
+    required this.pressedTime,
   });
 
   @override
@@ -536,7 +538,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return Container(
+            return SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
               child: Column(
                 children: [
@@ -580,18 +582,20 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
         day: widget.day,
         time: widget.time,
         intakeQuantity: widget.intakeQuantity,
-        isTaken: widget.isTaken,
-        isJumped: widget.isJumped,
+        isTaken: true,
+        isJumped: false,
         pressedTime: newPickedTime,
       );
 
       await ReminderDatabase().updateReminderCard(updatedCard);
 
       setState(() {
-        isTaken = widget.isTaken;
-        isJumped = widget.isJumped;
+        isTaken = true;
+        isJumped = false;
         pressedTime = newPickedTime;
       });
+
+      widget.onCardUpdated(updatedCard);
 
       Navigator.pop(context);
     }
