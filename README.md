@@ -12,7 +12,6 @@ Struggling to remember your medication schedule? Unsure about your pill count at
 |---------------|-------------|
 | Bruno Huang   | 202207517   |
 | Diogo Pinto   | 202205225   |
-| Eriton Naife  | 202008859   |
 | Ricardo Yang  | 202208465   |
 
 
@@ -262,7 +261,7 @@ Initially, our implementation stored reminders as a collective entity, accompani
 The difficulties with managing medication intake history, especially with reminder cards, led to incomplete progress on the related user story.
 
 
-### Sprint 3
+### Sprint 3 & Last
 Enhance existing features and finalize incomplete functionalities.
 
 #### Backlog screenshots
@@ -273,6 +272,24 @@ Enhance existing features and finalize incomplete functionalities.
       <p align="center">Sprint 3 - Initial</p>
     </td>
   </tr>
+      <td align="center">
+      <img src="assets/backlog/backlog_sprint3_final.png">
+      <p align="center">Sprint 3 - Final</p>
+    </td>
   <tr>
   </tr>
 </table>
+
+#### Implemented User Stories
+1. [After marking the medication as taken, user is able to see the remaining quantity (e.g., 18/20 antibiotics, the app should decrease automatically)](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56918540)
+
+2. [User is able to see statistics or history regarding to medication intake](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56917272)
+
+3. [The app notifies user at the scheduled time to take the medication](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/26/views/1?pane=issue&itemId=56918017)
+
+<p align="center"><img src="assets/gifs/sprint3/notification.png" width=33%></p>
+
+#### Reflection
+__Tests:__ Expanded and enhanced the test suite by adding more unit, widget, and integration tests, while also improving the quality of existing tests.
+
+__UI/UX:__ Refined the visual design with minor adjustments and consistent color schemes. Made the control center button more intuitive by replacing the "Pingu button" with a more recognizable "plus" button in the middle of the navigation bar.
