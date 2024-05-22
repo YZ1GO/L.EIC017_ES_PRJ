@@ -54,6 +54,7 @@ class MedicationReminderCardState extends State<MedicationReminderCard> {
 
   @override
   Widget build(BuildContext context) {
+    isNotToday = widget.day.isAfter(DateTime.now());
     return Center(
       child: FractionallySizedBox(
         widthFactor: 0.9,

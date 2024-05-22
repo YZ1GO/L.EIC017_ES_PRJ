@@ -1,6 +1,6 @@
 # PINGUPILLS 🐧
 
-<p align="center"><img src="assets/logo/LOGO-PINGUPILLS-V3.png" width=80%></p>
+<p align="center"><img src="assets/logo/LOGO-PINGUPILLS-V3.png" width=60%></p>
 
 Struggling to remember your medication schedule? Unsure about your pill count at home? Look no further – PINGU has got you covered! Set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock. 
 
@@ -297,7 +297,7 @@ __UI/UX:__ Refined the visual design with minor adjustments and consistent color
 ## Acknowledgements
 The logo was designed by Ricardo Yang.
 
-The medicament database was made by [WSAyan](https://github.com/WSAyan/medicinedb).
+The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
 
 <br>
 
