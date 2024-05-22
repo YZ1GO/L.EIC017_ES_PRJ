@@ -297,7 +297,7 @@ __UI/UX:__ Refined the visual design with minor adjustments and consistent color
 ## Acknowledgements
 The logo was designed by Ricardo Yang.
 
-The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
+The medicament database was made by [WSAyan](https://github.com/WSAyan/medicinedb).
 
 <br>
 
