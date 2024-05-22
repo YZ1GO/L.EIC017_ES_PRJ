@@ -293,3 +293,14 @@ Enhance existing features and finalize incomplete functionalities.
 __Tests:__ Expanded and enhanced the test suite by adding more unit, widget, and integration tests, while also improving the quality of existing tests.
 
 __UI/UX:__ Refined the visual design with minor adjustments and consistent color schemes. Made the control center button more intuitive by replacing the "Pingu button" with a more recognizable "plus" button in the middle of the navigation bar.
+
+## Acknowledgements
+The logo was designed by Ricardo Yang.
+
+The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
+
+<br>
+
+This project was developed for the "Engenharia de Software" (ES) course at @FEUP
+
+Special thanks to Professor [José Campos](https://sigarra.up.pt/feup/en/FUNC_GERAL.FORMVIEW?p_codigo=480945) for guidance and support throughout the course.
