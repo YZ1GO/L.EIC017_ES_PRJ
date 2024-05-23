@@ -1,8 +1,8 @@
 # PINGUPILLS 🐧
 
-<p align="center"><img src="images/logo/LOGO-PINGUPILLS-V3.png" width=400px></p>
+<p align="center"><img src="images/logo/LOGO-PINGUPILLS-V3.png" width=600px></p>
 
-Struggling to remember your medication schedule or keep track of your pill count at home? Look no further – PINGU has got you covered! 
+Struggling to remember your medication schedule or keep track of your pill count at home? `Look no further – PINGU has got you covered!`
 
 With PINGU, you can set alarms to ensure you never miss a dose again and effortlessly keep track of your medicine stock.
 
@@ -36,10 +36,8 @@ The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
 
 This project was developed for the "Engenharia de Software" (ES) course at @FEUP by team 2LEIC03T2:
 
-|  Name         |  ID         |
-|---------------|-------------|
-| Bruno Huang   | 202207517   |
-| Ricardo Yang  | 202208465   |
+- Bruno Huang   (up202207517)
+- Ricardo Yang  (up202208465)
 
 <br>
 
