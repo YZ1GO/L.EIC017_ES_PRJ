@@ -9,11 +9,11 @@ With PINGU, you can set alarms to ensure you never miss a dose again and effortl
 🚀 Let's embrace a healthy lifestyle with __PINGUPILLS__!
 
 ## Features
-- Keep track of medications that you have at home
+- Keep track your medicament stock that you have at home
 - Reminder for you to take your medications
 - One click to have the medication marked as taken 
-- Quick visualization of the remaining medication stock and expiration day
-- Reminder for close to expiration day and stock replenishment
+- Quick visualization of the remaining stock quantity and expiration date
+- Notification for close to expiration day and stock replenishment
 - A simple calendar to see medication intake in specific day
 
 ## Requirements
@@ -21,46 +21,11 @@ With PINGU, you can set alarms to ensure you never miss a dose again and effortl
 - Flutter 3.3.0 or higher
 - Dart SDK version: >=3.3.0 <4.0.0
 
-## Screenshots
+## Product
 
-<p align="center"><img src="images/demo/main_screen.png" width=180px></p>
-<p align="center"><b>Screenshot 1 - Reminders</b></p>
-<br>
+![](images/full/image.png)
+![](images/full/image2.png)
 
-<p align="center"><img src="images/demo/stock_screen.png" width=180px></p>
-<p align="center"><b>Screenshot 2 - Stock</b></p>
-<br>
-
-<p align="center"><img src="images/demo/menu.png" width=200px></p>
-<p align="center"><b>Screenshot 3 - Menu</b></p>
-<br>
-
-<p align="center"><img src="images/demo/add_reminder.png" width=180px></p>
-<p align="center"><b>Screenshot 4 - Add reminder</b></p>
-<br>
-
-<p align="center"><img src="images/demo/manage_reminders.png" width=180px></p>
-<p align="center"><b>Screenshot 5 - Manage reminders</b></p>
-<br>
-
-<p align="center"><img src="images/demo/edit_reminder.png" width=180px></p>
-<p align="center"><b>Screenshot 6 - Edit reminder</b></p>
-<br>
-
-<p align="center"><img src="images/demo/settings.png" width=180px></p>
-<p align="center"><b>Screenshot 7 - Settings</b></p>
-<br>
-
-<p align="center"><img src="images/demo/edit_medicament.png" width=180px></p>
-<p align="center"><b>Screenshot 8 - Edit medicament</b></p>
-<br>
-
-<p align="center"><img src="images/demo/search_medicament.png" width=180px></p>
-<p align="center"><b>Screenshot 9 - Search medicament</b></p>
-<br>
-
-<p align="center"><img src="images/demo/add_medicament.png" width=180px></p>
-<p align="center"><b>Screenshot 10 - Add medicament</b></p>
 
 ## Acknowledgements
 
