@@ -1,7 +1,5 @@
 ## MOCKUPS
-Mockups created in [Figma](https://www.figma.com/file/qMeErr0JtWtYGfH0MOQVOe/PinguPills?type=design&node-id=0%3A1&mode=design&t=NM5ZBWsMYzxWpchM-1) by Ricardo Yang
-
-> To obtain shape specifications, open the project in figma
+Mockups created in Figma by Ricardo Yang
 
 |||||
 |:------------------------------------:|:--------------------------------------:|:------------------------------------:|:--------------------------------------:|
