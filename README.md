@@ -34,7 +34,7 @@ The logo was designed by Ricardo Yang.
 The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
 
 
-This project was developed for the "Engenharia de Software" (ES) course at @FEUP by team 2LEIC03T2:
+This project was developed for the "Engenharia de Software" (ES) course at @FEUP by team 2LEIC03T2 on May 2024:
 
 - Bruno Huang   (up202207517)
 - Ricardo Yang  (up202208465)
