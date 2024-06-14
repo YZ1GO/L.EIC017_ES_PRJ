@@ -33,6 +33,7 @@ The logo was designed by Ricardo Yang.
 
 The medicament database made by [WSAyan](https://github.com/WSAyan/medicinedb).
 
+The app UI was based on [Pill Reminder Max](https://play.google.com/store/apps/details?id=com.artifyapp.mcare&hl=en).
 
 This project was developed for the "Engenharia de Software" (ES) course at @FEUP by team 2LEIC03T2 on May 2024:
 
